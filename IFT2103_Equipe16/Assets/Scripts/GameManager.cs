@@ -7,14 +7,16 @@ public class GameManager : MonoBehaviour {
 	public List<GameObject> enemiesAlive;
 	private GameObject[] players;
 	private GameObject[] enemies;
-	public string playersTag ="Player";
+    private List<GameObject> allCharacters;
+    public string playersTag ="Player";
 	public string enemiesTag = "Enemy";
 
 
 	void Start () {
 		players = GameObject.FindGameObjectsWithTag(playersTag);
-		enemies = GameObject.FindGameObjectsWithTag(enemiesTag); 
-		foreach (GameObject player in players)
+		enemies = GameObject.FindGameObjectsWithTag(enemiesTag);
+        
+        foreach (GameObject player in players)
 		{
 			playersAlive.Add(player);
 		}
@@ -43,6 +45,12 @@ public class GameManager : MonoBehaviour {
 				NextTurn(enemiesAlive[Random.Range(0, enemiesAlive.Count)]);
 			}
 		}
+        else
+        {
+            allCharacters = playersAlive;
+            allCharacters.AddRange(enemiesAlive);
+            NextTurn(allCharacters[Random.Range(0, allCharacters.Count)]);
+        }
 	}
 
 	//enclancher le prochain tour

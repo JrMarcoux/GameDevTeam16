@@ -12,7 +12,7 @@ public class RangeAttack : MonoBehaviour {
 	public float gravity = -18f;
 	private GameObject gameManager;
 
-	void Start()
+    void Start()
 	{
 		gameManager = GameObject.FindGameObjectWithTag("Game manager");
 		Invoke("DestroyProjectile", lifeTime);
@@ -34,8 +34,12 @@ public class RangeAttack : MonoBehaviour {
 	//calculer la vitesse du lancer
 	Vector3 CalcLaunchVelocity()
 	{
-		float displacementY = target.position.y - projectile.position.y;
-		Vector3 displacementXZ = new Vector3(target.position.x - projectile.position.x, 0, target.position.z - projectile.position.z);
+        powerBarScript powerBar = GameObject.Find("powerBar").GetComponent<powerBarScript>();
+
+        float displacementY = target.position.y - projectile.position.y;
+
+        Vector3 displacementXZ;
+        displacementXZ = new Vector3(target.position.x*2* powerBar.GetAmount() - projectile.position.x, 0, target.position.z*2* powerBar.GetAmount() - projectile.position.z);       
 		Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * verticalMaxDisplacement);
 		float time = Mathf.Sqrt(-2 * verticalMaxDisplacement / gravity) + Mathf.Sqrt(2 * (displacementY - verticalMaxDisplacement) / gravity);
 		Vector3 velocityXY = displacementXZ / time;
@@ -71,6 +75,10 @@ public class RangeAttack : MonoBehaviour {
 			string enemiesTag = gameManager.GetComponent<GameManager>().enemiesTag;
 			gameManager.GetComponent<GameManager>().choosePlayerOfNextTurn(enemiesTag);
 		}
+        if (col.gameObject.tag == "Game manager")
+        {
+            gameManager.GetComponent<GameManager>().choosePlayerOfNextTurn("noTag");
+        }
 	}
 
 

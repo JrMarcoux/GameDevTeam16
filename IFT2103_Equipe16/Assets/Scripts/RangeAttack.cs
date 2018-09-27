@@ -6,21 +6,29 @@ public class RangeAttack : MonoBehaviour {
 	private Rigidbody projectile;
 	public string nameOfTargets;
 	public float lifeTime = 5f;
+	public List<GameObject> targets;
 	private Transform target;
 	public float verticalMaxDisplacement = 2f;
 	[Range(-0.01f,-100)]
 	public float gravity = -18f;
 	private GameObject gameManager;
 
-    void Start()
+	void Start()
 	{
 		gameManager = GameObject.FindGameObjectWithTag("Game manager");
 		Invoke("DestroyProjectile", lifeTime);
 		projectile = gameObject.GetComponent<Rigidbody>();
 		projectile.useGravity = false;
-		GameObject[] Targets = GameObject.FindGameObjectsWithTag(nameOfTargets);
-		int nbTargets = Targets.Length;
-		target = Targets[Random.Range(0,nbTargets)].transform;
+		if (nameOfTargets == "Player")
+		{
+			targets = gameManager.GetComponent<GameManager>().playersAlive;
+		}
+		if (nameOfTargets == "Enemy")
+		{
+			targets = gameManager.GetComponent<GameManager>().enemiesAlive;
+		}
+		int nbTargets = targets.Count;
+		target = targets[Random.Range(0,nbTargets)].transform;
 		Launch();
 	}
 
@@ -30,6 +38,7 @@ public class RangeAttack : MonoBehaviour {
 		Physics.gravity = Vector3.up * gravity;
 		projectile.useGravity = true;
 		projectile.velocity = CalcLaunchVelocity();
+		Invoke("DestroyProjectile", 5.0f);
 	}
 	//calculer la vitesse du lancer
 	Vector3 CalcLaunchVelocity()
@@ -49,6 +58,14 @@ public class RangeAttack : MonoBehaviour {
 	void DestroyProjectile()
 	{
 		Destroy(gameObject);
+		if (nameOfTargets == "Enemy")
+		{
+			gameManager.GetComponent<GameManager>().choosePlayerOfNextTurn("Enemy");
+		}
+		if (nameOfTargets == "Player")
+		{
+			gameManager.GetComponent<GameManager>().choosePlayerOfNextTurn("Player");
+		}
 	}
 
 	/*
@@ -58,27 +75,24 @@ public class RangeAttack : MonoBehaviour {
 	*/
 	void OnCollisionEnter(Collision col)
 	{
-		DestroyProjectile();
+		
 		if (col.gameObject.tag == "Player")
 		{
 			GameObject player = col.gameObject;
 			player.GetComponent<Launcher>().isDead = true;
 			gameManager.GetComponent<GameManager>().playersAlive.Remove(player);
-			string playersTag = gameManager.GetComponent<GameManager>().playersTag;
-			gameManager.GetComponent<GameManager>().choosePlayerOfNextTurn(playersTag);
+			DestroyProjectile();
+
 		}
 		if (col.gameObject.tag == "Enemy")
 		{
 			GameObject enemy = col.gameObject;
 			enemy.GetComponent<Launcher>().isDead = true;
 			gameManager.GetComponent<GameManager>().enemiesAlive.Remove(enemy);
-			string enemiesTag = gameManager.GetComponent<GameManager>().enemiesTag;
-			gameManager.GetComponent<GameManager>().choosePlayerOfNextTurn(enemiesTag);
+			DestroyProjectile();
+
 		}
-        if (col.gameObject.tag == "Game manager")
-        {
-            gameManager.GetComponent<GameManager>().choosePlayerOfNextTurn("noTag");
-        }
+		
 	}
 
 

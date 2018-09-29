@@ -9,7 +9,7 @@ public class powerBarScript : MonoBehaviour {
     public bool powerBarMoving = false;
 
     public Image powerBar;
-    public float timeFill = 5f;
+    private float timeFill = 20f;
     private float direction=1;
 
 	// Use this for initialization

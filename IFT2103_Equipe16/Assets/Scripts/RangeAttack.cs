@@ -48,7 +48,14 @@ public class RangeAttack : MonoBehaviour {
         float displacementY = target.position.y - projectile.position.y;
 
         Vector3 displacementXZ;
-        displacementXZ = new Vector3(target.position.x*2* powerBar.GetAmount() - projectile.position.x, 0, target.position.z*2* powerBar.GetAmount() - projectile.position.z);       
+        if (0.40 < powerBar.GetAmount() && powerBar.GetAmount() < 0.60)
+        {
+            displacementXZ = new Vector3(target.position.x - projectile.position.x, 0, target.position.z - projectile.position.z);
+        }
+        else
+        {
+            displacementXZ = new Vector3(target.position.x * 2 * powerBar.GetAmount() - projectile.position.x, 0, target.position.z * 2 * powerBar.GetAmount() - projectile.position.z);
+        }           
 		Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * verticalMaxDisplacement);
 		float time = Mathf.Sqrt(-2 * verticalMaxDisplacement / gravity) + Mathf.Sqrt(2 * (displacementY - verticalMaxDisplacement) / gravity);
 		Vector3 velocityXY = displacementXZ / time;
@@ -80,16 +87,17 @@ public class RangeAttack : MonoBehaviour {
 		if (col.gameObject.tag == "Player")
 		{
 			GameObject player = col.gameObject;
-			player.GetComponent<Launcher>().isDead = true;
-			gameManager.GetComponent<GameManager>().playersAlive.Remove(player);
+            player.GetComponent<Animator>().SetTrigger(deadHash);
+            player.GetComponent<Launcher>().isDead = true;          
+            gameManager.GetComponent<GameManager>().playersAlive.Remove(player);
 			DestroyProjectile();
 
 		}
 		if (col.gameObject.tag == "Enemy")
 		{
 			GameObject enemy = col.gameObject;
-			enemy.GetComponent<Launcher>().isDead = true;
             enemy.GetComponent<Animator>().SetTrigger(deadHash);
+            enemy.GetComponent<Launcher>().isDead = true;           
 			gameManager.GetComponent<GameManager>().enemiesAlive.Remove(enemy);
 			DestroyProjectile();
 

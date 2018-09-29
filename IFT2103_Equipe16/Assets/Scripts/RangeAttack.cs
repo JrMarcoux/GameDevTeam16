@@ -75,6 +75,7 @@ public class RangeAttack : MonoBehaviour {
 	*/
 	void OnCollisionEnter(Collision col)
 	{
+        int deadHash = Animator.StringToHash("Dead");
 		
 		if (col.gameObject.tag == "Player")
 		{
@@ -88,6 +89,7 @@ public class RangeAttack : MonoBehaviour {
 		{
 			GameObject enemy = col.gameObject;
 			enemy.GetComponent<Launcher>().isDead = true;
+            enemy.GetComponent<Animator>().SetTrigger(deadHash);
 			gameManager.GetComponent<GameManager>().enemiesAlive.Remove(enemy);
 			DestroyProjectile();
 

@@ -5,32 +5,22 @@ using UnityEngine.UI;
 
 public class powerBarScript : MonoBehaviour {
 
-    public float fullWidth = 256f;
     public bool powerBarMoving = false;
 
     public Image powerBar;
-    private float timeFill = 20f;
-    private float direction=1;
+    public float speed = 1f;
+    public float addSpeed = 0.5f;
 
 	// Use this for initialization
 	void Start () {
-		
+        powerBar = GetComponent<Image>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (powerBarMoving == true)
         {
-            if (powerBar.fillAmount <= 0)
-            {
-                direction = 1;
-            }
-            else if (powerBar.fillAmount >= 1)
-            {
-                direction = -1;
-            }
-            powerBar.fillAmount += direction / (fullWidth * timeFill * Time.deltaTime);
-
+            powerBar.fillAmount = Mathf.PingPong(Time.time*speed, 1);
         }
 	}
 
@@ -47,5 +37,10 @@ public class powerBarScript : MonoBehaviour {
     public float GetAmount()
     {
         return powerBar.fillAmount;
+    }
+
+    public void IncreaseSpeed()
+    {
+        speed += addSpeed;
     }
 }

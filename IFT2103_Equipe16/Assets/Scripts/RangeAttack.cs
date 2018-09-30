@@ -12,12 +12,14 @@ public class RangeAttack : MonoBehaviour {
 	[Range(-0.01f,-100)]
 	public float gravity = -18f;
 	private GameObject gameManager;
+    public powerBarScript powerBar;
 
-	void Start()
+    void Start()
 	{
-		gameManager = GameObject.FindGameObjectWithTag("Game manager");
+        powerBar = GameObject.Find("powerBar").GetComponent<powerBarScript>();
+        gameManager = GameObject.FindGameObjectWithTag("Game manager");
 		Invoke("DestroyProjectile", lifeTime);
-		projectile = gameObject.GetComponent<Rigidbody>();
+        projectile = gameObject.GetComponent<Rigidbody>();
 		projectile.useGravity = false;
 		if (nameOfTargets == "Player")
 		{
@@ -42,8 +44,7 @@ public class RangeAttack : MonoBehaviour {
 	}
 	//calculer la vitesse du lancer
 	Vector3 CalcLaunchVelocity()
-	{
-        powerBarScript powerBar = GameObject.Find("powerBar").GetComponent<powerBarScript>();
+	{       
 
         float displacementY = target.position.y - projectile.position.y;
 
@@ -90,6 +91,7 @@ public class RangeAttack : MonoBehaviour {
             player.GetComponent<Animator>().SetTrigger(deadHash);
             player.GetComponent<Launcher>().isDead = true;          
             gameManager.GetComponent<GameManager>().playersAlive.Remove(player);
+            powerBar.IncreaseSpeed();
 			DestroyProjectile();
 
 		}
@@ -99,7 +101,8 @@ public class RangeAttack : MonoBehaviour {
             enemy.GetComponent<Animator>().SetTrigger(deadHash);
             enemy.GetComponent<Launcher>().isDead = true;           
 			gameManager.GetComponent<GameManager>().enemiesAlive.Remove(enemy);
-			DestroyProjectile();
+            powerBar.IncreaseSpeed();
+            DestroyProjectile();
 
 		}
 		

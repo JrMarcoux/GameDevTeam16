@@ -7,11 +7,16 @@ public class Launcher : MonoBehaviour {
 	public Transform shotPoint;
 	public bool isDead = false;
 	public string enemyTag;
+    public powerBarScript powerBar;
+
+    private void Start()
+    {
+        powerBar = GameObject.Find("powerBar").GetComponent<powerBarScript>();
+    }
 
     public IEnumerator launch()
 	{
-        powerBarScript powerBar = GameObject.Find("powerBar").GetComponent<powerBarScript>();
-        //attendre que le joueur appuie sur Espace pour enclancher le lancer
+        //attendre que le joueur appuie sur Espace pour enclancher le lancer       
         powerBar.ToggleOn();
 		while (!Input.GetKeyDown(KeyCode.Space))
 		{     

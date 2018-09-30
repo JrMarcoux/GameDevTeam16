@@ -10,12 +10,16 @@ public class GameManager : MonoBehaviour {
     private List<GameObject> allCharacters;
     public string playersTag ="Player";
 	public string enemiesTag = "Enemy";
+    private GameObject redSprite;
+    private GameObject blueSprite;
 
 
-	void Start () {
+    void Start () {
 		players = GameObject.FindGameObjectsWithTag(playersTag);
 		enemies = GameObject.FindGameObjectsWithTag(enemiesTag);
-        
+        redSprite = GameObject.Find("powerBarRed");
+        blueSprite = GameObject.Find("powerBarBlue");       
+
         foreach (GameObject player in players)
 		{
 			playersAlive.Add(player);
@@ -24,8 +28,10 @@ public class GameManager : MonoBehaviour {
 		{
 			enemiesAlive.Add(enemy);
 		}
-		//commencer la partie
-		NextTurn(playersAlive[0]);
+        //commencer la partie
+        redSprite.SetActive(false);
+        blueSprite.SetActive(true);
+        NextTurn(playersAlive[0]);
 	}
 	
 	//choisir le prochain joueur à jouer
@@ -35,22 +41,20 @@ public class GameManager : MonoBehaviour {
 		{
 			if (playersAlive.Count > 0)
 			{
-				NextTurn(playersAlive[Random.Range(0, playersAlive.Count)]);
+                redSprite.SetActive(false);
+                blueSprite.SetActive(true);
+                NextTurn(playersAlive[Random.Range(0, playersAlive.Count)]);
 			}
 		}
 		else if(tagName == enemiesTag)
 		{
 			if (enemiesAlive.Count > 0)
 			{
-				NextTurn(enemiesAlive[Random.Range(0, enemiesAlive.Count)]);
+                redSprite.SetActive(true);
+                blueSprite.SetActive(false);
+                NextTurn(enemiesAlive[Random.Range(0, enemiesAlive.Count)]);
 			}
 		}
-        else
-        {
-            allCharacters = playersAlive;
-            allCharacters.AddRange(enemiesAlive);
-            NextTurn(allCharacters[Random.Range(0, allCharacters.Count)]);
-        }
 	}
 
 	//enclancher le prochain tour

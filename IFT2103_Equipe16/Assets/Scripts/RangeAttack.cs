@@ -46,17 +46,24 @@ public class RangeAttack : MonoBehaviour {
 	Vector3 CalcLaunchVelocity()
 	{       
 
-        float displacementY = target.position.y - projectile.position.y;
+    float displacementY = target.position.y - projectile.position.y;
 
-        Vector3 displacementXZ;
-        if (0.40 < powerBar.GetAmount() && powerBar.GetAmount() < 0.60)
-        {
-            displacementXZ = new Vector3(target.position.x - projectile.position.x, 0, target.position.z - projectile.position.z);
-        }
-        else
-        {
-            displacementXZ = new Vector3(target.position.x * 2 * powerBar.GetAmount() - projectile.position.x, 0, target.position.z * 2 * powerBar.GetAmount() - projectile.position.z);
-        }           
+    Vector3 displacementXZ;
+		//valeur de la powerbar
+    if (0.40 < powerBar.GetAmount() && powerBar.GetAmount() < 0.60)
+    {
+        displacementXZ = new Vector3(target.position.x - projectile.position.x, 0, target.position.z - projectile.position.z);
+    }
+    else
+    {
+        displacementXZ = new Vector3(target.position.x * 2 * powerBar.GetAmount() - projectile.position.x, 0, target.position.z * 2 * powerBar.GetAmount() - projectile.position.z);
+    }
+		
+		//si la cible est plus haute que la hauteur max, ajuster la hauteur max
+		if(target.position.y > verticalMaxDisplacement)
+		{
+			verticalMaxDisplacement = target.position.y + target.GetComponent<Collider>().bounds.size.y;
+		}         
 		Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * verticalMaxDisplacement);
 		float time = Mathf.Sqrt(-2 * verticalMaxDisplacement / gravity) + Mathf.Sqrt(2 * (displacementY - verticalMaxDisplacement) / gravity);
 		Vector3 velocityXY = displacementXZ / time;

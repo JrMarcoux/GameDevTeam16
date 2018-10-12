@@ -12,14 +12,19 @@ public class RangeAttack : MonoBehaviour {
 	[Range(-0.01f,-100)]
 	public float gravity = -18f;
 	private GameObject gameManager;
-    public powerBarScript powerBar;
+  public powerBarScript powerBar;
+	public OriginAABB AABB;
+	private bool checkAABB = false;
+	private bool outsideAABB = false;
 
     void Start()
 	{
-        powerBar = GameObject.Find("powerBar").GetComponent<powerBarScript>();
-        gameManager = GameObject.FindGameObjectWithTag("Game manager");
+		AABB = GameObject.Find("AABB").GetComponent<OriginAABB>();
+		checkAABB = false;
+		powerBar = GameObject.Find("powerBar").GetComponent<powerBarScript>();
+		gameManager = GameObject.FindGameObjectWithTag("Game manager");
 		Invoke("DestroyProjectile", lifeTime);
-        projectile = gameObject.GetComponent<Rigidbody>();
+		projectile = gameObject.GetComponent<Rigidbody>();
 		projectile.useGravity = false;
 		if (nameOfTargets == "Player")
 		{
@@ -33,10 +38,22 @@ public class RangeAttack : MonoBehaviour {
 		target = targets[Random.Range(0,nbTargets)].transform;
 		Launch();
 	}
+	void Update()
+	{
+		if (checkAABB)
+		{
+			outsideAABB = AABB.checkIfObjectIsOutOfAABB(gameObject,true,true,true);
+		}
+		if (outsideAABB)
+		{
+			DestroyProjectile();//si la balle dépasse les limites de la boite AABB, elle est détruite
+		}
+	}
 
 	//lancer le projectile
 	void Launch()
 	{
+		checkAABB = true; // on enclanche la détection pour regarder si la balle dépasse la boite AABB
 		Physics.gravity = Vector3.up * gravity;
 		projectile.useGravity = true;
 		projectile.velocity = CalcLaunchVelocity();

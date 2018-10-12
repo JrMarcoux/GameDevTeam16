@@ -55,6 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\Launcher.cs" />
+     <Compile Include="Assets\Scripts\OriginAABB.cs" />
      <Compile Include="Assets\Scripts\powerBarScript.cs" />
      <Compile Include="Assets\Scripts\RangeAttack.cs" />
  <Reference Include="UnityEditor.StandardEvents">

@@ -7,7 +7,7 @@ public class Launcher : MonoBehaviour {
 	public Transform shotPoint;
 	public bool isDead = false;
 	public string enemyTag;
-    public powerBarScript powerBar;
+  public powerBarScript powerBar;
 
     private void Start()
     {

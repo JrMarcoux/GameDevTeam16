@@ -57,25 +57,24 @@ public class RangeAttack : MonoBehaviour {
 		Physics.gravity = Vector3.up * gravity;
 		projectile.useGravity = true;
 		projectile.velocity = CalcLaunchVelocity();
-        transform.GetChild(0).GetComponent<CustomSphereColliderScr>().nameOfTargets = nameOfTargets;
-        Invoke("DestroyProjectile", 5.0f);
+		Invoke("DestroyProjectile", 5.0f);
 	}
 	//calculer la vitesse du lancer
 	Vector3 CalcLaunchVelocity()
 	{       
 
-        float displacementY = target.position.y - projectile.position.y;
+    float displacementY = target.position.y - projectile.position.y;
 
-        Vector3 displacementXZ;
-		    //valeur de la powerbar
-        if (0.40 < powerBar.GetAmount() && powerBar.GetAmount() < 0.60)
-        {
-            displacementXZ = new Vector3(target.position.x - projectile.position.x, 0, target.position.z - projectile.position.z);
-        }
-        else
-        {
-            displacementXZ = new Vector3(target.position.x * 2 * powerBar.GetAmount() - projectile.position.x, 0, target.position.z * 2 * powerBar.GetAmount() - projectile.position.z);
-        }
+    Vector3 displacementXZ;
+		//valeur de la powerbar
+    if (0.40 < powerBar.GetAmount() && powerBar.GetAmount() < 0.60)
+    {
+        displacementXZ = new Vector3(target.position.x - projectile.position.x, 0, target.position.z - projectile.position.z);
+    }
+    else
+    {
+        displacementXZ = new Vector3(target.position.x * 2 * powerBar.GetAmount() - projectile.position.x, 0, target.position.z * 2 * powerBar.GetAmount() - projectile.position.z);
+    }
 		
 		//si la cible est plus haute que la hauteur max, ajuster la hauteur max
 		if(target.position.y > verticalMaxDisplacement)

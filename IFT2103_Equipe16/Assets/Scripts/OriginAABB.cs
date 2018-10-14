@@ -62,5 +62,42 @@ public class OriginAABB : MonoBehaviour {
 		}
 		return isOutside;
 	}
-	
+
+    //regarde si un objet est à l'intérieur de AABB
+    public bool checkIfObjectIsInAABB(GameObject objectToEvaluate, bool checkX, bool checkY, bool checkZ)
+    {
+        Vector3 seize = objectToEvaluate.transform.localScale;
+        float halfHeight = seize.y/2;
+        float halfDepth = seize.z/2;
+        float halfWidth = seize.x/2;
+        bool isInside = true;
+        Vector3 positionOfObject = objectToEvaluate.transform.position;
+        float positionX = Mathf.Abs(positionOfObject.x);
+        float positionY = Mathf.Abs(positionOfObject.y);
+        float positionZ = Mathf.Abs(positionOfObject.z);
+        if (checkX)
+        {
+            if (positionX + halfWidth >= halfWidthAABB)
+            {
+                isInside = false;
+            }
+        }
+        if (checkY)
+        {
+            if (positionY + halfHeight >= halfHeightAABB)
+            {
+
+                isInside = false;
+            }
+        }
+        if (checkZ)
+        {
+            if (positionZ + halfDepth >= halfDepthAABB)
+            {
+                isInside = false;
+            }
+        }
+        return isInside;
+    }
+
 }

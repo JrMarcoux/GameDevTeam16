@@ -7,19 +7,20 @@ public class RangeAttack : MonoBehaviour {
 	public string nameOfTargets;
 	public float lifeTime = 5f;
 	public List<GameObject> targets;
-	private Transform target;
+	private GameObject target;
 	public float verticalMaxDisplacement = 2f;
 	[Range(-0.01f,-100)]
 	public float gravity = -18f;
 	private GameObject gameManager;
   public powerBarScript powerBar;
-	public OriginAABB AABB;
+	public GameObject outBoundaries;
 	private bool checkAABB = false;
 	private bool outsideAABB = false;
+    private bool targetAABB = false;
 
     void Start()
 	{
-		AABB = GameObject.Find("AABB").GetComponent<OriginAABB>();
+		outBoundaries = GameObject.Find("AABB");
 		checkAABB = false;
 		powerBar = GameObject.Find("powerBar").GetComponent<powerBarScript>();
 		gameManager = GameObject.FindGameObjectWithTag("Game manager");
@@ -34,20 +35,25 @@ public class RangeAttack : MonoBehaviour {
 		{
 			targets = gameManager.GetComponent<GameManager>().enemiesAlive;
 		}
-		int nbTargets = targets.Count;
-		target = targets[Random.Range(0,nbTargets)].transform;
+		int nbTargets = targets.Count;       
+		target = targets[Random.Range(0,nbTargets)];
 		Launch();
 	}
 	void Update()
 	{
 		if (checkAABB)
 		{
-			outsideAABB = AABB.checkIfObjectIsOutOfAABB(gameObject,true,true,true);
+			outsideAABB = !outBoundaries.GetComponent<CollisionAABB>().CheckIfObjectIsInAABB(gameObject);
+            targetAABB = target.GetComponent<CollisionAABB>().CheckIfObjectIsInAABB(gameObject);
 		}
 		if (outsideAABB)
 		{
 			DestroyProjectile();//si la balle dépasse les limites de la boite AABB, elle est détruite
 		}
+        if (targetAABB)
+        {
+            CollisionTarget();
+        }
 	}
 
 	//lancer le projectile
@@ -63,23 +69,23 @@ public class RangeAttack : MonoBehaviour {
 	Vector3 CalcLaunchVelocity()
 	{       
 
-    float displacementY = target.position.y - projectile.position.y;
+    float displacementY = target.transform.position.y - projectile.position.y;
 
     Vector3 displacementXZ;
 		//valeur de la powerbar
     if (0.40 < powerBar.GetAmount() && powerBar.GetAmount() < 0.60)
     {
-        displacementXZ = new Vector3(target.position.x - projectile.position.x, 0, target.position.z - projectile.position.z);
+        displacementXZ = new Vector3(target.transform.position.x - projectile.position.x, 0, target.transform.position.z - projectile.position.z);
     }
     else
     {
-        displacementXZ = new Vector3(target.position.x * 2 * powerBar.GetAmount() - projectile.position.x, 0, target.position.z * 2 * powerBar.GetAmount() - projectile.position.z);
+        displacementXZ = new Vector3(target.transform.position.x * 2 * powerBar.GetAmount() - projectile.position.x, 0, target.transform.position.z * 2 * powerBar.GetAmount() - projectile.position.z);
     }
 		
 		//si la cible est plus haute que la hauteur max, ajuster la hauteur max
-		if(target.position.y > verticalMaxDisplacement)
+		if(target.transform.position.y > verticalMaxDisplacement)
 		{
-			verticalMaxDisplacement = target.position.y + target.GetComponent<Collider>().bounds.size.y;
+			verticalMaxDisplacement = target.transform.position.y + target.GetComponent<Collider>().bounds.size.y;
 		}         
 		Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * verticalMaxDisplacement);
 		float time = Mathf.Sqrt(-2 * verticalMaxDisplacement / gravity) + Mathf.Sqrt(2 * (displacementY - verticalMaxDisplacement) / gravity);
@@ -105,32 +111,26 @@ public class RangeAttack : MonoBehaviour {
 	 * assigner les morts
 	 * appeler la méthode de sélection du prochain joueur de la classe Game manager
 	*/
-	void OnCollisionEnter(Collision col)
+	void CollisionTarget()
 	{
         int deadHash = Animator.StringToHash("Dead");
-		
-		if (col.gameObject.tag == "Player")
-		{
-			GameObject player = col.gameObject;
-            player.GetComponent<Animator>().SetTrigger(deadHash);
-            player.GetComponent<Launcher>().isDead = true;          
-            gameManager.GetComponent<GameManager>().playersAlive.Remove(player);
-            powerBar.IncreaseSpeed();
-			DestroyProjectile();
 
-		}
-		if (col.gameObject.tag == "Enemy")
-		{
-			GameObject enemy = col.gameObject;
-            enemy.GetComponent<Animator>().SetTrigger(deadHash);
-            enemy.GetComponent<Launcher>().isDead = true;           
-			gameManager.GetComponent<GameManager>().enemiesAlive.Remove(enemy);
-            powerBar.IncreaseSpeed();
-            DestroyProjectile();
+        target.GetComponent<Animator>().SetTrigger(deadHash);
+        target.GetComponent<Launcher>().isDead = true;
 
+        if (target.tag == "Player")
+		{                    
+            gameManager.GetComponent<GameManager>().playersAlive.Remove(target);       
 		}
-		
-	}
+		if (target.tag == "Enemy")
+		{      
+			gameManager.GetComponent<GameManager>().enemiesAlive.Remove(target);
+		}
+
+        powerBar.IncreaseSpeed();
+        DestroyProjectile();
+
+    }
 
 
 }

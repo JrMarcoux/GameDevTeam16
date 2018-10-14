@@ -11,19 +11,19 @@ public class powerBarScript : MonoBehaviour {
     public float speed = 1f;
     public float addSpeed = 0.5f;
 
-	// Use this for initialization
+	
 	void Start () {
         powerBar = GetComponent<Image>();
 	}
 	
-	// Update is called once per frame
+	//change la longeur de la barre en fonction du temps
 	void Update () {
         if (powerBarMoving == true)
         {
             powerBar.fillAmount = Mathf.PingPong(Time.time*speed, 1);
         }
 	}
-
+    //activer ou désactiver le mouvement si tour commencé ou en attente du prochain
     public void ToggleOn()
     {
         powerBarMoving = true;
@@ -33,12 +33,12 @@ public class powerBarScript : MonoBehaviour {
     {
         powerBarMoving = false;
     }
-
+    //obtenir la valeur de la barre pour la distance de la balle
     public float GetAmount()
     {
         return powerBar.fillAmount;
     }
-
+    //la vitesse augmente à chaque tour
     public void IncreaseSpeed()
     {
         speed += addSpeed;

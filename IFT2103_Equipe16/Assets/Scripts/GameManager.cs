@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour {
             else
             {
                 victory.SetActive(true);
+                GameObject.FindGameObjectWithTag("RedFountain").GetComponent<ParticleSystem>().Play();
                 chronoActive = true;
             }
         }
@@ -68,6 +69,7 @@ public class GameManager : MonoBehaviour {
             else
             {
                 victory.SetActive(true);
+                GameObject.FindGameObjectWithTag("BlueFountain").GetComponent<ParticleSystem>().Play();
                 chronoActive = true;
             }
         }       

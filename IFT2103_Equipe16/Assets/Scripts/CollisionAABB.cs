@@ -46,7 +46,15 @@ public class CollisionAABB : MonoBehaviour
         {
             if (xMaxThis < xMin || xMax < xMinThis || yMaxThis < yMin || yMax < yMinThis)
             {
+                if (this.tag == "AABB")
+                {
+                    Debug.Log("L'objet " + objectToEvaluate.name + " est sorti de la zone de jeu.");
+                }
                 return false;
+            }
+            if (this.tag == "Enemy" || this.tag == "Player")
+            {
+                Debug.Log("Collision effectue entre " + this.name + " et " + objectToEvaluate.name + ".");
             }
             return true;
         }
@@ -54,7 +62,15 @@ public class CollisionAABB : MonoBehaviour
         {
             if (xMaxThis < xMin || xMax < xMinThis || yMaxThis < yMin || yMax < yMinThis || zMaxThis < zMin || zMax < zMinThis)
             {
+                if (this.tag == "AABB")
+                {
+                    Debug.Log("L'objet "+objectToEvaluate.name+" est sorti de la zone de jeu.");
+                }
                 return false;
+            }
+            if(this.tag == "Enemy"|| this.tag == "Player")
+            {
+                Debug.Log("Collision effectue entre " + this.name + " et " + objectToEvaluate.name + ".");
             }
             return true;
         }

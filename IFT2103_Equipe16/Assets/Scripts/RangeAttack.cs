@@ -117,6 +117,7 @@ public class RangeAttack : MonoBehaviour {
 
         target.GetComponent<Animator>().SetTrigger(deadHash);
         target.GetComponent<Launcher>().isDead = true;
+        target.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 5);
 
         if (target.tag == "Player")
 		{                    

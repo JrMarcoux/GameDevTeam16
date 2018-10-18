@@ -16,7 +16,12 @@ public class Launcher : MonoBehaviour {
 
     public IEnumerator launch()
 	{
-        //attendre que le joueur appuie sur Espace pour enclancher le lancer       
+
+        //attendre que le joueur appuie sur Espace pour enclancher le lancer
+        if (powerBar == null)
+        {
+            Start();
+        }
         powerBar.ToggleOn();
 		while (!Input.GetKeyDown(KeyCode.Space))
 		{     
@@ -25,7 +30,6 @@ public class Launcher : MonoBehaviour {
         powerBar.ToggleOff();
         GameObject currentProj = Instantiate(projectile, shotPoint.position, shotPoint.rotation); //instancier le projectile
 		currentProj.GetComponent<RangeAttack>().nameOfTargets = enemyTag; //assigner le nom de la cible
-
-	}
+    }
 }
 	

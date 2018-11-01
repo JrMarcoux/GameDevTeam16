@@ -23,13 +23,18 @@ public class Launcher : MonoBehaviour {
             Start();
         }
         powerBar.ToggleOn();
-		while (!Input.GetKeyDown(KeyCode.Space))
+		while (!Input.GetKeyDown(GetKeyPrefs("Fire")))
 		{     
 			yield return null;
 		}
         powerBar.ToggleOff();
         GameObject currentProj = Instantiate(projectile, shotPoint.position, shotPoint.rotation); //instancier le projectile
 		currentProj.GetComponent<RangeAttack>().nameOfTargets = enemyTag; //assigner le nom de la cible
+    }
+
+    public KeyCode GetKeyPrefs(string keyName)
+    {
+        return (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(keyName));
     }
 }
 	

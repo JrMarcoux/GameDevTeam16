@@ -86,8 +86,8 @@ public class GameManager : MonoBehaviour {
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))//quitter la partie avec Escape
 		{
-			Application.Quit();
-		}
+            SceneManager.LoadScene(0);
+        }
         if (chronoActive)
         {
             chrono -= Time.deltaTime;
@@ -97,5 +97,4 @@ public class GameManager : MonoBehaviour {
             SceneManager.LoadScene(0);
         }
 	}
-
 }

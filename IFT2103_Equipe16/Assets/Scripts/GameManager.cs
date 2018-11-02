@@ -4,13 +4,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
-	public List<GameObject> playersAlive;
+	public List<GameObject> playerAvatarsAlive;
 	public List<GameObject> enemiesAlive;
 	private GameObject[] players;
 	private GameObject[] enemies;
-    private List<GameObject> allCharacters;
-    public string playersTag ="Player";
+    
+    public int selectedPlayerAvatar;
+    public int selectedEnemyAvatar;
+    public int selectedPlayerTarget;
+    public int selectedEnemyTarget;
+    public string teamTurn;
+
+    public string playerTag ="Player";
 	public string enemiesTag = "Enemy";
+
+
     private GameObject redSprite;
     private GameObject blueSprite;
     private GameObject victory;
@@ -19,7 +27,7 @@ public class GameManager : MonoBehaviour {
 
 
     void Start () {
-		players = GameObject.FindGameObjectsWithTag(playersTag);
+		players = GameObject.FindGameObjectsWithTag(playerTag);
 		enemies = GameObject.FindGameObjectsWithTag(enemiesTag);
         redSprite = GameObject.Find("powerBarRed");
         blueSprite = GameObject.Find("powerBarBlue");
@@ -27,7 +35,7 @@ public class GameManager : MonoBehaviour {
 
         foreach (GameObject player in players)
 		{
-			playersAlive.Add(player);
+            playerAvatarsAlive.Add(player);
 		}
 		foreach (GameObject enemy in enemies)
 		{
@@ -37,20 +45,28 @@ public class GameManager : MonoBehaviour {
         redSprite.SetActive(false);
         blueSprite.SetActive(true);
         victory.SetActive(false);
-        NextTurn(playersAlive[0]);
-	}
+        teamTurn = playerTag;
+        selectedPlayerAvatar = 0;
+        selectedEnemyAvatar = 0;
+        selectedPlayerTarget = 0;
+        selectedEnemyTarget = 0;
+        playerAvatarsAlive[selectedPlayerAvatar].GetComponent<controlPlayer>().enabled = true;
+        enemiesAlive[selectedEnemyAvatar].GetComponent<IAEnemyScript>().enabled = true;
+        StartCoroutine(playerAvatarsAlive[selectedPlayerAvatar].GetComponent<Launcher>().launch());
+    }
 	
 	//choisir le prochain joueur à jouer
-	public void choosePlayerOfNextTurn(string tagName)
+	public void changeTurn()
 	{
-		if(tagName == playersTag)
+		if(teamTurn == enemiesTag)
 		{
-			if (playersAlive.Count > 0)
+			if (playerAvatarsAlive.Count > 0)
 			{
                 redSprite.SetActive(false);
                 blueSprite.SetActive(true);
-                NextTurn(playersAlive[Random.Range(0, playersAlive.Count)]);
-			}
+                teamTurn = playerTag;
+                StartCoroutine(playerAvatarsAlive[selectedPlayerAvatar].GetComponent<Launcher>().launch());
+            }
             else
             {
                 victory.SetActive(true);
@@ -58,14 +74,15 @@ public class GameManager : MonoBehaviour {
                 chronoActive = true;
             }
         }
-		else if(tagName == enemiesTag)
+		else if(teamTurn == playerTag)
 		{
 			if (enemiesAlive.Count > 0)
 			{
                 redSprite.SetActive(true);
                 blueSprite.SetActive(false);
-                NextTurn(enemiesAlive[Random.Range(0, enemiesAlive.Count)]);
-			}
+                teamTurn = enemiesTag;
+                StartCoroutine(enemiesAlive[selectedEnemyAvatar].GetComponent<Launcher>().launch());
+            }
             else
             {
                 victory.SetActive(true);
@@ -74,12 +91,6 @@ public class GameManager : MonoBehaviour {
             }
         }       
     }
-
-	//enclancher le prochain tour
-	void NextTurn(GameObject playerToPlay)
-	{
-		StartCoroutine(playerToPlay.GetComponent<Launcher>().launch());
-	}
 
 	
 	void Update()
@@ -97,4 +108,47 @@ public class GameManager : MonoBehaviour {
             SceneManager.LoadScene(0);
         }
 	}
+
+    public void changeSelectCharacter(string team)
+    {
+        if(team == playerTag)
+        {
+            if(teamTurn == playerTag)
+            {
+                StopCoroutine(playerAvatarsAlive[selectedPlayerAvatar].GetComponent<Launcher>().launch());
+            }            
+            playerAvatarsAlive[selectedPlayerAvatar].GetComponent<controlPlayer>().enabled = false;
+            selectedPlayerAvatar = (selectedPlayerAvatar + 1) % playerAvatarsAlive.Count;
+            playerAvatarsAlive[selectedPlayerAvatar].GetComponent<controlPlayer>().enabled = true;
+            if (teamTurn == playerTag)
+            {
+                StartCoroutine(playerAvatarsAlive[selectedPlayerAvatar].GetComponent<Launcher>().launch());
+            }           
+        }
+        if (team == enemiesTag)
+        {
+            if(teamTurn == enemiesTag){
+                StopCoroutine(enemiesAlive[selectedEnemyAvatar].GetComponent<Launcher>().launch());
+            }            
+            enemiesAlive[selectedEnemyAvatar].GetComponent<IAEnemyScript>().enabled = false;
+            selectedEnemyAvatar = (selectedEnemyAvatar + 1) % enemiesAlive.Count;
+            enemiesAlive[selectedEnemyAvatar].GetComponent<IAEnemyScript>().enabled = true;
+            if (teamTurn == enemiesTag)
+            {
+                StartCoroutine(enemiesAlive[selectedEnemyAvatar].GetComponent<Launcher>().launch());
+            }           
+        }
+    }
+
+    public void changeSelectTarget(string team)
+    {
+        if (team == playerTag)
+        {
+            selectedPlayerTarget = (selectedPlayerTarget + 1) % enemiesAlive.Count;
+        }
+        if (team == enemiesTag)
+        {
+            selectedEnemyTarget = (selectedEnemyTarget + 1) % playerAvatarsAlive.Count;
+        }
+    }
 }

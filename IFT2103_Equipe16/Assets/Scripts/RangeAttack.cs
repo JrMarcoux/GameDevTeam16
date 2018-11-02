@@ -5,13 +5,11 @@ using UnityEngine;
 public class RangeAttack : MonoBehaviour {
 	private Rigidbody projectile;
 	private BallisticPhysics physicScript;
-	public string nameOfTargets;
 	public float lifeTime = 5f;
-	public List<GameObject> targets;
 	private GameObject target;
 	private GameObject gameManager;
-  public powerBarScript powerBar;
-	public GameObject outBoundaries;
+    private powerBarScript powerBar;
+	private GameObject outBoundaries;
 	private bool checkAABB = false;
 	private bool outsideAABB = false;
    private bool targetAABB = false;
@@ -26,16 +24,14 @@ public class RangeAttack : MonoBehaviour {
 		Invoke("DestroyProjectile", lifeTime);
 		projectile = gameObject.GetComponent<Rigidbody>();
 		projectile.useGravity = false;
-		if (nameOfTargets == "Player")
-		{
-			targets = gameManager.GetComponent<GameManager>().playersAlive;
-		}
-		if (nameOfTargets == "Enemy")
-		{
-			targets = gameManager.GetComponent<GameManager>().enemiesAlive;
-		}
-		int nbTargets = targets.Count;       
-		target = targets[Random.Range(0,nbTargets)];
+        if (gameManager.GetComponent<GameManager>().teamTurn == gameManager.GetComponent<GameManager>().playerTag)
+        {
+            target = gameManager.GetComponent<GameManager>().enemiesAlive[gameManager.GetComponent<GameManager>().selectedPlayerTarget];
+        }
+        else if (gameManager.GetComponent<GameManager>().teamTurn == gameManager.GetComponent<GameManager>().enemiesTag)
+        {
+            target = gameManager.GetComponent<GameManager>().playerAvatarsAlive[gameManager.GetComponent<GameManager>().selectedEnemyTarget];
+        }
 		Launch();
 	}
 	void Update()
@@ -67,15 +63,8 @@ public class RangeAttack : MonoBehaviour {
 	//détruitre le projectile
 	void DestroyProjectile()
 	{
-		Destroy(gameObject);
-		if (nameOfTargets == "Enemy")
-		{
-			gameManager.GetComponent<GameManager>().choosePlayerOfNextTurn("Enemy");
-		}
-		if (nameOfTargets == "Player")
-		{
-			gameManager.GetComponent<GameManager>().choosePlayerOfNextTurn("Player");
-		}
+        gameManager.GetComponent<GameManager>().changeTurn();
+        Destroy(gameObject);      
 	}
 
 	/*
@@ -91,14 +80,18 @@ public class RangeAttack : MonoBehaviour {
         target.GetComponent<Launcher>().isDead = true;
         target.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 5);
 
-        if (target.tag == "Player")
+        if (target.tag == gameManager.GetComponent<GameManager>().playerTag)
 		{                    
-            gameManager.GetComponent<GameManager>().playersAlive.Remove(target);       
-		}
-		if (target.tag == "Enemy")
+            gameManager.GetComponent<GameManager>().playerAvatarsAlive.Remove(target);
+            gameManager.GetComponent<GameManager>().changeSelectCharacter(gameManager.GetComponent<GameManager>().playerTag);
+            gameManager.GetComponent<GameManager>().changeSelectTarget(gameManager.GetComponent<GameManager>().playerTag);
+        }
+		if (target.tag == gameManager.GetComponent<GameManager>().enemiesTag)
 		{      
 			gameManager.GetComponent<GameManager>().enemiesAlive.Remove(target);
-		}
+            gameManager.GetComponent<GameManager>().changeSelectCharacter(gameManager.GetComponent<GameManager>().enemiesTag);
+            gameManager.GetComponent<GameManager>().changeSelectTarget(gameManager.GetComponent<GameManager>().enemiesTag);
+        }
 
         powerBar.IncreaseSpeed();
         DestroyProjectile();

@@ -5,13 +5,17 @@ using UnityEngine;
 public class Launcher : MonoBehaviour {
 	public GameObject projectile;
 	public Transform shotPoint;
-	public bool isDead = false;
 	public string enemyTag;
-  public powerBarScript powerBar;
+    public powerBarScript powerBar;
+
+    public bool isShooting;
+    public bool isDead;
+
 
     private void Start()
     {
         powerBar = GameObject.Find("powerBar").GetComponent<powerBarScript>();
+        isShooting = false;
     }
 
     public IEnumerator launch()
@@ -23,18 +27,13 @@ public class Launcher : MonoBehaviour {
             Start();
         }
         powerBar.ToggleOn();
-		while (!Input.GetKeyDown(GetKeyPrefs("Fire")))
+		while (!isShooting)
 		{     
 			yield return null;
 		}
+        isShooting = !isShooting;
         powerBar.ToggleOff();
-        GameObject currentProj = Instantiate(projectile, shotPoint.position, shotPoint.rotation); //instancier le projectile
-		currentProj.GetComponent<RangeAttack>().nameOfTargets = enemyTag; //assigner le nom de la cible
-    }
-
-    public KeyCode GetKeyPrefs(string keyName)
-    {
-        return (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(keyName));
+        Instantiate(projectile, shotPoint.position, shotPoint.rotation); //instancier le projectile
     }
 }
 	

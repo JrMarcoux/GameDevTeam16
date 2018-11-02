@@ -63,7 +63,9 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BallisticPhysics.cs" />
     <Compile Include="Assets\Scripts\CollisionAABB.cs" />
+    <Compile Include="Assets\Scripts\controlPlayer.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\IAEnemyScript.cs" />
     <Compile Include="Assets\Scripts\keyBindScript.cs" />
     <Compile Include="Assets\Scripts\Launcher.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />

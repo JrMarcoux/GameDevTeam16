@@ -64,7 +64,11 @@ public class GameManager : MonoBehaviour {
 			{
                 redSprite.SetActive(false);
                 blueSprite.SetActive(true);
-                teamTurn = playerTag;
+                selectedPlayerAvatar = 0;
+                selectedEnemyTarget = 0;
+                changeSelectCharacter(playerTag);
+                changeSelectTarget(enemiesTag);
+                teamTurn = playerTag;                
                 StartCoroutine(playerAvatarsAlive[selectedPlayerAvatar].GetComponent<Launcher>().launch());
             }
             else
@@ -80,8 +84,12 @@ public class GameManager : MonoBehaviour {
 			{
                 redSprite.SetActive(true);
                 blueSprite.SetActive(false);
-                teamTurn = enemiesTag;
-                StartCoroutine(enemiesAlive[selectedEnemyAvatar].GetComponent<Launcher>().launch());
+                selectedEnemyAvatar = 0;
+                selectedPlayerTarget = 0;
+                changeSelectCharacter(enemiesTag);
+                changeSelectTarget(playerTag);
+                teamTurn = enemiesTag;               
+                StartCoroutine(enemiesAlive[selectedEnemyAvatar].GetComponent<Launcher>().launch());               
             }
             else
             {

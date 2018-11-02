@@ -11,6 +11,7 @@ public class IAEnemyScript : MonoBehaviour {
     }
 	
 	void Update () {
+        //pour controler l'enemie avec un autre script (multijoueur), changer le getComponent<script> dans le gamemanager
         //les appels de fonctions devraient ressembler à ceux de controlPlayer pour plus de réalisme
         if (gameManager.GetComponent<GameManager>().teamTurn == gameManager.GetComponent<GameManager>().enemiesTag)
         {

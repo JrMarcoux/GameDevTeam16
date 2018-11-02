@@ -81,17 +81,15 @@ public class RangeAttack : MonoBehaviour {
         target.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 5);
 
         if (target.tag == gameManager.GetComponent<GameManager>().playerTag)
-		{                    
+		{
+            gameManager.GetComponent<GameManager>().playerAvatarsAlive[gameManager.GetComponent<GameManager>().selectedPlayerAvatar].GetComponent<controlPlayer>().enabled = false;
             gameManager.GetComponent<GameManager>().playerAvatarsAlive.Remove(target);
-            gameManager.GetComponent<GameManager>().changeSelectCharacter(gameManager.GetComponent<GameManager>().playerTag);
-            gameManager.GetComponent<GameManager>().changeSelectTarget(gameManager.GetComponent<GameManager>().playerTag);
         }
 		if (target.tag == gameManager.GetComponent<GameManager>().enemiesTag)
-		{      
-			gameManager.GetComponent<GameManager>().enemiesAlive.Remove(target);
-            gameManager.GetComponent<GameManager>().changeSelectCharacter(gameManager.GetComponent<GameManager>().enemiesTag);
-            gameManager.GetComponent<GameManager>().changeSelectTarget(gameManager.GetComponent<GameManager>().enemiesTag);
-        }
+		{
+            gameManager.GetComponent<GameManager>().enemiesAlive[gameManager.GetComponent<GameManager>().selectedEnemyAvatar].GetComponent<IAEnemyScript>().enabled = false;
+            gameManager.GetComponent<GameManager>().enemiesAlive.Remove(target);
+        }       
 
         powerBar.IncreaseSpeed();
         DestroyProjectile();

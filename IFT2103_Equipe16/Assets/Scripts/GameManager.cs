@@ -8,7 +8,15 @@ public class GameManager : MonoBehaviour {
 	public List<GameObject> enemiesAlive;
 	private GameObject[] players;
 	private GameObject[] enemies;
-    
+
+    private GameObject enemyLifes;
+    private GameObject playerAvatarLifes;
+    public GameObject life;
+    private GameObject instaLife;
+    private Vector3 positionPlayerLife;
+    private Vector3 positionEnemyLife;
+    private float offsetLife;
+
     public int selectedPlayerAvatar;
     public int selectedEnemyAvatar;
     public int selectedPlayerTarget;
@@ -26,23 +34,34 @@ public class GameManager : MonoBehaviour {
     public float chrono = 4;
     private bool chronoActive = false;
 
-    private void Awake()
-    {
+    void Start () {
+
         players = GameObject.FindGameObjectsWithTag(playerTag);
         enemies = GameObject.FindGameObjectsWithTag(enemiesTag);
+
+        enemyLifes = GameObject.FindGameObjectWithTag("enemyLifes");
+        playerAvatarLifes = GameObject.FindGameObjectWithTag("playerAvatarLifes");
+        positionEnemyLife = enemyLifes.transform.GetChild(0).position;
+        positionPlayerLife = playerAvatarLifes.transform.GetChild(0).position;
+        offsetLife = life.transform.localScale.x * 4;
 
         foreach (GameObject player in players)
         {
             playerAvatarsAlive.Add(player);
+            instaLife = Instantiate(life, positionPlayerLife, new Quaternion()) as GameObject;
+            instaLife.transform.SetParent(playerAvatarLifes.transform);
+            positionPlayerLife += new Vector3(offsetLife,0,0);
         }
+        playerAvatarLifes.GetComponent<playersLivesScript>().enabled = true;
         foreach (GameObject enemy in enemies)
         {
             enemiesAlive.Add(enemy);
+            instaLife = Instantiate(life, positionEnemyLife, new Quaternion()) as GameObject;
+            instaLife.transform.SetParent(enemyLifes.transform);
+            positionEnemyLife -= new Vector3(offsetLife, 0, 0);
         }
-    }
+        enemyLifes.GetComponent<enemiesLivesScript>().enabled = true;
 
-    void Start () {
-		
         redSprite = GameObject.Find("powerBarRed");
         blueSprite = GameObject.Find("powerBarBlue");
         victory = GameObject.Find("victoryText");

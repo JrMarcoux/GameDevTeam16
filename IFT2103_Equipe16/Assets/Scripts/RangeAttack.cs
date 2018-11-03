@@ -9,16 +9,16 @@ public class RangeAttack : MonoBehaviour {
 	private GameObject target;
 	private GameObject gameManager;
     private powerBarScript powerBar;
-	private GameObject outBoundaries;
-	private bool checkAABB = false;
-	private bool outsideAABB = false;
-   private bool targetAABB = false;
+	//private GameObject outBoundaries;
+	//private bool checkAABB = false;
+	//private bool outsideAABB = false;
+   //private bool targetAABB = false;
 
     void Start()
 	{
 		physicScript = gameObject.GetComponent<BallisticPhysics>();
-		outBoundaries = GameObject.Find("AABB");
-		checkAABB = false;
+		//outBoundaries = GameObject.Find("AABB");
+		//checkAABB = false;
 		powerBar = GameObject.Find("powerBar").GetComponent<powerBarScript>();
 		gameManager = GameObject.FindGameObjectWithTag("Game manager");
 		Invoke("DestroyProjectile", lifeTime);
@@ -55,7 +55,7 @@ public class RangeAttack : MonoBehaviour {
 	//lancer le projectile
 	void Launch()
 	{
-		checkAABB = true; // on enclanche la détection pour regarder si la balle dépasse la boite AABB
+		//checkAABB = true; // on enclanche la détection pour regarder si la balle dépasse la boite AABB
 		projectile.useGravity = true;
 		float offset = powerBar.GetAmount(); //valeur de la powerbar
 		physicScript.BallisticLaunch(projectile, target, offset); //lancer le projectile avec la physique

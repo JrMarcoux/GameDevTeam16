@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 public class LevelGenerator : MonoBehaviour
 {
     //Regroupement
-    private Transform parent;
+    private Transform levelParent;
+    private Transform playerAvatarsParent;
+    private Transform enemiesParent;
 
     //Paramètres du terrain
     public GameObject[] Tiles;
@@ -34,8 +36,12 @@ public class LevelGenerator : MonoBehaviour
 
     void Start()
     {
-        parent = new GameObject().transform;
-        parent.name = "LevelParent";
+        levelParent = new GameObject().transform;
+        levelParent.name = "LevelParent";
+        playerAvatarsParent = new GameObject().transform;
+        playerAvatarsParent.name = "playerAvatarsParent";
+        enemiesParent = new GameObject().transform;
+        enemiesParent.name = "enemiesParent";
         outBoundaries = GameObject.Find("AABB");
         outBoundaries.transform.localScale = (XAmount + 5) * TileSize * new Vector3(1,1,1);
         outBoundaries.transform.position = XAmount/2 * TileSize * new Vector3(1, 0, 1);
@@ -65,7 +71,7 @@ public class LevelGenerator : MonoBehaviour
             }
 
         }
-        GetComponent<GameManager>().enabled = true;
+        GetComponent<GameManager>().enabled = true;      
 
         yield return 0;
     }
@@ -114,7 +120,7 @@ public class LevelGenerator : MonoBehaviour
 
         TileObject = Instantiate(Tiles[TileIndex], transform.position, transform.rotation) as GameObject;
 
-        TileObject.transform.parent = parent;
+        TileObject.transform.parent = levelParent;
     }
 
     //Génération des Murs du périmètre
@@ -128,28 +134,28 @@ public class LevelGenerator : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x + TileSize, 0, transform.position.z);
             WallObject = Instantiate(Wall, transform.position, transform.rotation) as GameObject;
-            WallObject.transform.parent = parent;
+            WallObject.transform.parent = levelParent;
         }
 
         for (int i = 0; i < ZAmount + 1; i++)
         {
             transform.position = new Vector3(transform.position.x, 0, transform.position.z + TileSize);
             WallObject = Instantiate(Wall, transform.position, transform.rotation) as GameObject;
-            WallObject.transform.parent = parent;
+            WallObject.transform.parent = levelParent;
         }
 
         for (int i = 0; i < XAmount + 1; i++)
         {
             transform.position = new Vector3(transform.position.x - TileSize, 0, transform.position.z);
             WallObject = Instantiate(Wall, transform.position, transform.rotation) as GameObject;
-            WallObject.transform.parent = parent;
+            WallObject.transform.parent = levelParent;
         }
 
         for (int i = 0; i < ZAmount + 1; i++)
         {
             transform.position = new Vector3(transform.position.x, 0, transform.position.z - TileSize);
             WallObject = Instantiate(Wall, transform.position, transform.rotation) as GameObject;
-            WallObject.transform.parent = parent;
+            WallObject.transform.parent = levelParent;
         }
     }
 
@@ -159,9 +165,11 @@ public class LevelGenerator : MonoBehaviour
     {
         for(int i = 0; i < PlayerAvatarsAmount; i++)
         {
+            GameObject TileObject;
             int TargetIndex = Random.Range(0, PlayerAvatars.Length);
             transform.position = new Vector3(Random.Range(0, XAmount * TileSize), SpawnHeight, Random.Range(0, ZAmount * TileSize));
-            Instantiate(PlayerAvatars[TargetIndex], transform.position, transform.rotation);
+            TileObject = Instantiate(PlayerAvatars[TargetIndex], transform.position, transform.rotation) as GameObject;
+            TileObject.transform.parent = playerAvatarsParent;
         }
     }
 
@@ -170,9 +178,11 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = 0; i < EnemyAvatarsAmount; i++)
         {
+            GameObject TileObject;
             int TargetIndex = Random.Range(0, EnemyAvatars.Length);
             transform.position = new Vector3(Random.Range(0, XAmount * TileSize), SpawnHeight, Random.Range(0, ZAmount * TileSize));
-            Instantiate(EnemyAvatars[TargetIndex], transform.position, transform.rotation);
+            TileObject = Instantiate(EnemyAvatars[TargetIndex], transform.position, transform.rotation) as GameObject;
+            TileObject.transform.parent = enemiesParent;
         }
     }
 
@@ -181,9 +191,11 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = 0; i < DecorAmount; i++)
         {
+            GameObject TileObject;
             int TargetIndex = Random.Range(0, DecorObjects.Length);
             transform.position = new Vector3(Random.Range(0, XAmount * TileSize), SpawnHeight, Random.Range(0, ZAmount * TileSize));
-            Instantiate(DecorObjects[TargetIndex], transform.position, transform.rotation);
+            TileObject = Instantiate(DecorObjects[TargetIndex], transform.position, transform.rotation) as GameObject;
+            TileObject.transform.parent = levelParent;
         }
     }
 }

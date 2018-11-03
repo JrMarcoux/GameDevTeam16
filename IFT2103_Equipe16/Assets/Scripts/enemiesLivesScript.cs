@@ -17,7 +17,10 @@ public class enemiesLivesScript : MonoBehaviour
         lives = new List<Image>();
         foreach (Transform child in transform)
         {
-            lives.Add(child.GetComponent<Image>());
+            if(child.GetComponent<Image>() != null)
+            {
+                lives.Add(child.GetComponent<Image>());
+            }           
         }
         index = 0;
         gameManager = GameObject.FindGameObjectWithTag("Game manager");

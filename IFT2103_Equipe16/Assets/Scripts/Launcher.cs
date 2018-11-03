@@ -36,7 +36,7 @@ public class Launcher : MonoBehaviour {
 		}
         isShooting = !isShooting;
         powerBar.ToggleOff();
-        currentProj = Instantiate(projectile, shotPoint.position, shotPoint.rotation); //instancier le projectile
+        currentProj = Instantiate(projectile, shotPoint.position, shotPoint.rotation) as GameObject; //instancier le projectile
         isProj = true;
     }
 }

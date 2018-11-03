@@ -26,22 +26,28 @@ public class GameManager : MonoBehaviour {
     public float chrono = 4;
     private bool chronoActive = false;
 
+    private void Awake()
+    {
+        players = GameObject.FindGameObjectsWithTag(playerTag);
+        enemies = GameObject.FindGameObjectsWithTag(enemiesTag);
+
+        foreach (GameObject player in players)
+        {
+            playerAvatarsAlive.Add(player);
+        }
+        foreach (GameObject enemy in enemies)
+        {
+            enemiesAlive.Add(enemy);
+        }
+    }
 
     void Start () {
-		players = GameObject.FindGameObjectsWithTag(playerTag);
-		enemies = GameObject.FindGameObjectsWithTag(enemiesTag);
+		
         redSprite = GameObject.Find("powerBarRed");
         blueSprite = GameObject.Find("powerBarBlue");
         victory = GameObject.Find("victoryText");
 
-        foreach (GameObject player in players)
-		{
-            playerAvatarsAlive.Add(player);
-		}
-		foreach (GameObject enemy in enemies)
-		{
-			enemiesAlive.Add(enemy);
-		}
+       
         //commencer la partie
         redSprite.SetActive(false);
         blueSprite.SetActive(true);

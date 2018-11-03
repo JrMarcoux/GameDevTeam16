@@ -36,19 +36,20 @@ public class RangeAttack : MonoBehaviour {
 	}
 	void Update()
 	{
-		if (checkAABB)
-		{
-			outsideAABB = !outBoundaries.GetComponent<CollisionAABB>().CheckIfObjectIsInAABB(gameObject);
-            targetAABB = target.GetComponent<CollisionAABB>().CheckIfObjectIsInAABB(gameObject);
-		}
-		if (outsideAABB)//si la balle dépasse les limites de la boite AABB, elle est détruite
-		{
-			DestroyProjectile();
-		}
-        if (targetAABB)
-        {
-            CollisionTarget();
-        }
+        //custom collision
+		//if (checkAABB)
+		//{
+		//	outsideAABB = !outBoundaries.GetComponent<CollisionAABB>().CheckIfObjectIsInAABB(gameObject);
+        //    targetAABB = target.GetComponent<CollisionAABB>().CheckIfObjectIsInAABB(gameObject);
+		//}
+		//if (outsideAABB)//si la balle dépasse les limites de la boite AABB, elle est détruite
+		//{
+		//	DestroyProjectile();
+		//}
+        //if (targetAABB)
+        //{
+        //    CollisionTarget();
+        //}
 	}
 
 	//lancer le projectile
@@ -63,6 +64,14 @@ public class RangeAttack : MonoBehaviour {
 	//détruitre le projectile
 	void DestroyProjectile()
 	{
+        if (gameManager.GetComponent<GameManager>().teamTurn == gameManager.GetComponent<GameManager>().playerTag)
+        {
+            gameManager.GetComponent<GameManager>().playerAvatarsAlive[gameManager.GetComponent<GameManager>().selectedPlayerAvatar].GetComponent<Launcher>().isProj = false;
+        }
+        else if (gameManager.GetComponent<GameManager>().teamTurn == gameManager.GetComponent<GameManager>().enemiesTag)
+        {
+            gameManager.GetComponent<GameManager>().enemiesAlive[gameManager.GetComponent<GameManager>().selectedEnemyAvatar].GetComponent<Launcher>().isProj = false;
+        }
         gameManager.GetComponent<GameManager>().changeTurn();
         Destroy(gameObject);      
 	}
@@ -72,27 +81,36 @@ public class RangeAttack : MonoBehaviour {
 	 * assigner les morts
 	 * appeler la méthode de sélection du prochain joueur de la classe Game manager
 	*/
-	void CollisionTarget()
+	void OnCollisionEnter(Collision col)
 	{
-        int deadHash = Animator.StringToHash("Dead");
+        int deadHash = Animator.StringToHash("Dead");    
 
-        target.GetComponent<Animator>().SetTrigger(deadHash);
-        target.GetComponent<Launcher>().isDead = true;
-        target.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 5);
-
-        if (target.tag == gameManager.GetComponent<GameManager>().playerTag)
+        if (col.gameObject.tag == gameManager.GetComponent<GameManager>().playerTag)
 		{
+            target.GetComponent<Animator>().SetTrigger(deadHash);
+            target.GetComponent<Launcher>().isDead = true;
+            target.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 5);
             gameManager.GetComponent<GameManager>().playerAvatarsAlive[gameManager.GetComponent<GameManager>().selectedPlayerAvatar].GetComponent<controlPlayer>().enabled = false;
             gameManager.GetComponent<GameManager>().playerAvatarsAlive.Remove(target);
+            powerBar.IncreaseSpeed();
+            DestroyProjectile();
         }
-		if (target.tag == gameManager.GetComponent<GameManager>().enemiesTag)
+		else if (col.gameObject.tag == gameManager.GetComponent<GameManager>().enemiesTag)
 		{
+            target.GetComponent<Animator>().SetTrigger(deadHash);
+            target.GetComponent<Launcher>().isDead = true;
+            target.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 5);
             gameManager.GetComponent<GameManager>().enemiesAlive[gameManager.GetComponent<GameManager>().selectedEnemyAvatar].GetComponent<IAEnemyScript>().enabled = false;
             gameManager.GetComponent<GameManager>().enemiesAlive.Remove(target);
-        }       
+            powerBar.IncreaseSpeed();
+            DestroyProjectile();
+        }  
+        else if (col.gameObject.tag == "AABB")
+        {
+            DestroyProjectile();
+        }
 
-        powerBar.IncreaseSpeed();
-        DestroyProjectile();
+        
 
     }
 

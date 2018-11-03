@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
     private GameObject redSprite;
     private GameObject blueSprite;
     private GameObject victory;
+    private GameObject[] particles;
     public float chrono = 4;
     private bool chronoActive = false;
 
@@ -74,7 +75,11 @@ public class GameManager : MonoBehaviour {
             else
             {
                 victory.SetActive(true);
-                GameObject.FindGameObjectWithTag("RedFountain").GetComponent<ParticleSystem>().Play();
+                particles = GameObject.FindGameObjectsWithTag("RedFountain");
+                foreach (GameObject emitter in particles)
+                {
+                    emitter.GetComponent<ParticleSystem>().Play();
+                }
                 chronoActive = true;
             }
         }
@@ -94,7 +99,11 @@ public class GameManager : MonoBehaviour {
             else
             {
                 victory.SetActive(true);
-                GameObject.FindGameObjectWithTag("BlueFountain").GetComponent<ParticleSystem>().Play();
+                particles = GameObject.FindGameObjectsWithTag("BlueFountain");
+                foreach (GameObject emitter in particles)
+                {
+                    emitter.GetComponent<ParticleSystem>().Play();
+                }
                 chronoActive = true;
             }
         }       

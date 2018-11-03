@@ -7,8 +7,10 @@ public class Launcher : MonoBehaviour {
 	public Transform shotPoint;
 	public string enemyTag;
     public powerBarScript powerBar;
+    public GameObject currentProj;
 
     public bool isShooting;
+    public bool isProj;
     public bool isDead;
 
 
@@ -16,6 +18,7 @@ public class Launcher : MonoBehaviour {
     {
         powerBar = GameObject.Find("powerBar").GetComponent<powerBarScript>();
         isShooting = false;
+        isProj = false;
     }
 
     public IEnumerator launch()
@@ -33,7 +36,8 @@ public class Launcher : MonoBehaviour {
 		}
         isShooting = !isShooting;
         powerBar.ToggleOff();
-        Instantiate(projectile, shotPoint.position, shotPoint.rotation); //instancier le projectile
+        currentProj = Instantiate(projectile, shotPoint.position, shotPoint.rotation); //instancier le projectile
+        isProj = true;
     }
 }
 	

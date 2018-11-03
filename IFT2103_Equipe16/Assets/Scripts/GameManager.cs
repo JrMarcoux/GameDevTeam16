@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour {
     private GameObject enemyLifes;
     private GameObject playerAvatarLifes;
     public GameObject life;
+    public GameObject playerImage;
+    public GameObject enemyImage;
     private GameObject instaLife;
     private Vector3 positionPlayerLife;
     private Vector3 positionEnemyLife;
@@ -48,6 +50,10 @@ public class GameManager : MonoBehaviour {
         foreach (GameObject player in players)
         {
             playerAvatarsAlive.Add(player);
+            //image
+            instaLife = Instantiate(playerImage, positionPlayerLife, new Quaternion()) as GameObject;
+            instaLife.transform.SetParent(playerAvatarLifes.transform);
+            //XMark
             instaLife = Instantiate(life, positionPlayerLife, new Quaternion()) as GameObject;
             instaLife.transform.SetParent(playerAvatarLifes.transform);
             positionPlayerLife += new Vector3(offsetLife,0,0);
@@ -56,6 +62,10 @@ public class GameManager : MonoBehaviour {
         foreach (GameObject enemy in enemies)
         {
             enemiesAlive.Add(enemy);
+            //image
+            instaLife = Instantiate(enemyImage, positionEnemyLife, new Quaternion()) as GameObject;
+            instaLife.transform.SetParent(enemyLifes.transform);
+            //XMark
             instaLife = Instantiate(life, positionEnemyLife, new Quaternion()) as GameObject;
             instaLife.transform.SetParent(enemyLifes.transform);
             positionEnemyLife -= new Vector3(offsetLife, 0, 0);

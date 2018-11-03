@@ -25,6 +25,7 @@ public class enemiesLivesScript : MonoBehaviour
         index = 0;
         gameManager = GameObject.FindGameObjectWithTag("Game manager");
         nbrLives = gameManager.GetComponent<GameManager>().enemiesAlive.Count;
+        Debug.Log(nbrLives);
     }
 
     // Update is called once per frame
@@ -32,8 +33,15 @@ public class enemiesLivesScript : MonoBehaviour
     {
         if (gameManager.GetComponent<GameManager>().enemiesAlive.Count < nbrLives)
         {
-            lives[index++].enabled = true;
-            nbrLives--;
+            if(lives[index].tag == "Life")
+            {
+                lives[index++].enabled = true;
+                nbrLives--;
+            }
+            else
+            {
+                index++;
+            }
         }
     }
 }

@@ -23,11 +23,15 @@ public class HealthMultiplayer : NetworkBehaviour
 			{
 				gameObject.tag = "Player2";
 				spawnPosition = GameObject.FindGameObjectWithTag("SpawnPlayer2").transform.position;
-				
-			}else
+				CmdstartBotFire();
+
+			}
+			else
 			{
 				gameObject.tag = "Player1";
 				spawnPosition = GameObject.FindGameObjectWithTag("SpawnPlayer1").transform.position;
+				
+
 			}
 			transform.position = spawnPosition;
 		}
@@ -35,6 +39,7 @@ public class HealthMultiplayer : NetworkBehaviour
 
 	void Update()
 	{
+		//le joueur tombe en bas de la plateforme
 		if (transform.position.y < -10)
 		{
 			currentHealth = maxHealth;
@@ -43,8 +48,8 @@ public class HealthMultiplayer : NetworkBehaviour
 	}
 	public void TakeDamage(int dmg)
 	{
-		// c'est seulement le serveur qui applique les dommages
-		if (!isServer)
+		
+		if (!isServer) // c'est seulement le serveur qui applique les dommages
 		{
 			return;
 		}
@@ -57,10 +62,19 @@ public class HealthMultiplayer : NetworkBehaviour
 		
 		
 	}
+	//changer la barre de vie en fonction de la vie 
 	void changeHealth(int health)
 	{
 		healthBar.sizeDelta = new Vector2(health, healthBar.sizeDelta.y);
 	}
+
+	[Command]
+	void CmdstartBotFire()
+	{
+		GameObject.FindGameObjectWithTag("BotP1").GetComponent<controlBotMultiplayer>().CmdFire();
+		GameObject.FindGameObjectWithTag("BotP2").GetComponent<controlBotMultiplayer>().CmdFire();
+	}
+	//Respawn du joueur local
 	[ClientRpc]
 	void RpcRespawn()
 	{

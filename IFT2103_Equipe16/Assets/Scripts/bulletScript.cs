@@ -10,7 +10,7 @@ public class bulletScript : MonoBehaviour {
 		var health = objColl.GetComponent<HealthMultiplayer>();
 		if (health != null)
 		{
-			health.TakeDamage(10);
+			health.TakeDamage(20);
 		}
 		Destroy(gameObject);
 	}

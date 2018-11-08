@@ -22,6 +22,7 @@ c7dd12c15208b0447e101f80038706df UnityEngine.Timeline.dll:UnityEngine.Timeline.A
 64f3a13c1277a7f1324321d93d0ec13b UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
 f6637497451c9a030c421de4a1ad5cdb Unity.TextMeshPro.dll:TMPro.TMP_ScrollbarEventHandler
 b14b4630cc47b6e9ea8a644551a6a8cc Unity.TextMeshPro.dll:TMPro.TMP_Text
+8fa1475428a202e711e0c9290dd57a36 Assembly-CSharp.dll:.controlBotMultiplayer
 53cefe5d98cadefbab750835e70b89c0 UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 486cd95c82d8305219c352c06b776e1f UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 da2091a04d360891450faf16cdf621f1 UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -88,6 +89,7 @@ e90403eeda069970e0b9de1533de13a6 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 2d58ca16854b99daea8c45e9c0f367b7 UnityEngine.UI.dll:UnityEngine.EventSystems.TouchInputModule
 16da51d1b62ef6d4ee1849350434023b UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
 a1253e702ede734e02b7477d374aabce Assembly-CSharp.dll:.keyBindScript
+486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.fireBallScriptMultiplayer
 486cd95c82d8305219c352c06b776e1f UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 9e61f3535f3c55760a1cedfbd114f4af UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
 754551afe4f2531f58476bf14c510657 UnityEngine.Timeline.dll:UnityEngine.Timeline.AnimationPlayableAsset
@@ -100,7 +102,7 @@ c7dd12c15208b0447e101f80038706df UnityEngine.Timeline.dll:UnityEngine.Timeline.A
 0ddb2c46096a1e59e0dce07886ce4769 UnityEngine.Timeline.dll:UnityEngine.Timeline.GroupTrack
 0ddb2c46096a1e59e0dce07886ce4769 UnityEngine.Timeline.dll:UnityEngine.Timeline.PlayableTrack
 64f3a13c1277a7f1324321d93d0ec13b UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
-0934e2e495bb5cd6987232ef40b1515f Assembly-CSharp.dll:.controlPlayerMultiplayer
+18745bf3271236f8098106f76b068b93 Assembly-CSharp.dll:.controlPlayerMultiplayer
 66b3109aa5921cf800bec17926c6adba Unity.TextMeshPro.dll:TMPro.TMP_SubMeshUI
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.MainMenu
 201273fb4f889724fb090164b7d6c657 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
@@ -180,6 +182,7 @@ e29edeb1a1b8987fdf819c2734b74001 Assembly-CSharp.dll:.cameraScript
 9318334b30e9f195f573b2ce00154b95 Unity.TextMeshPro.dll:TMPro.TMP_ColorGradient
 93307bd34e39d73fd24e00ec39c25a91 Unity.TextMeshPro.dll:TMPro.TMP_SubMesh
 c0c2c2febe9ce8d66f40fa795b425837 Assembly-CSharp.dll:.HealthMultiplayer
+a49ff329a03e208cd1a1012a2ddc174a Assembly-CSharp.dll:.BotSpawnerMultiplayer
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.Billboard
 700c365bae4a7e10ba352726c61e3089 Assembly-CSharp.dll:.LevelGenerator
 4dbff7e0c68088ac75bb07f0e3b4b06f Assembly-CSharp.dll:.Launcher

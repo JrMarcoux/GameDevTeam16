@@ -55,12 +55,15 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\BallisticPhysics.cs" />
      <Compile Include="Assets\Scripts\Billboard.cs" />
+     <Compile Include="Assets\Scripts\BotSpawnerMultiplayer.cs" />
      <Compile Include="Assets\Scripts\bulletScript.cs" />
      <Compile Include="Assets\Scripts\cameraScript.cs" />
      <Compile Include="Assets\Scripts\CollisionAABB.cs" />
+     <Compile Include="Assets\Scripts\controlBotMultiplayer.cs" />
      <Compile Include="Assets\Scripts\controlPlayer.cs" />
      <Compile Include="Assets\Scripts\controlPlayerMultiplayer.cs" />
      <Compile Include="Assets\Scripts\enemiesLivesScript.cs" />
+     <Compile Include="Assets\Scripts\fireBallScriptMultiplayer.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\HealthMultiplayer.cs" />
      <Compile Include="Assets\Scripts\IAEnemyScript.cs" />

@@ -36,4 +36,24 @@ public class BallisticPhysics : MonoBehaviour {
 		//lancer le projectile
 		projectile.velocity = velocityXY + velocityY;
 	}
+	//lancer le projectile avec la physique version multi
+	public void BallisticLaunchMultiplayer(Rigidbody projectile, float xMin, float xMax, float zMin, float zMax)
+	{
+		Physics.gravity = Vector3.up * gravity;
+
+		//calculer le déplacement
+
+		Vector3 displacementXZ;
+		displacementXZ = new Vector3(Random.Range(xMin, xMax) - projectile.position.x, 0, Random.Range(zMin, zMax) - projectile.position.z);
+
+		//ajuster la hauteur max si la cible est plus haute que la hauteur max, 
+
+		//calcuer la vélocité
+		Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * verticalMaxDisplacement);
+		float time = Mathf.Sqrt(-2 * verticalMaxDisplacement / gravity) + Mathf.Sqrt(2 * (0 - verticalMaxDisplacement) / gravity);
+		Vector3 velocityXY = displacementXZ / time;
+
+		//lancer le projectile
+		projectile.velocity = velocityXY + velocityY;
+	}
 }

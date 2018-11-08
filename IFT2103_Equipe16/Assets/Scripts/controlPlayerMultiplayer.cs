@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class controlPlayerMultiplayer : NetworkBehaviour
 {
@@ -13,6 +14,7 @@ public class controlPlayerMultiplayer : NetworkBehaviour
 		public Transform bulletSpawnLeft;
 		public Transform bulletSpawnRight;
 		public float velocityBulletSpeed = 6;
+	  public GameObject networkManager;
 		
 
 		public override void OnStartLocalPlayer()
@@ -25,34 +27,40 @@ public class controlPlayerMultiplayer : NetworkBehaviour
 
 		void Update()
     {
-				// ignorer les touches si le joueur n'est pas local
-				if (!isLocalPlayer)
-				{
-					return;
-				}
-				else
-				{
-						if (Input.GetKey(GetKeyPrefs("Down")))
-						{
-							transform.Translate(0f, 0f, -speed * Time.deltaTime);
-						}
-						if (Input.GetKey(GetKeyPrefs("Up")))
-						{
-							transform.Translate(0f, 0f, speed * Time.deltaTime);
-						}
-						if (Input.GetKey(GetKeyPrefs("Right")))
-						{
-							transform.Translate(speed * Time.deltaTime, 0f, 0f);
-						}
-						if (Input.GetKey(GetKeyPrefs("Left")))
-						{
-							transform.Translate(-speed * Time.deltaTime, 0f, 0f);
-						}
-						if (Input.GetKeyDown(GetKeyPrefs("Fire")))
-						{
-							CmdFire();
-						}
-				}
+		// ignorer les touches si le joueur n'est pas local
+		if (!isLocalPlayer)
+		{
+			return;
+		}
+		else
+		{
+			if (Input.GetKey(GetKeyPrefs("Down")))
+			{
+				transform.Translate(0f, 0f, -speed * Time.deltaTime);
+			}
+			if (Input.GetKey(GetKeyPrefs("Up")))
+			{
+				transform.Translate(0f, 0f, speed * Time.deltaTime);
+			}
+			if (Input.GetKey(GetKeyPrefs("Right")))
+			{
+				transform.Translate(speed * Time.deltaTime, 0f, 0f);
+			}
+			if (Input.GetKey(GetKeyPrefs("Left")))
+			{
+				transform.Translate(-speed * Time.deltaTime, 0f, 0f);
+			}
+			if (Input.GetKeyDown(GetKeyPrefs("Fire")))
+			{
+				CmdFire();
+			}
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				NetworkManager.Shutdown();
+				Destroy(networkManager);
+				SceneManager.LoadScene(0);
+			}
+		}
 				
     }
 
@@ -63,7 +71,8 @@ public class controlPlayerMultiplayer : NetworkBehaviour
 	[Command]
 	void CmdFire()
 	{
-		if(transform.position.x > 0)
+
+		if (transform.position.x > 0)
 		{
 		var bullet = (GameObject)Instantiate(bulletObject, bulletSpawnLeft.position, bulletSpawnLeft.rotation);
 			bullet.GetComponent<Rigidbody>().velocity = bullet.transform.right * -velocityBulletSpeed;

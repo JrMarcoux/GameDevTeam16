@@ -15,6 +15,8 @@ public class controlPlayerMultiplayer : NetworkBehaviour
 		public Transform bulletSpawnRight;
 		public float velocityBulletSpeed = 6;
 	  public GameObject networkManager;
+		private bool allowFire = true;
+		public float fireRate = 0.20f;
 		
 
 		public override void OnStartLocalPlayer()
@@ -50,7 +52,7 @@ public class controlPlayerMultiplayer : NetworkBehaviour
 			{
 				transform.Translate(-speed * Time.deltaTime, 0f, 0f);
 			}
-			if (Input.GetKeyDown(GetKeyPrefs("Fire")))
+			if ((Input.GetKeyDown(GetKeyPrefs("Fire")))&&(allowFire))
 			{
 				CmdFire();
 			}
@@ -86,7 +88,15 @@ public class controlPlayerMultiplayer : NetworkBehaviour
 			NetworkServer.Spawn(bullet);
 			Destroy(bullet, 2.0f);
 		}
+		StartCoroutine(waitForFire());
+		
 
 		
+	}
+	IEnumerator waitForFire()
+	{
+		allowFire = false;
+		yield return new WaitForSeconds(fireRate);
+		allowFire = true;
 	}
 }

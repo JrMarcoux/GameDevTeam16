@@ -23,6 +23,10 @@ public class HealthMultiplayer : NetworkBehaviour
 			{
 				gameObject.tag = "Player2";
 				spawnPosition = GameObject.FindGameObjectWithTag("SpawnPlayer2").transform.position;
+				gameObject.GetComponent<controlPlayerMultiplayer>().xMinLimit = GameObject.FindGameObjectWithTag("SpawnPlayer2").GetComponent<spawnPositionMulti>().xMinLimit;
+				gameObject.GetComponent<controlPlayerMultiplayer>().xMaxLimit = GameObject.FindGameObjectWithTag("SpawnPlayer2").GetComponent<spawnPositionMulti>().xMaxLimit;
+				gameObject.GetComponent<controlPlayerMultiplayer>().zMinLimit = GameObject.FindGameObjectWithTag("SpawnPlayer2").GetComponent<spawnPositionMulti>().zMinLimit;
+				gameObject.GetComponent<controlPlayerMultiplayer>().zMaxLimit = GameObject.FindGameObjectWithTag("SpawnPlayer2").GetComponent<spawnPositionMulti>().zMaxLimit;
 				CmdstartBotFire();
 
 			}
@@ -30,7 +34,11 @@ public class HealthMultiplayer : NetworkBehaviour
 			{
 				gameObject.tag = "Player1";
 				spawnPosition = GameObject.FindGameObjectWithTag("SpawnPlayer1").transform.position;
-				
+				gameObject.GetComponent<controlPlayerMultiplayer>().xMinLimit = GameObject.FindGameObjectWithTag("SpawnPlayer1").GetComponent<spawnPositionMulti>().xMinLimit;
+				gameObject.GetComponent<controlPlayerMultiplayer>().xMaxLimit = GameObject.FindGameObjectWithTag("SpawnPlayer1").GetComponent<spawnPositionMulti>().xMaxLimit;
+				gameObject.GetComponent<controlPlayerMultiplayer>().zMinLimit = GameObject.FindGameObjectWithTag("SpawnPlayer1").GetComponent<spawnPositionMulti>().zMinLimit;
+				gameObject.GetComponent<controlPlayerMultiplayer>().zMaxLimit = GameObject.FindGameObjectWithTag("SpawnPlayer1").GetComponent<spawnPositionMulti>().zMaxLimit;
+
 
 			}
 			transform.position = spawnPosition;

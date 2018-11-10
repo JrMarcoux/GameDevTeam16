@@ -15,11 +15,15 @@ public class controlPlayerMultiplayer : NetworkBehaviour
 		public Transform bulletSpawnRight;
 		public float velocityBulletSpeed = 6;
 	  public GameObject networkManager;
-		private bool allowFire = true;
+		public bool allowFire = true;
 		public float fireRate = 0.20f;
-		
+		public float xMinLimit = 100f;
+		public float xMaxLimit = -100f;
+		public float zMinLimit = -100f;
+		public float zMaxLimit = 100f;
 
-		public override void OnStartLocalPlayer()
+
+	public override void OnStartLocalPlayer()
 		{
 		//changer le sprite et l'animation pour le joueur local
 		GetComponent<SpriteRenderer>().sprite = spriteLocal;
@@ -38,23 +42,39 @@ public class controlPlayerMultiplayer : NetworkBehaviour
 		{
 			if (Input.GetKey(GetKeyPrefs("Down")))
 			{
-				transform.Translate(0f, 0f, -speed * Time.deltaTime);
+				if(transform.position.z > zMinLimit)
+				{
+					transform.Translate(0f, 0f, -speed * Time.deltaTime);
+
+				}
 			}
 			if (Input.GetKey(GetKeyPrefs("Up")))
 			{
-				transform.Translate(0f, 0f, speed * Time.deltaTime);
+				if (transform.position.z < zMaxLimit)
+				{
+					transform.Translate(0f, 0f, speed * Time.deltaTime);
+
+				}
 			}
 			if (Input.GetKey(GetKeyPrefs("Right")))
 			{
-				transform.Translate(speed * Time.deltaTime, 0f, 0f);
+				if (transform.position.x < xMaxLimit)
+				{
+					transform.Translate(speed * Time.deltaTime, 0f, 0f);
+
+				}
 			}
 			if (Input.GetKey(GetKeyPrefs("Left")))
 			{
-				transform.Translate(-speed * Time.deltaTime, 0f, 0f);
+				if (transform.position.x > xMinLimit)
+				{
+					transform.Translate(-speed * Time.deltaTime, 0f, 0f);
+				}
 			}
 			if ((Input.GetKeyDown(GetKeyPrefs("Fire")))&&(allowFire))
 			{
 				CmdFire();
+				StartCoroutine(waitForFire());
 			}
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
@@ -88,7 +108,7 @@ public class controlPlayerMultiplayer : NetworkBehaviour
 			NetworkServer.Spawn(bullet);
 			Destroy(bullet, 2.0f);
 		}
-		StartCoroutine(waitForFire());
+		
 		
 
 		

@@ -102,7 +102,7 @@ c7dd12c15208b0447e101f80038706df UnityEngine.Timeline.dll:UnityEngine.Timeline.A
 0ddb2c46096a1e59e0dce07886ce4769 UnityEngine.Timeline.dll:UnityEngine.Timeline.GroupTrack
 0ddb2c46096a1e59e0dce07886ce4769 UnityEngine.Timeline.dll:UnityEngine.Timeline.PlayableTrack
 64f3a13c1277a7f1324321d93d0ec13b UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
-18745bf3271236f8098106f76b068b93 Assembly-CSharp.dll:.controlPlayerMultiplayer
+15dbc568692d5d270beda063d7e7b9a9 Assembly-CSharp.dll:.controlPlayerMultiplayer
 66b3109aa5921cf800bec17926c6adba Unity.TextMeshPro.dll:TMPro.TMP_SubMeshUI
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.MainMenu
 201273fb4f889724fb090164b7d6c657 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
@@ -186,3 +186,5 @@ a49ff329a03e208cd1a1012a2ddc174a Assembly-CSharp.dll:.BotSpawnerMultiplayer
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.Billboard
 700c365bae4a7e10ba352726c61e3089 Assembly-CSharp.dll:.LevelGenerator
 4dbff7e0c68088ac75bb07f0e3b4b06f Assembly-CSharp.dll:.Launcher
+fbfeb402279460d88a9ff65bfd8d66fd Assembly-CSharp.dll:.SyncPlayerMovement
+01790a5f19e2a9818782658f06d8d6ee Assembly-CSharp.dll:.spawnPositionMulti

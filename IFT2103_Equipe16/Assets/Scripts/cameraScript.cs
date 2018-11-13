@@ -34,7 +34,7 @@ public class cameraScript : MonoBehaviour {
                 focusPosition = gameManager.GetComponent<GameManager>().enemiesAlive[gameManager.GetComponent<GameManager>().selectedEnemyAvatar].transform.position;
             }           
         }
-        transform.position = new Vector3(0, 1, -3) + focusPosition;
+        transform.position = new Vector3(0, 3, -10) + focusPosition;
 
     }
 }

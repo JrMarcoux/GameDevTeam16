@@ -12,7 +12,7 @@ public class LevelGenerator : MonoBehaviour
     //Paramètres du terrain
     public GameObject[] Tiles;
 
-    public int TileAmount;
+    private int TileAmount;
     public int TileSize;
 
     public float WaitTime;
@@ -21,14 +21,14 @@ public class LevelGenerator : MonoBehaviour
     public GameObject Wall;
     private GameObject outBoundaries;
 
-    public float XAmount;
-    public float ZAmount;
+    private int XAmount;
+    private int ZAmount;
 
 
     //Paramètres des avatars
-    public int PlayerAvatarsAmount;
-    public int EnemyAvatarsAmount;
-    public int DecorAmount;
+    private int PlayerAvatarsAmount;
+    private int EnemyAvatarsAmount;
+    private int DecorAmount;
     public float SpawnHeight;
     public GameObject[] PlayerAvatars;
     public GameObject[] EnemyAvatars;
@@ -36,6 +36,15 @@ public class LevelGenerator : MonoBehaviour
 
     void Start()
     {
+        //params du menu
+        XAmount = PlayerPrefs.GetInt("levelWidth");
+        ZAmount = PlayerPrefs.GetInt("levelDepth");
+        TileAmount = XAmount * ZAmount;
+        PlayerAvatarsAmount = PlayerPrefs.GetInt("nbCharacters");
+        EnemyAvatarsAmount = PlayerPrefs.GetInt("nbEnemies");
+        DecorAmount = PlayerPrefs.GetInt("nbDecors");
+
+        //init
         levelParent = new GameObject().transform;
         levelParent.name = "LevelParent";
         playerAvatarsParent = new GameObject().transform;
@@ -45,12 +54,13 @@ public class LevelGenerator : MonoBehaviour
         outBoundaries = GameObject.Find("AABB");
         outBoundaries.transform.localScale = (XAmount + 5) * TileSize * new Vector3(1,1,1);
         outBoundaries.transform.position = XAmount/2 * TileSize * new Vector3(1, 0, 1);
+
+        //generation du level
         StartCoroutine(GenerateLevel());
     }
 
     IEnumerator GenerateLevel()
     {
-        ZAmount = TileAmount / XAmount;
 
         for (int i = 1; i < TileAmount + 1; i++)
         {

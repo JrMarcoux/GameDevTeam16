@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour {
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))//quitter la partie avec Escape
 		{
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("Menu");
         }
         if (chronoActive)
         {
@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour {
         }
         if(chrono <= 0)
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("Menu");
         }
 	}
 

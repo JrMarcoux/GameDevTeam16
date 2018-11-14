@@ -39,12 +39,14 @@ public class MainMenu : MonoBehaviour {
         PlayerPrefs.SetInt("levelDepth", levelDepth);
         PlayerPrefs.SetInt("nbDecors", nbDecors);
         PlayerPrefs.Save();
-        SceneManager.LoadScene(1);
+        ApplicationModel.sceneToLoad = "combatScene";
+        SceneManager.LoadScene("loadingScene");
     }
 	public void PlayMultiplayer()
 		{
-		    SceneManager.LoadScene(2);
-		}
+            ApplicationModel.sceneToLoad = "multiplayerScene";
+            SceneManager.LoadScene("loadingScene");
+        }
     public void QuitGame()
     {
         Application.Quit();

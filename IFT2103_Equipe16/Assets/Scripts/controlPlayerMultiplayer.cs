@@ -80,7 +80,7 @@ public class controlPlayerMultiplayer : NetworkBehaviour
 			{
 				NetworkManager.Shutdown();
 				Destroy(networkManager);
-				SceneManager.LoadScene(0);
+				SceneManager.LoadScene("Menu");
 			}
 		}
 				

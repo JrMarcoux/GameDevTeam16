@@ -42,12 +42,17 @@ public class MainMenu : MonoBehaviour {
         ApplicationModel.sceneToLoad = "combatScene";
         SceneManager.LoadScene("loadingScene");
     }
-	public void PlayMultiplayer()
+	public void PlayLanMultiplayer()
 		{
             ApplicationModel.sceneToLoad = "multiplayerScene";
             SceneManager.LoadScene("loadingScene");
         }
-    public void QuitGame()
+	public void PlayOnlineMultiplayer()
+	{
+		ApplicationModel.sceneToLoad = "PUNmultiplayerScene";
+		SceneManager.LoadScene("loadingScene");
+	}
+	public void QuitGame()
     {
         Application.Quit();
     }

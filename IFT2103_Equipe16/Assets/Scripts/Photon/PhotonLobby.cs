@@ -11,6 +11,7 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
 	public static PhotonLobby lobby;
 	public GameObject battleButton;
 	public GameObject cancelButton;
+	public GameObject waitButton;
 
 	private void Awake()
 	{
@@ -33,6 +34,7 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
 		Debug.Log("click battle button");
 		battleButton.SetActive(false);
 		cancelButton.SetActive(true);
+		waitButton.SetActive(true);
 		PhotonNetwork.JoinRandomRoom(); 
 	}
 	public override void OnJoinRandomFailed(short returnCode, string message)
@@ -62,6 +64,7 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
 		Debug.Log("click cancel button");
 		cancelButton.SetActive(false);
 		battleButton.SetActive(true);
+		waitButton.SetActive(false);
 		PhotonNetwork.LeaveRoom();
 	}
 

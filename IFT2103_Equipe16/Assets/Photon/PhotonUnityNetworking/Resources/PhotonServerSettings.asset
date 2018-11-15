@@ -35,4 +35,6 @@ MonoBehaviour:
   - RPC_LoadedGameScene
   - RPC_Fire
   - RPC_TakeDamage
+  - RPC_SetTagPlayer
+  - RPC_setTag
   DisableAutoOpenWizard: 1

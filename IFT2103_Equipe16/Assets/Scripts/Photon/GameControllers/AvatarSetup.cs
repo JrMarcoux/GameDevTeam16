@@ -9,17 +9,26 @@ public class AvatarSetup : MonoBehaviour {
 	public GameObject myCharacter;
 	public Sprite spriteLocal;
 	public RuntimeAnimatorController animatorController;
+	public Vector3 spawnPosition;
 
 
 	void Start() {
 		PV = GetComponent<PhotonView>();
 		if (PV.IsMine)
 		{
+
 			GetComponent<SpriteRenderer>().sprite = spriteLocal;
 			GetComponent<Animator>().runtimeAnimatorController = animatorController;
 			myCharacter = gameObject;
 		}
+			
 		
+	}
+
+	[PunRPC]
+	void RPC_setTag(string tagName)
+	{
+		gameObject.tag = tagName;
 	}
 	
 }

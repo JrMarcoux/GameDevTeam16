@@ -377,6 +377,7 @@ MonoBehaviour:
   myCharacter: {fileID: 0}
   spriteLocal: {fileID: 21300000, guid: a62e2f93354fc2445a05885bdcc68425, type: 3}
   animatorController: {fileID: 9100000, guid: 4df34627e2b3a7743a64631890976cde, type: 2}
+  spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &114663744726316848
 MonoBehaviour:
   m_ObjectHideFlags: 1

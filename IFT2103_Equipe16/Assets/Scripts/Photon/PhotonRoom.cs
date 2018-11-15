@@ -62,7 +62,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks {
 		readyToCount = false;
 		readyToStart = false;
 		lessThanMaxPlayers = startingTime;
-		atMaxPlayer = 6;
+		atMaxPlayer = 0;
 		timeToStart = startingTime;
 	}
 	
@@ -171,7 +171,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks {
 	{
 		lessThanMaxPlayers = startingTime;
 		timeToStart = startingTime;
-		atMaxPlayer = 6;
+		atMaxPlayer = 0;
 		readyToCount = false;
 		readyToStart = false;
 

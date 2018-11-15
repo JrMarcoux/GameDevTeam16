@@ -33,4 +33,6 @@ MonoBehaviour:
   - RespawnSpaceship
   - RPC_CreatePlayer
   - RPC_LoadedGameScene
+  - RPC_Fire
+  - RPC_TakeDamage
   DisableAutoOpenWizard: 1

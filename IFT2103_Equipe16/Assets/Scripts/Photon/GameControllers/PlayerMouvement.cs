@@ -7,8 +7,6 @@ public class PlayerMouvement : MonoBehaviour {
 
 	private PhotonView PV;
 	public float speed = 1f;
-	public Sprite spriteLocal;
-	public RuntimeAnimatorController animatorController;
 	public GameObject bulletObject;
 	public Transform bulletSpawnLeft;
 	public Transform bulletSpawnRight;
@@ -43,72 +41,72 @@ public class PlayerMouvement : MonoBehaviour {
 
 	void Mouvement()
 	{
-			if (Input.GetKey(GetKeyPrefs("Down")))
+		if (Input.GetKey(GetKeyPrefs("Down")))
+		{
+			if (transform.position.z > zMinLimit)
 			{
-				if (transform.position.z > zMinLimit)
-				{
-					transform.Translate(0f, 0f, -speed * Time.deltaTime);
+				transform.Translate(0f, 0f, -speed * Time.deltaTime);
 
-				}
-			}
-			if (Input.GetKey(GetKeyPrefs("Up")))
-			{
-				if (transform.position.z < zMaxLimit)
-				{
-					transform.Translate(0f, 0f, speed * Time.deltaTime);
-
-				}
-			}
-			if (Input.GetKey(GetKeyPrefs("Right")))
-			{
-				if (transform.position.x < xMaxLimit)
-				{
-					transform.Translate(speed * Time.deltaTime, 0f, 0f);
-
-				}
-			}
-			if (Input.GetKey(GetKeyPrefs("Left")))
-			{
-				if (transform.position.x > xMinLimit)
-				{
-					transform.Translate(-speed * Time.deltaTime, 0f, 0f);
-				}
-			}
-			if ((Input.GetKeyDown(GetKeyPrefs("Fire"))) && (allowFire))
-			{
-				//CmdFire();
-				//StartCoroutine(waitForFire());
-			}
-			if (Input.GetKeyDown(KeyCode.Escape))
-			{
-				//NetworkManager.Shutdown();
-				//Destroy(networkManager);
-				//SceneManager.LoadScene("Menu");
 			}
 		}
+		if (Input.GetKey(GetKeyPrefs("Up")))
+		{
+			if (transform.position.z < zMaxLimit)
+			{
+				transform.Translate(0f, 0f, speed * Time.deltaTime);
+
+			}
+		}
+		if (Input.GetKey(GetKeyPrefs("Right")))
+		{
+			if (transform.position.x < xMaxLimit)
+			{
+				transform.Translate(speed * Time.deltaTime, 0f, 0f);
+
+			}
+		}
+		if (Input.GetKey(GetKeyPrefs("Left")))
+		{
+			if (transform.position.x > xMinLimit)
+			{
+				transform.Translate(-speed * Time.deltaTime, 0f, 0f);
+			}
+		}
+		if ((Input.GetKeyDown(GetKeyPrefs("Fire"))) && (allowFire))
+		{
+			PV.RPC("RPC_Fire", RpcTarget.All);
+			//StartCoroutine(waitForFire());
+		}
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			//NetworkManager.Shutdown();
+			//Destroy(networkManager);
+			//SceneManager.LoadScene("Menu");
+		}
+	}
 
 
 	public KeyCode GetKeyPrefs(string keyName)
 	{
 		return (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(keyName));
 	}
-	/*
-	[Command]
-	void CmdFire()
+	
+	[PunRPC]
+	void RPC_Fire()
 	{
 
 		if (transform.position.x > 0)
 		{
 			var bullet = (GameObject)Instantiate(bulletObject, bulletSpawnLeft.position, bulletSpawnLeft.rotation);
 			bullet.GetComponent<Rigidbody>().velocity = bullet.transform.right * -velocityBulletSpeed;
-			NetworkServer.Spawn(bullet);
+			//NetworkServer.Spawn(bullet);
 			Destroy(bullet, 2.0f);
 		}
 		else if (transform.position.x < 0)
 		{
 			var bullet = (GameObject)Instantiate(bulletObject, bulletSpawnRight.position, bulletSpawnRight.rotation);
 			bullet.GetComponent<Rigidbody>().velocity = bullet.transform.right * velocityBulletSpeed;
-			NetworkServer.Spawn(bullet);
+			//NetworkServer.Spawn(bullet);
 			Destroy(bullet, 2.0f);
 		}
 
@@ -123,13 +121,5 @@ public class PlayerMouvement : MonoBehaviour {
 		allowFire = true;
 	}
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}*/
+
 }

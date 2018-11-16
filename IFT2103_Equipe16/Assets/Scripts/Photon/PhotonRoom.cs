@@ -165,6 +165,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks {
 			PhotonNetwork.CurrentRoom.IsOpen = false;
 		}
 		PhotonNetwork.LoadLevel(MultiplayerSetting.multiplayerSetting.multiplayerScene);
+		
 	}
 
 	void RestartTimer()
@@ -208,6 +209,13 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks {
 	private void RPC_CreatePlayer()
 	{
 		PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonNetworkPlayer"), transform.position, Quaternion.identity,0);
+	}
+
+	public override void OnPlayerLeftRoom(Player otherPlayer)
+	{
+		base.OnPlayerLeftRoom(otherPlayer);
+		Debug.Log(otherPlayer.NickName + "has left the game");
+		playerInGame--;
 	}
 
 

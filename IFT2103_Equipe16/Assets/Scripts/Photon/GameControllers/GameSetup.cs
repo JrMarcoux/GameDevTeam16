@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameSetup : MonoBehaviour {
 
@@ -16,13 +18,16 @@ public class GameSetup : MonoBehaviour {
 		}
 	}
 
-	// Use this for initialization
-	void Start () {
-		
+	public void DisconnectPLayer()
+	{
+		StartCoroutine(Disconect());
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	IEnumerator Disconect()
+	{
+		PhotonNetwork.Disconnect();
+		while(PhotonNetwork.IsConnected)
+			yield return null;
+		SceneManager.LoadScene(4);
 	}
 }

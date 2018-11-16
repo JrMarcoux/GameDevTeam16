@@ -3,8 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using UnityEngine.SceneManagement;
 
 public class PhotonLobby : MonoBehaviourPunCallbacks {
 
@@ -68,7 +67,9 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
 		PhotonNetwork.LeaveRoom();
 	}
 
-	void Update () {
-		
+	public void OnMenuButtonClicked()
+	{
+		PhotonNetwork.Disconnect();
+		SceneManager.LoadScene(0);
 	}
 }

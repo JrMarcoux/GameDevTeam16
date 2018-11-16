@@ -7,6 +7,8 @@ public class controlPlayer : MonoBehaviour
     private GameObject gameManager;
 
     public float speed = 1f;
+    public float jumpSpeed = 3f;
+    private float delayJump = 0;
 
     void Start()
     {
@@ -42,6 +44,11 @@ public class controlPlayer : MonoBehaviour
         if (Input.GetKeyDown(GetKeyPrefs("ChgTarget")))
         {
             gameManager.GetComponent<GameManager>().changeSelectTarget(gameManager.GetComponent<GameManager>().playerTag);
+        }
+        if (Input.GetKeyDown(GetKeyPrefs("Jump")) && Time.time > delayJump)
+        {
+            GetComponent<Rigidbody>().velocity += jumpSpeed * Vector3.up;
+            delayJump = Time.time + 0.8f;
         }
     }
 

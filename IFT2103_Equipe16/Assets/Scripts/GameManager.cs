@@ -147,10 +147,6 @@ public class GameManager : MonoBehaviour {
 	
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Escape))//quitter la partie avec Escape
-		{
-            SceneManager.LoadScene("Menu");
-        }
         if (chronoActive)
         {
             chrono -= Time.deltaTime;

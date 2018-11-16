@@ -25,6 +25,8 @@ TagManager:
   - ProgressBar
   - Bullet
   - PhotonPlayer
+  - PipePlayer1
+  - PipePlayer2
   layers:
   - Default
   - TransparentFX

@@ -188,7 +188,10 @@
      <Compile Include="Assets\Scripts\Photon\GameControllers\PlayerMouvement.cs" />
      <Compile Include="Assets\Scripts\Photon\MultiplayerSetting.cs" />
      <Compile Include="Assets\Scripts\Photon\PhotonbulletScript.cs" />
+     <Compile Include="Assets\Scripts\Photon\PhotonControlBot.cs" />
+     <Compile Include="Assets\Scripts\Photon\PhotonFireBallScript.cs" />
      <Compile Include="Assets\Scripts\Photon\PhotonLobby.cs" />
+     <Compile Include="Assets\Scripts\Photon\PhotonPhysique.cs" />
      <Compile Include="Assets\Scripts\Photon\PhotonRoom.cs" />
      <Compile Include="Assets\Scripts\Photon\playerInfo.cs" />
      <Compile Include="Assets\Scripts\playersLivesScript.cs" />

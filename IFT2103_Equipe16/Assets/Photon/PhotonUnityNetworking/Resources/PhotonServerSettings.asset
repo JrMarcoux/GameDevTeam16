@@ -37,4 +37,6 @@ MonoBehaviour:
   - RPC_TakeDamage
   - RPC_SetTagPlayer
   - RPC_setTag
+  - RPC_BalisticPhysics
+  - RPC_Bots
   DisableAutoOpenWizard: 1

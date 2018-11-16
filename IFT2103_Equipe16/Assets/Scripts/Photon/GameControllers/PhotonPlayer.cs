@@ -12,13 +12,16 @@ public class PhotonPlayer : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		PV = GetComponent<PhotonView>();
-		int spawnPicker = Random.Range(0, GameSetup.GS.spawnPoints.Length);
+		
 		if (PhotonNetwork.IsMasterClient)
 		{
 			if (PV.IsMine)
 			{
 				myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerAvatar"),
 					GameSetup.GS.spawnPoints[0].position, GameSetup.GS.spawnPoints[0].rotation, 0);
+				myAvatar.tag = "Player1";
+				PhotonNetwork.InstantiateSceneObject(Path.Combine("PhotonPrefabs", "PhotonBotP1"), GameSetup.GS.spawnBotP1.transform.position, GameSetup.GS.spawnBotP1.transform.rotation, 0);
+				PhotonNetwork.InstantiateSceneObject(Path.Combine("PhotonPrefabs", "PhotonBotP2"), GameSetup.GS.spawnBotP2.transform.position, GameSetup.GS.spawnBotP2.transform.rotation, 0);
 			}
 		}else
 		{
@@ -26,6 +29,7 @@ public class PhotonPlayer : MonoBehaviour {
 			{
 				myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerAvatar"),
 					GameSetup.GS.spawnPoints[1].position, GameSetup.GS.spawnPoints[1].rotation, 0);
+				myAvatar.tag = "Player2";
 			}
 		}
 		
@@ -33,6 +37,13 @@ public class PhotonPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
+	}
+
+	[PunRPC]
+	private void RPC_Bots()
+	{
+		PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonBotP1"), GameSetup.GS.spawnBotP1.transform.position, GameSetup.GS.spawnBotP1.transform.rotation, 0);
 		
 	}
 }

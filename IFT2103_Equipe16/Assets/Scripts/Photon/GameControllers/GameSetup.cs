@@ -10,6 +10,9 @@ public class GameSetup : MonoBehaviour {
 
 	public Transform[] spawnPoints;
 
+	public GameObject spawnBotP1;
+	public GameObject spawnBotP2;
+
 	private void OnEnable()
 	{
 		if(GameSetup.GS == null)

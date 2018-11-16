@@ -39,4 +39,6 @@ MonoBehaviour:
   - RPC_setTag
   - RPC_BalisticPhysics
   - RPC_Bots
+  - RPC_transmitVelcocity
+  - RPC_lauchBalistic
   DisableAutoOpenWizard: 1

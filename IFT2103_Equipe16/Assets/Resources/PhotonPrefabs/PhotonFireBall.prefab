@@ -26,8 +26,8 @@ GameObject:
   - component: {fileID: 198630141505901302}
   - component: {fileID: 199518721727037404}
   - component: {fileID: 114370741533528758}
-  - component: {fileID: 114883939751758912}
   - component: {fileID: 114259664926184456}
+  - component: {fileID: 114953010025894368}
   m_Layer: 0
   m_Name: PhotonFireBall
   m_TagString: Untagged
@@ -122,7 +122,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114883939751758912}
+  - {fileID: 114953010025894368}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   verticalMaxDisplacement: 2
   gravity: -18
---- !u!114 &114883939751758912
+--- !u!114 &114953010025894368
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,12 +147,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1146529808261258}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f67a6f47083c064d9621c8ceb909073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
+  SyncRate: 8.11
 --- !u!135 &135537314818911924
 SphereCollider:
   m_ObjectHideFlags: 1

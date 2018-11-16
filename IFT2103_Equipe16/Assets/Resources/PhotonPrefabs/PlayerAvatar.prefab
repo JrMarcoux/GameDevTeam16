@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 212125663883408434}
   - component: {fileID: 95538495242036394}
   - component: {fileID: 114155027932583930}
-  - component: {fileID: 114152173708298138}
+  - component: {fileID: 114956233979709118}
   - component: {fileID: 114159712211838550}
   - component: {fileID: 114584387209001938}
   - component: {fileID: 114226558698643288}
@@ -205,20 +205,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114152173708298138
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1245477718944098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
 --- !u!114 &114154613373318768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -263,7 +249,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114152173708298138}
+  - {fileID: 114956233979709118}
   viewIdField: 0
   InstantiationId: 1
   isRuntimeInstantiated: 0
@@ -394,6 +380,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114956233979709118
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1245477718944098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f67a6f47083c064d9621c8ceb909073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncRate: 7
 --- !u!212 &212125663883408434
 SpriteRenderer:
   m_ObjectHideFlags: 1

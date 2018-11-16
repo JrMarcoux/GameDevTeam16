@@ -94,14 +94,12 @@ public class PlayerMouvement : MonoBehaviour {
 		{
 			var bullet = (GameObject)Instantiate(bulletObject, bulletSpawnLeft.position, bulletSpawnLeft.rotation);
 			bullet.GetComponent<Rigidbody>().velocity = bullet.transform.right * -velocityBulletSpeed;
-			//NetworkServer.Spawn(bullet);
 			Destroy(bullet, 2.0f);
 		}
 		else if (transform.position.x < 0)
 		{
 			var bullet = (GameObject)Instantiate(bulletObject, bulletSpawnRight.position, bulletSpawnRight.rotation);
 			bullet.GetComponent<Rigidbody>().velocity = bullet.transform.right * velocityBulletSpeed;
-			//NetworkServer.Spawn(bullet);
 			Destroy(bullet, 2.0f);
 		}
 

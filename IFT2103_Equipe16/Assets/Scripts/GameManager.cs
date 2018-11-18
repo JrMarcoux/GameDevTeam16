@@ -199,4 +199,16 @@ public class GameManager : MonoBehaviour {
             selectedEnemyTarget = (selectedEnemyTarget + 1) % playerAvatarsAlive.Count;
         }
     }
+
+    public GameObject GetSelectedCharacter()
+    {
+        if(teamTurn == playerTag)
+        {
+            return playerAvatarsAlive[selectedPlayerAvatar];
+        }
+        else
+        {
+            return enemiesAlive[selectedEnemyAvatar];
+        }
+    }
 }

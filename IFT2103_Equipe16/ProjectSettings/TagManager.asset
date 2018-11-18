@@ -27,6 +27,7 @@ TagManager:
   - PhotonPlayer
   - PipePlayer1
   - PipePlayer2
+  - Decor
   layers:
   - Default
   - TransparentFX

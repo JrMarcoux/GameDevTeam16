@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -562,7 +562,7 @@ GameObject:
   m_Layer: 0
   m_Name: levelGenerator
   m_TagString: Game manager
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -603,10 +603,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tiles:
-  - {fileID: 1117198655446886, guid: abd61905658fa2e4390fc89aa37acfc7, type: 2}
+  - {fileID: 1500956264263158, guid: 26334e6e03afae0419094ede5f5a319a, type: 2}
   - {fileID: 1117198655446886, guid: 2fea0b657ac47f6499cf05336afc4bb3, type: 2}
-  - {fileID: 1117198655446886, guid: d70412b2acbff474a9ed9d065e891edc, type: 2}
-  - {fileID: 1938637704507498, guid: c6508fd22a046b040be600d36b90c847, type: 2}
+  - {fileID: 1029550740900280, guid: de60dd45e9da49843ba30a3305790f28, type: 2}
+  - {fileID: 1757877761196698, guid: d11a007e9cc1c314d82f27b588815ea2, type: 2}
   TileSize: 1
   WaitTime: 0
   Wall: {fileID: 1938637704507498, guid: cdcff34fc24cd58428d79c04f0573f76, type: 2}

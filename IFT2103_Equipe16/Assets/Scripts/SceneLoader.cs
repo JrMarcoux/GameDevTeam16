@@ -18,8 +18,6 @@ public class SceneLoader : MonoBehaviour
     void Start()
     {
         sceneToLoad = ApplicationModel.sceneToLoad;
-        minTime = 2f;
-        t = 0;
         progressBar = this.GetComponent<Image>();
         StartCoroutine(LoadNewScene());
     }
@@ -29,20 +27,10 @@ public class SceneLoader : MonoBehaviour
         // load la scène de façons asynchrone
         async = SceneManager.LoadSceneAsync(sceneToLoad);
 
-        //empêche la scène de démarrer avant le temps minimal d'attente
-        async.allowSceneActivation = false;
-
         while (!async.isDone)
         {
             //fait progresser la barre de progression en fonction de la scène à loader
             progressBar.fillAmount = Mathf.Clamp01(async.progress / 0.9f);
-            t += Time.deltaTime;
-
-            //vérifie si le temps minimal d'attente est terminé
-            if (t > minTime)
-            {
-                async.allowSceneActivation = true;
-            }
 
             yield return null;
         }

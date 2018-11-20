@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour {
     public float chrono = 4;
     private bool chronoActive = false;
 
+    private powerBarScript powerBar;
+    private float distance;
+
     void Start () {
 
         players = GameObject.FindGameObjectsWithTag(playerTag);
@@ -154,6 +157,16 @@ public class GameManager : MonoBehaviour {
         if(chrono <= 0)
         {
             SceneManager.LoadScene("Menu");
+        }
+        if(teamTurn == playerTag)
+        {
+            distance = (playerAvatarsAlive[selectedPlayerAvatar].transform.position - enemiesAlive[selectedPlayerTarget].transform.position).magnitude;
+            powerBar.ChangeSpeed(distance);
+        }
+        else if(teamTurn == enemiesTag)
+        {
+            distance = (enemiesAlive[selectedEnemyAvatar].transform.position - playerAvatarsAlive[selectedEnemyTarget].transform.position).magnitude;
+            powerBar.ChangeSpeed(distance);
         }
 	}
 

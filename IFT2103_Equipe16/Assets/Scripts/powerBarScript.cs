@@ -9,18 +9,20 @@ public class powerBarScript : MonoBehaviour {
 
     public Image powerBar;
     public float speed = 1f;
-    public float addSpeed = 0.5f;
+    private float addSpeed;
+    private float maxSpeed;
 
 	
 	void Start () {
         powerBar = GetComponent<Image>();
-	}
+        maxSpeed = 3/PlayerPrefs.GetInt("levelWidth");
+    }
 	
 	//change la longeur de la barre en fonction du temps
 	void Update () {
         if (powerBarMoving == true)
         {
-            powerBar.fillAmount = Mathf.PingPong(Time.time*speed, 1);
+            powerBar.fillAmount = Mathf.PingPong(Time.time*speed*addSpeed, 1);
         }
 	}
     //activer ou désactiver le mouvement si tour commencé ou en attente du prochain
@@ -39,8 +41,8 @@ public class powerBarScript : MonoBehaviour {
         return powerBar.fillAmount;
     }
     //la vitesse augmente à chaque tour
-    public void IncreaseSpeed()
+    public void ChangeSpeed(float distance)
     {
-        speed += addSpeed;
+        addSpeed = distance * maxSpeed;
     }
 }

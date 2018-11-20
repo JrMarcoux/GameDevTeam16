@@ -92,7 +92,6 @@ public class RangeAttack : MonoBehaviour {
             target.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 5);
             gameManager.GetComponent<GameManager>().playerAvatarsAlive[gameManager.GetComponent<GameManager>().selectedPlayerAvatar].GetComponent<controlPlayer>().enabled = false;
             gameManager.GetComponent<GameManager>().playerAvatarsAlive.Remove(target);
-            powerBar.IncreaseSpeed();
             DestroyProjectile();
         }
 		else if (col.gameObject.tag == gameManager.GetComponent<GameManager>().enemiesTag)
@@ -102,7 +101,6 @@ public class RangeAttack : MonoBehaviour {
             target.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 5);
             gameManager.GetComponent<GameManager>().enemiesAlive[gameManager.GetComponent<GameManager>().selectedEnemyAvatar].GetComponent<IAEnemyScript>().enabled = false;
             gameManager.GetComponent<GameManager>().enemiesAlive.Remove(target);
-            powerBar.IncreaseSpeed();
             DestroyProjectile();
         }  
         else if (col.gameObject.tag == "AABB")

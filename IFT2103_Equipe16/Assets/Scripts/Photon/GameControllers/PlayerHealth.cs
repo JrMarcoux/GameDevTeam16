@@ -12,15 +12,15 @@ public class PlayerHealth : MonoBehaviour {
 	private Vector3 spawnPosition;
 	private PhotonView PV;
 	public GameObject myCharacter;
-
-
-
+	private GameObject GS;
+	private bool IsDead = false;
+	private bool stopUpdate = false;
 
 
 
 	void Start()
 	{
-
+		GS = GameObject.FindGameObjectWithTag("GameSetup");
 		PV = GetComponent<PhotonView>();
 		if (PV.IsMine)
 		{
@@ -28,67 +28,49 @@ public class PlayerHealth : MonoBehaviour {
 			myCharacter = gameObject;
 		}
 
-		/*if (isLocalPlayer)
-		{
-			int nbPLayer = GameObject.FindGameObjectsWithTag("Player").Length;
-			if (nbPLayer > 1)
-			{
-				gameObject.tag = "Player2";
-				spawnPosition = GameObject.FindGameObjectWithTag("SpawnPlayer2").transform.position;
-				gameObject.GetComponent<controlPlayerMultiplayer>().xMinLimit = GameObject.FindGameObjectWithTag("SpawnPlayer2").GetComponent<spawnPositionMulti>().xMinLimit;
-				gameObject.GetComponent<controlPlayerMultiplayer>().xMaxLimit = GameObject.FindGameObjectWithTag("SpawnPlayer2").GetComponent<spawnPositionMulti>().xMaxLimit;
-				gameObject.GetComponent<controlPlayerMultiplayer>().zMinLimit = GameObject.FindGameObjectWithTag("SpawnPlayer2").GetComponent<spawnPositionMulti>().zMinLimit;
-				gameObject.GetComponent<controlPlayerMultiplayer>().zMaxLimit = GameObject.FindGameObjectWithTag("SpawnPlayer2").GetComponent<spawnPositionMulti>().zMaxLimit;
-				CmdstartBotFire();
-
-			}
-			else
-			{
-				gameObject.tag = "Player1";
-				spawnPosition = GameObject.FindGameObjectWithTag("SpawnPlayer1").transform.position;
-				gameObject.GetComponent<controlPlayerMultiplayer>().xMinLimit = GameObject.FindGameObjectWithTag("SpawnPlayer1").GetComponent<spawnPositionMulti>().xMinLimit;
-				gameObject.GetComponent<controlPlayerMultiplayer>().xMaxLimit = GameObject.FindGameObjectWithTag("SpawnPlayer1").GetComponent<spawnPositionMulti>().xMaxLimit;
-				gameObject.GetComponent<controlPlayerMultiplayer>().zMinLimit = GameObject.FindGameObjectWithTag("SpawnPlayer1").GetComponent<spawnPositionMulti>().zMinLimit;
-				gameObject.GetComponent<controlPlayerMultiplayer>().zMaxLimit = GameObject.FindGameObjectWithTag("SpawnPlayer1").GetComponent<spawnPositionMulti>().zMaxLimit;
-
-
-			}
-			transform.position = spawnPosition;
-		}*/
 	}
 
 	void Update()
 	{
-		
-		
-		/*
-		//le joueur tombe en bas de la plateforme
-		if (transform.position.y < -10)
+		if (!stopUpdate)
 		{
-			currentHealth = maxHealth;
-			RpcRespawn();
+			if (IsDead)
+			{
+				PV.RPC("RPC_FinishGame", RpcTarget.AllBuffered);
+			}
+			if (GS.GetComponent<GameSetup>().GameIsFinish)
+			{
+				stopUpdate = true;
+				if (PV.IsMine)
+				{
+					GameObject.FindGameObjectWithTag("MainCamera").GetComponent<EndGameCamera>().target = gameObject.transform;
+					GameObject.FindGameObjectWithTag("MainCamera").GetComponent<EndGameCamera>().fallow = true;
+					if (IsDead)
+					{
+						GS.GetComponent<GameSetup>().playerLoser = true;
+					}
+					GS.GetComponent<GameSetup>().activeEndGameButton();
+				}
+			}
 		}
-
-		*/
+		
 	}
 	public void TakeDamage(int dmg)
 	{
-		if (PV.IsMine)
+		if (!GS.GetComponent<GameSetup>().GameIsFinish)
 		{
-			PV.RPC("RPC_TakeDamage", RpcTarget.AllBuffered, dmg);
+			if (PV.IsMine)
+			{
+				PV.RPC("RPC_TakeDamage", RpcTarget.AllBuffered, dmg);
+			}
 		}
+		
+	}
 
-		/*
-		if (!isServer) // c'est seulement le serveur qui applique les dommages
-		{
-			return;
-		}
-		currentHealth -= dmg;
-		if (currentHealth <= 0)
-		{
-			currentHealth = maxHealth;
-			RpcRespawn();
-		}*/
+	[PunRPC]
+	void RPC_FinishGame()
+	{
+		GS.GetComponent<GameSetup>().GameIsFinish = true;
 	}
 
 	[PunRPC]
@@ -97,40 +79,13 @@ public class PlayerHealth : MonoBehaviour {
 		currentHealth -= dmg;
 		if (currentHealth <= 0)
 		{
-			currentHealth = maxHealth;
+			//currentHealth = maxHealth;
+			IsDead = true;
 			
-			//RpcRespawn();
+
 		}
 		healthBar.sizeDelta = new Vector2(currentHealth, healthBar.sizeDelta.y);
 	}
-	/*
-	//changer la barre de vie en fonction de la vie 
-	void changeHealth(int health)
-	{
-		healthBar.sizeDelta = new Vector2(health, healthBar.sizeDelta.y);
-	}
-	*/
 
-		/*
-	[Command]
-	void CmdstartBotFire()
-	{
-		GameObject.FindGameObjectWithTag("BotP1").GetComponent<controlBotMultiplayer>().CmdFire();
-		GameObject.FindGameObjectWithTag("BotP2").GetComponent<controlBotMultiplayer>().CmdFire();
-	}
-
-	*/
-	/*
-	//Respawn du joueur local
-	[ClientRpc]
-	void RpcRespawn()
-	{
-		if (isLocalPlayer)
-		{
-
-			transform.position = spawnPosition;
-		}
-	}
-	*/
 
 }

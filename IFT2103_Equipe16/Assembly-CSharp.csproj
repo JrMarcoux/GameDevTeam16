@@ -183,6 +183,7 @@
      <Compile Include="Assets\Scripts\MainMenu.cs" />
      <Compile Include="Assets\Scripts\MapElement.cs" />
      <Compile Include="Assets\Scripts\pauseScript.cs" />
+     <Compile Include="Assets\Scripts\Photon\EndGameCamera.cs" />
      <Compile Include="Assets\Scripts\Photon\GameControllers\AvatarSetup.cs" />
      <Compile Include="Assets\Scripts\Photon\GameControllers\CustomSync.cs" />
      <Compile Include="Assets\Scripts\Photon\GameControllers\GameSetup.cs" />

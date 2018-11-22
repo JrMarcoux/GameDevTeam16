@@ -20,15 +20,12 @@ public class PhotonControlBot : MonoBehaviour
 	public float verticalMaxDisplacement = 2f;
 	[Range(-0.01f, -100)]
 	public float gravity = -18f;
+	private GameObject GS;
 
-	public void changeSprite()
-	{
-		//changer le sprite et l'animation
-		GetComponent<SpriteRenderer>().sprite = spriteLocal;
-		GetComponent<Animator>().runtimeAnimatorController = animatorController;
-	}
+	
 	void Start()
 	{
+		GS = GameObject.FindGameObjectWithTag("GameSetup");
 		PV = GetComponent<PhotonView>();
 		if (PhotonNetwork.IsMasterClient)
 		{
@@ -36,7 +33,14 @@ public class PhotonControlBot : MonoBehaviour
 		}
 		
 	}
-	
+
+	public void changeSprite()
+	{
+		//changer le sprite et l'animation
+		GetComponent<SpriteRenderer>().sprite = spriteLocal;
+		GetComponent<Animator>().runtimeAnimatorController = animatorController;
+	}
+
 
 	[PunRPC]
 	public void RPC_Fire()
@@ -65,10 +69,14 @@ public class PhotonControlBot : MonoBehaviour
 	IEnumerator waitAndFire(float time)
 	{
 		yield return new WaitForSeconds(time);
-		if (PhotonNetwork.IsMasterClient)
+		if (!GS.GetComponent<GameSetup>().GameIsFinish)
 		{
-			PV.RPC("RPC_Fire", RpcTarget.All);
+			if (PhotonNetwork.IsMasterClient)
+			{
+				PV.RPC("RPC_Fire", RpcTarget.All);
+			}
 		}
+			
 	}
 
 

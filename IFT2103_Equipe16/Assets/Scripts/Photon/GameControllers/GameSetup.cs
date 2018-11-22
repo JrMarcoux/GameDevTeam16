@@ -13,6 +13,15 @@ public class GameSetup : MonoBehaviour {
 	public GameObject spawnBotP1;
 	public GameObject spawnBotP2;
 
+	public bool GameIsFinish = false;
+
+	public GameObject DisconectBtn;
+	public GameObject MainMenuBtn;
+	public GameObject OnlineMenuBtn;
+	public GameObject VictoryTxt;
+	public GameObject DeafeatTxt;
+	public bool playerLoser = false;
+
 	private void OnEnable()
 	{
 		if(GameSetup.GS == null)
@@ -32,5 +41,30 @@ public class GameSetup : MonoBehaviour {
 		while(PhotonNetwork.IsConnected)
 			yield return null;
 		SceneManager.LoadScene(4);
+	}
+	public void ReturnMainMenu()
+	{
+		StartCoroutine(DisconectMainMenu());
+	}
+	IEnumerator DisconectMainMenu()
+	{
+		PhotonNetwork.Disconnect();
+		while (PhotonNetwork.IsConnected)
+			yield return null;
+		SceneManager.LoadScene(0);
+	}
+
+	public void activeEndGameButton()
+	{
+		DisconectBtn.SetActive(false);
+		MainMenuBtn.SetActive(true);
+		OnlineMenuBtn.SetActive(true);
+		if (playerLoser)
+		{
+			DeafeatTxt.SetActive(true);
+		}else
+		{
+			VictoryTxt.SetActive(true);
+		}
 	}
 }

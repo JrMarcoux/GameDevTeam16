@@ -24,7 +24,7 @@ public class PhotonFireBallScript : MonoBehaviour
 		var health = objColl.GetComponent<PlayerHealth>();
 		if (health != null)
 		{
-			health.TakeDamage(10);
+			health.TakeDamage(5);
 		}
 		//Destroy(gameObject);
 	}	

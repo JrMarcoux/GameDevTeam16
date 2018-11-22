@@ -41,4 +41,5 @@ MonoBehaviour:
   - RPC_Bots
   - RPC_transmitVelcocity
   - RPC_lauchBalistic
+  - RPC_FinishGame
   DisableAutoOpenWizard: 1

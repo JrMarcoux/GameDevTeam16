@@ -28,6 +28,7 @@ TagManager:
   - PipePlayer1
   - PipePlayer2
   - Decor
+  - GameSetup
   layers:
   - Default
   - TransparentFX

@@ -76,6 +76,8 @@ public class PlayerMouvement : MonoBehaviour {
 		{
 			PV.RPC("RPC_Fire", RpcTarget.All);
 			StartCoroutine(waitForFire());
+			
+
 		}
 
 	}

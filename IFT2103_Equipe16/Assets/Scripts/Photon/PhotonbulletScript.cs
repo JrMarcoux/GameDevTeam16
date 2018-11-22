@@ -10,7 +10,7 @@ public class PhotonbulletScript : MonoBehaviour {
 		var health = objColl.GetComponent<PlayerHealth>();
 		if (health != null)
 		{
-			health.TakeDamage(20);
+			health.TakeDamage(10);
 		}
 		Destroy(gameObject);
 	}

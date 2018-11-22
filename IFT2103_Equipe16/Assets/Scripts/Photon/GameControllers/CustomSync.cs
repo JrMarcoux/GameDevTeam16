@@ -7,7 +7,7 @@ using Photon.Realtime;
 public class CustomSync : MonoBehaviourPun, IPunObservable
 {
 
-	public float SyncRate = 15;
+	public float Rate = 15;
 	private Vector3 OriginPlayerPosition = Vector3.zero;
 
 
@@ -28,7 +28,7 @@ public class CustomSync : MonoBehaviourPun, IPunObservable
 	{
 		if (!photonView.IsMine)
 		{
-			transform.position = Vector3.Lerp(transform.position, OriginPlayerPosition, Time.deltaTime * this.SyncRate);
+			transform.position = Vector3.Lerp(transform.position, OriginPlayerPosition, Time.deltaTime * this.Rate);
 		}
 	}
 

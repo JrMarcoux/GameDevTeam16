@@ -75,7 +75,7 @@ public class PlayerMouvement : MonoBehaviour {
 		if ((Input.GetKeyDown(GetKeyPrefs("Fire"))) && (allowFire))
 		{
 			PV.RPC("RPC_Fire", RpcTarget.All);
-			//StartCoroutine(waitForFire());
+			StartCoroutine(waitForFire());
 		}
 
 	}

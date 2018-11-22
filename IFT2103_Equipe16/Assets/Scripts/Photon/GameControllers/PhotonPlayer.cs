@@ -20,6 +20,10 @@ public class PhotonPlayer : MonoBehaviour {
 				myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerAvatar"),
 					GameSetup.GS.spawnPoints[0].position, GameSetup.GS.spawnPoints[0].rotation, 0);
 				myAvatar.tag = "Player1";
+				myAvatar.GetComponent<PlayerMouvement>().xMaxLimit = -0.5f;
+				myAvatar.GetComponent<PlayerMouvement>().xMinLimit = -4f;
+				myAvatar.GetComponent<PlayerMouvement>().zMaxLimit = 3.5f;
+				myAvatar.GetComponent<PlayerMouvement>().zMinLimit = -3.5f;
 				PhotonNetwork.InstantiateSceneObject(Path.Combine("PhotonPrefabs", "PhotonBotP1"), GameSetup.GS.spawnBotP1.transform.position, GameSetup.GS.spawnBotP1.transform.rotation, 0);
 				PhotonNetwork.InstantiateSceneObject(Path.Combine("PhotonPrefabs", "PhotonBotP2"), GameSetup.GS.spawnBotP2.transform.position, GameSetup.GS.spawnBotP2.transform.rotation, 0);
 			}
@@ -30,6 +34,10 @@ public class PhotonPlayer : MonoBehaviour {
 				myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerAvatar"),
 					GameSetup.GS.spawnPoints[1].position, GameSetup.GS.spawnPoints[1].rotation, 0);
 				myAvatar.tag = "Player2";
+				myAvatar.GetComponent<PlayerMouvement>().xMaxLimit = 4f;
+				myAvatar.GetComponent<PlayerMouvement>().xMinLimit = 0.5f;
+				myAvatar.GetComponent<PlayerMouvement>().zMaxLimit = 3.5f;
+				myAvatar.GetComponent<PlayerMouvement>().zMinLimit = -3.5f;
 			}
 		}
 		

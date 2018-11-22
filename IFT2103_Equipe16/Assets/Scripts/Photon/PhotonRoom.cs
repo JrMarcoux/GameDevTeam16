@@ -214,6 +214,8 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks {
 	public override void OnPlayerLeftRoom(Player otherPlayer)
 	{
 		base.OnPlayerLeftRoom(otherPlayer);
+		GameObject.FindGameObjectWithTag("GameSetup").GetComponent<GameSetup>().playerHasLeft = true;
+		GameObject.FindGameObjectWithTag("GameSetup").GetComponent<GameSetup>().GameIsFinish = true;
 		Debug.Log(otherPlayer.NickName + "has left the game");
 		playerInGame--;
 	}

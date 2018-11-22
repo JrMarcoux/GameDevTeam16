@@ -276,6 +276,7 @@ MonoBehaviour:
   xMaxLimit: 100
   zMinLimit: -100
   zMaxLimit: 100
+  GS: {fileID: 0}
 --- !u!114 &114226558698643288
 MonoBehaviour:
   m_ObjectHideFlags: 1

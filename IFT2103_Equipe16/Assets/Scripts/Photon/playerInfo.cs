@@ -24,10 +24,5 @@ public class playerInfo : MonoBehaviour {
 		}
 	}
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
 
 }

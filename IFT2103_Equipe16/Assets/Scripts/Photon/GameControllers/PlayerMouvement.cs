@@ -11,20 +11,19 @@ public class PlayerMouvement : MonoBehaviour {
 	public Transform bulletSpawnLeft;
 	public Transform bulletSpawnRight;
 	public float velocityBulletSpeed = 6;
-	//public GameObject networkManager;
 	public bool allowFire = true;
 	public float fireRate = 0.20f;
 	public float xMinLimit = -100f;
 	public float xMaxLimit = 100f; 
 	public float zMinLimit = -100f;
 	public float zMaxLimit = 100f;
+	public GameObject GS;
+	
 
 
 	void Start()
 	{
-		//changer le sprite et l'animation pour le joueur local
-		//GetComponent<SpriteRenderer>().sprite = spriteLocal;
-		//GetComponent<Animator>().runtimeAnimatorController = animatorController;
+		GS = GameObject.FindGameObjectWithTag("GameSetup");
 		PV = GetComponent<PhotonView>();
 
 
@@ -32,7 +31,6 @@ public class PlayerMouvement : MonoBehaviour {
 
 	void Update()
 	{
-		// ignorer les touches si le joueur n'est pas local
 		if (PV.IsMine)
 		{
 			Mouvement();
@@ -72,12 +70,14 @@ public class PlayerMouvement : MonoBehaviour {
 				transform.Translate(-speed * Time.deltaTime, 0f, 0f);
 			}
 		}
+		if (Input.GetKey("escape"))
+		{
+			GS.GetComponent<GameSetup>().EnabledMenu();
+		}
 		if ((Input.GetKeyDown(GetKeyPrefs("Fire"))) && (allowFire))
 		{
 			PV.RPC("RPC_Fire", RpcTarget.All);
 			StartCoroutine(waitForFire());
-			
-
 		}
 
 	}

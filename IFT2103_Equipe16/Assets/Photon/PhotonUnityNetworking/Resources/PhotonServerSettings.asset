@@ -42,4 +42,5 @@ MonoBehaviour:
   - RPC_transmitVelcocity
   - RPC_lauchBalistic
   - RPC_FinishGame
+  - RCP_SendPLayerHasLeft
   DisableAutoOpenWizard: 1

@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour {
 
 	public const int maxHealth = 100;
-	//[SyncVar(hook = "changeHealth")]
 	public int currentHealth;
 	public RectTransform healthBar;
 	private Vector3 spawnPosition;
@@ -79,7 +78,7 @@ public class PlayerHealth : MonoBehaviour {
 		currentHealth -= dmg;
 		if (currentHealth <= 0)
 		{
-			//currentHealth = maxHealth;
+			
 			IsDead = true;
 			
 

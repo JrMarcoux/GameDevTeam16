@@ -15,12 +15,14 @@ public class GameSetup : MonoBehaviour {
 
 	public bool GameIsFinish = false;
 
-	public GameObject DisconectBtn;
 	public GameObject MainMenuBtn;
 	public GameObject OnlineMenuBtn;
 	public GameObject VictoryTxt;
 	public GameObject DeafeatTxt;
+	public GameObject HasLeftTxt;
+	public GameObject GameMenu;
 	public bool playerLoser = false;
+	public bool playerHasLeft = false;
 
 	private void OnEnable()
 	{
@@ -54,15 +56,27 @@ public class GameSetup : MonoBehaviour {
 		SceneManager.LoadScene(0);
 	}
 
+	public void EnabledMenu()
+	{
+		GameMenu.SetActive(true);
+	}
+	public void DisabledMenu()
+	{
+		GameMenu.SetActive(false);
+	}
 	public void activeEndGameButton()
 	{
-		DisconectBtn.SetActive(false);
 		MainMenuBtn.SetActive(true);
 		OnlineMenuBtn.SetActive(true);
 		if (playerLoser)
 		{
 			DeafeatTxt.SetActive(true);
-		}else
+		}
+		else if (playerHasLeft)
+		{
+			HasLeftTxt.SetActive(true);
+		}
+		else
 		{
 			VictoryTxt.SetActive(true);
 		}

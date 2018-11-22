@@ -49,19 +49,15 @@ public class PhotonControlBot : MonoBehaviour
 		if (PhotonNetwork.IsMasterClient)
 		{
 			var bullet = PhotonNetwork.InstantiateSceneObject(Path.Combine("PhotonPrefabs", "PhotonFireBall"), bulletSpawn.position, bulletSpawn.rotation);
-			//var bullet = (GameObject)Instantiate(bulletObject, bulletSpawn.position, bulletSpawn.rotation);
 
 			Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
-			//PV.RPC("RPC_BalisticPhysics", RpcTarget.All, minX, maxX, minZ, maxZ);
 			Vector3 velocity = balisticPhysics(bulletRigidbody, minX, maxX, minZ, maxZ);
 
 			bullet.GetComponent<Rigidbody>().velocity = velocity;
 
 			
 		}
-		//gameObject.GetComponent<BallisticPhysics>().BallisticLaunchMultiplayer(bullet.GetComponent<Rigidbody>(), minX, maxX, minZ, maxZ);
 		
-
 		StartCoroutine(waitAndFire(Random.Range(1f, 3f)));
 
 	}

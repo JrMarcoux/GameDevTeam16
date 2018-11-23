@@ -12,8 +12,10 @@ public class targetPlayerArrowScript : MonoBehaviour {
     }
 	
 	void Update () {
-        focusPosition = gameManager.GetComponent<GameManager>().enemiesAlive[gameManager.GetComponent<GameManager>().selectedPlayerTarget].transform.position;
-        transform.position = new Vector3(0, 1, 0) + focusPosition;
-
+        if (gameManager.GetComponent<GameManager>().enemiesAlive.Count != 0)
+        {
+            focusPosition = gameManager.GetComponent<GameManager>().enemiesAlive[gameManager.GetComponent<GameManager>().selectedPlayerTarget].transform.position;
+            transform.position = new Vector3(0, 1, 0) + focusPosition;
+        }
     }
 }

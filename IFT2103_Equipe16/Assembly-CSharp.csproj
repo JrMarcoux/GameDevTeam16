@@ -182,6 +182,7 @@
      <Compile Include="Assets\Scripts\LevelGenerator.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />
      <Compile Include="Assets\Scripts\MapElement.cs" />
+	 <Compile Include="Assets\Scripts\MapGraph.cs" />
      <Compile Include="Assets\Scripts\pauseScript.cs" />
      <Compile Include="Assets\Scripts\Photon\EndGameCamera.cs" />
      <Compile Include="Assets\Scripts\Photon\GameControllers\AvatarSetup.cs" />

@@ -25,7 +25,6 @@ public class playersLivesScript : MonoBehaviour
         index = 0;
         gameManager = GameObject.FindGameObjectWithTag("Game manager");
         nbrLives = gameManager.GetComponent<GameManager>().playerAvatarsAlive.Count;
-        Debug.Log(nbrLives);
     }
 
     // Update is called once per frame

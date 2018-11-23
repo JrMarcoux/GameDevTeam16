@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour {
         }
         enemyLifes.GetComponent<enemiesLivesScript>().enabled = true;
 
+        powerBar = GameObject.Find("powerBar").GetComponent<powerBarScript>();
         redSprite = GameObject.Find("powerBarRed");
         blueSprite = GameObject.Find("powerBarBlue");
         victory = GameObject.Find("victoryText");

@@ -5,6 +5,7 @@ using UnityEngine;
 public class controlPlayer : MonoBehaviour
 {
     private GameObject gameManager;
+    private cameraScript cameraScript;
 
     public float speed = 1f;
     public float jumpSpeed = 3f;
@@ -13,6 +14,7 @@ public class controlPlayer : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("Game manager");
+        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<cameraScript>();
     }
 
     void Update()
@@ -49,6 +51,14 @@ public class controlPlayer : MonoBehaviour
         {
             GetComponent<Rigidbody>().velocity += jumpSpeed * Vector3.up;
             delayJump = Time.time + 0.8f;
+        }
+        if (Input.GetKeyDown(GetKeyPrefs("Zoom")) && Time.time > delayJump)
+        {
+            cameraScript.Zoom();
+        }
+        if (Input.GetKeyDown(GetKeyPrefs("Unzoom")) && Time.time > delayJump)
+        {
+            cameraScript.Unzoom();
         }
     }
 

@@ -8,7 +8,7 @@ public class keyBindScript : MonoBehaviour {
 
     private Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
 
-    public TMPro.TextMeshProUGUI up, left, down, right, jump, fire, chgCharacter, chgTarget;
+    public TMPro.TextMeshProUGUI up, left, down, right, jump, fire, chgCharacter, chgTarget, zoom, unzoom;
 
     private GameObject currentKey;
 
@@ -23,6 +23,8 @@ public class keyBindScript : MonoBehaviour {
         keys.Add("Right", KeyCode.D);
         keys.Add("Jump", KeyCode.Space);
         keys.Add("Fire", KeyCode.Return);
+        keys.Add("Zoom", KeyCode.UpArrow);
+        keys.Add("Unzoom", KeyCode.DownArrow);
         keys.Add("ChgCharacter", KeyCode.LeftShift);
         keys.Add("ChgTarget", KeyCode.LeftControl);
 
@@ -38,13 +40,11 @@ public class keyBindScript : MonoBehaviour {
         right.text = keys["Right"].ToString();
         jump.text = keys["Jump"].ToString();
         fire.text = keys["Fire"].ToString();
+        zoom.text = keys["Zoom"].ToString();
+        unzoom.text = keys["Unzoom"].ToString();
         chgCharacter.text = keys["ChgCharacter"].ToString();
         chgTarget.text = keys["ChgTarget"].ToString();
     }
-	
-	void Update () {
-		
-	}
 
     void OnGUI()
     {

@@ -19,6 +19,7 @@ namespace Assets.Scripts
             this.Height = height;
             this.TileSize = tileSize;
             this.hasDecor = hasDecor;
+
         }
 
         public Vector3 Position

@@ -35,8 +35,9 @@ public class LevelGenerator : MonoBehaviour
     public GameObject[] EnemyAvatars;
     public GameObject[] DecorObjects;
 
-    //tableau Map
-    private MapElement[,] map;
+    //paramètres tableau Map
+    private MapGraph.Node<MapElement>[,] map;
+    private MapGraph graphStruct;
     private enum height {blue, green, yellow, black};
     private int indexX;
     private int indexZ;
@@ -61,7 +62,8 @@ public class LevelGenerator : MonoBehaviour
         outBoundaries = GameObject.Find("AABB");
         outBoundaries.transform.localScale = (XAmount + 5) * TileSize * new Vector3(1,1,1);
         outBoundaries.transform.position = XAmount/2 * TileSize * new Vector3(1, 0, 1);
-        map = new MapElement[XAmount, ZAmount];
+        map = new MapGraph.Node<MapElement>[XAmount, ZAmount];
+        graphStruct = new MapGraph();
         indexX = 0;
         indexZ = 0;
 
@@ -71,12 +73,11 @@ public class LevelGenerator : MonoBehaviour
 
     IEnumerator GenerateLevel()
     {
-
         for (int i = 1; i < TileAmount + 1; i++)
         {
             float GenPos = i;
             int Tile = Random.Range(0, Tiles.Length);
-
+            //int Tile = Random.Range(0, 2) == 0 ? 1 : 3;
             CreateTile(Tile);
             CallMoveGen(GenPos);
 
@@ -92,7 +93,8 @@ public class LevelGenerator : MonoBehaviour
 
         }
         
-        GetComponent<GameManager>().enabled = true;      
+        GetComponent<GameManager>().enabled = true;
+        CreateGraph();
 
         yield return 0;
     }
@@ -142,6 +144,7 @@ public class LevelGenerator : MonoBehaviour
     void CreateTile(int TileIndex)
     {
         GameObject TileObject;
+        MapElement mapElement;
         int heightnbr = 0;
         string material;
 
@@ -164,8 +167,8 @@ public class LevelGenerator : MonoBehaviour
                 heightnbr = (int)height.yellow;
                 break;
         }
-
-        map[indexX, indexZ] = new MapElement(TileObject.transform.position, heightnbr, TileSize);
+        mapElement = new MapElement(TileObject.transform.position, heightnbr, TileSize);
+        map[indexX, indexZ] = new MapGraph.Node<MapElement>(mapElement, 1);
     }
 
     //Génération des Murs du périmètre
@@ -243,14 +246,85 @@ public class LevelGenerator : MonoBehaviour
             GameObject TileObject;
             int TargetIndex = Random.Range(0, DecorObjects.Length);
             transform.position = new Vector3(Random.Range(0, XAmount * TileSize), SpawnHeight, Random.Range(0, ZAmount * TileSize));
-            map[(int)transform.position.x, (int)transform.position.z].HasDecor = true;
+            map[(int)transform.position.x, (int)transform.position.z].Value.HasDecor = true;
             TileObject = Instantiate(DecorObjects[TargetIndex], transform.position, transform.rotation) as GameObject;
             TileObject.transform.parent = levelParent;
         }
     }
 
-    public MapElement[,] GetMapArray()
+    private void CreateGraph()
+    {
+        for (int z = 0; z < map.GetLength(1); z++)
+        {
+            for (int x = 0; x < map.GetLength(0); x++)
+            {
+                graphStruct.AddNode(map[x, z]);
+
+                if (x > 0)
+                {
+                    if (map[x, z].Value.Height >= map[x - 1, z].Value.Height || (map[x - 1, z].Value.Height - map[x, z].Value.Height) < 3)
+                    {
+                        if (!map[x - 1, z].Value.HasDecor)
+                        {
+                            graphStruct.ConnectNode(map[x, z], map[x - 1, z]);
+                        }
+                    }
+                }
+                if (x < map.GetLength(0) - 1)
+                {
+                    if (map[x, z].Value.Height >= map[x + 1, z].Value.Height || (map[x + 1, z].Value.Height - map[x, z].Value.Height) < 3)
+                    {
+                        if (!map[x + 1, z].Value.HasDecor)
+                        {
+                            graphStruct.ConnectNode(map[x, z], map[x + 1, z]);
+                        }
+                    }
+                }
+
+                if (z > 0)
+                {
+                    if (map[x, z].Value.Height >= map[x, z - 1].Value.Height || (map[x, z - 1].Value.Height - map[x, z].Value.Height) < 3)
+                    {
+                        if (!map[x, z - 1].Value.HasDecor)
+                        {
+                            graphStruct.ConnectNode(map[x, z], map[x, z - 1]);
+                        }
+                    }
+                }
+                if (z < map.GetLength(1) - 1)
+                {
+                    if (map[x, z].Value.Height >= map[x, z + 1].Value.Height || (map[x, z + 1].Value.Height - map[x, z].Value.Height) < 3)
+                    {
+                        if (!map[x, z + 1].Value.HasDecor)
+                        {
+                            graphStruct.ConnectNode(map[x, z], map[x, z + 1]);
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    public MapGraph.Node<MapElement>[,] GetMapArray()
     {
         return map;
+    }
+
+    public MapGraph getGraph()
+    {
+        return graphStruct;
+    }
+
+    public bool PositionInMapExist(int x, int z)
+    {
+        if (x < XAmount && x > 0 && z < ZAmount && z > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

@@ -64,6 +64,6 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
 	public void OnMenuButtonClicked()
 	{
 		PhotonNetwork.Disconnect();
-		SceneManager.LoadScene(0);
+		SceneManager.LoadScene(1);
 	}
 }

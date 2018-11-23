@@ -42,11 +42,17 @@ public class MainMenu : MonoBehaviour {
         ApplicationModel.sceneToLoad = "combatScene";
         SceneManager.LoadScene("loadingScene");
     }
+
+	/* DEPRECATED multijoueur avec la classe Network
 	public void PlayLanMultiplayer()
 		{
             ApplicationModel.sceneToLoad = "multiplayerScene";
             SceneManager.LoadScene("loadingScene");
-        }
+    }
+  */
+
+
+	//Multjoueur Photon
 	public void PlayOnlineMultiplayer()
 	{
 		ApplicationModel.sceneToLoad = "PUNmultiplayerScene";

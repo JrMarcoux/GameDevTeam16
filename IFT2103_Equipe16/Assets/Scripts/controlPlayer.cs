@@ -52,11 +52,21 @@ public class controlPlayer : MonoBehaviour
             GetComponent<Rigidbody>().velocity += jumpSpeed * Vector3.up;
             delayJump = Time.time + 0.8f;
         }
-        if (Input.GetKey(GetKeyPrefs("Zoom")) && Time.time > delayJump)
+        if (Input.GetKey(GetKeyPrefs("Zoom")))
         {
             cameraScript.Zoom();
         }
-        if (Input.GetKey(GetKeyPrefs("Unzoom")) && Time.time > delayJump)
+        if (Input.GetKey(GetKeyPrefs("Unzoom")))
+        {
+            cameraScript.Unzoom();
+        }
+        transform.Translate(Input.GetAxis("Horizontal")*speed * Time.deltaTime, 0f, 0f);
+        transform.Translate(0f, 0f, Input.GetAxis("Vertical")*speed * Time.deltaTime);
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            cameraScript.Zoom();
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             cameraScript.Unzoom();
         }

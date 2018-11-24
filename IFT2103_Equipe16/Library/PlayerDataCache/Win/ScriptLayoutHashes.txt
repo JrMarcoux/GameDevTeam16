@@ -1,6 +1,6 @@
 WindowsStandalone
 PlayerPath?
-C:/Users/jr_ma/Desktop/IFT2103_Equipe16.exe
+C:/Users/Gabriel/Desktop/Nouveau dossier/IFT2103_Equipe16.exe
 SceneListBegin?
 Assets/Scenes/OpenScene.unity
 Assets/Scenes/Menu.unity

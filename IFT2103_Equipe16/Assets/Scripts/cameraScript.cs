@@ -53,7 +53,7 @@ public class cameraScript : MonoBehaviour {
 
     public void Unzoom()
     {
-        if (zoomPosition < 10)
+        if (zoomPosition < 100)
         {
             zoomPosition += 1;
         }

@@ -52,11 +52,11 @@ public class controlPlayer : MonoBehaviour
             GetComponent<Rigidbody>().velocity += jumpSpeed * Vector3.up;
             delayJump = Time.time + 0.8f;
         }
-        if (Input.GetKeyDown(GetKeyPrefs("Zoom")) && Time.time > delayJump)
+        if (Input.GetKey(GetKeyPrefs("Zoom")) && Time.time > delayJump)
         {
             cameraScript.Zoom();
         }
-        if (Input.GetKeyDown(GetKeyPrefs("Unzoom")) && Time.time > delayJump)
+        if (Input.GetKey(GetKeyPrefs("Unzoom")) && Time.time > delayJump)
         {
             cameraScript.Unzoom();
         }

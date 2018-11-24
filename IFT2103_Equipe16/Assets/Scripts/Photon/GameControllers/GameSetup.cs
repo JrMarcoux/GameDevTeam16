@@ -42,7 +42,7 @@ public class GameSetup : MonoBehaviour {
 		PhotonNetwork.Disconnect();
 		while(PhotonNetwork.IsConnected)
 			yield return null;
-		SceneManager.LoadScene(5);
+		SceneManager.LoadScene(4);
 	}
 	public void ReturnMainMenu()
 	{

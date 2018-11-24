@@ -341,7 +341,7 @@ MonoBehaviour:
   delayStart: 1
   maxPlayer: 2
   menuScene: 0
-  multiplayerScene: 6
+  multiplayerScene: 5
 --- !u!4 &492828968
 Transform:
   m_ObjectHideFlags: 0
@@ -1571,7 +1571,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Join the battle
+  m_Text: Play
 --- !u!222 &2112878573
 CanvasRenderer:
   m_ObjectHideFlags: 0

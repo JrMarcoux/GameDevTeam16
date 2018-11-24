@@ -14,8 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/combatScene.unity
     guid: efb1a6ab8b93277438628410c38f2086
-  - enabled: 1
-    path: Assets/Scenes/multiplayerScene.unity
+  - enabled: 0
+    path: Assets/Scenes/DEPRECATED_NetworkMultiplayerScene.unity
     guid: 18c4dd52e9a020841a61de9148e74c50
   - enabled: 1
     path: Assets/Scenes/loadingScene.unity

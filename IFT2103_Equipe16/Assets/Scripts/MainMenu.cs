@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
 
-public class MainMenu : MonoBehaviour {
+public class MainMenu : MonoBehaviour
+{
     private int nbCharacters;
     private int nbEnemies;
     private int levelWidth;
     private int levelDepth;
     private int nbDecors;
+    private bool difficultyHard;
 
     public TMPro.TextMeshProUGUI charTxt, enemiesTxt, widthTxt, depthTxt, decorsTxt;
 
@@ -20,6 +23,7 @@ public class MainMenu : MonoBehaviour {
         levelWidth = 25;
         levelDepth = 25;
         nbDecors = 5;
+        difficultyHard = false;
 
         if (charTxt != null)
         {
@@ -28,7 +32,7 @@ public class MainMenu : MonoBehaviour {
             widthTxt.text = levelWidth.ToString();
             depthTxt.text = levelDepth.ToString();
             decorsTxt.text = nbDecors.ToString();
-        }     
+        }
     }
 
     public void PlayLocal()
@@ -38,12 +42,13 @@ public class MainMenu : MonoBehaviour {
         PlayerPrefs.SetInt("levelWidth", levelWidth);
         PlayerPrefs.SetInt("levelDepth", levelDepth);
         PlayerPrefs.SetInt("nbDecors", nbDecors);
+        PlayerPrefs.SetInt("difficulty", Convert.ToInt32(difficultyHard));
         PlayerPrefs.Save();
         ApplicationModel.sceneToLoad = "combatScene";
         SceneManager.LoadScene("loadingScene");
     }
 
-	/* DEPRECATED multijoueur avec la classe Network
+    /* DEPRECATED multijoueur avec la classe Network
 	public void PlayLanMultiplayer()
 		{
             ApplicationModel.sceneToLoad = "multiplayerScene";
@@ -52,13 +57,13 @@ public class MainMenu : MonoBehaviour {
   */
 
 
-	//Multjoueur Photon
-	public void PlayOnlineMultiplayer()
-	{
-		ApplicationModel.sceneToLoad = "PUNmultiplayerScene";
-		SceneManager.LoadScene("loadingScene");
-	}
-	public void QuitGame()
+    //Multjoueur Photon
+    public void PlayOnlineMultiplayer()
+    {
+        ApplicationModel.sceneToLoad = "PUNmultiplayerScene";
+        SceneManager.LoadScene("loadingScene");
+    }
+    public void QuitGame()
     {
         Application.Quit();
     }
@@ -92,6 +97,9 @@ public class MainMenu : MonoBehaviour {
         nbDecors = (int)newInt;
         decorsTxt.text = nbDecors.ToString();
     }
-
+    public void AdjustDifficulty(float newInt)
+    {
+        difficultyHard = Convert.ToBoolean(newInt);
+    }
 
 }

@@ -163,17 +163,23 @@ public class GameManager : MonoBehaviour
         }
         if(teamTurn == playerTag)
         {
-            distance = (playerAvatarsAlive[selectedPlayerAvatar].transform.position - enemiesAlive[selectedPlayerTarget].transform.position).magnitude;
-            powerBar.ChangeSpeed(distance);
+            if (playerAvatarsAlive.Count != 0 && enemiesAlive.Count != 0)
+            {
+                distance = (playerAvatarsAlive[selectedPlayerAvatar].transform.position - enemiesAlive[selectedPlayerTarget].transform.position).magnitude;
+                powerBar.ChangeSpeed(distance);
+            }
         }
         else if(teamTurn == enemiesTag)
         {
-            distance = (enemiesAlive[selectedEnemyAvatar].transform.position - playerAvatarsAlive[selectedEnemyTarget].transform.position).magnitude;
-            powerBar.ChangeSpeed(distance);
+            if (enemiesAlive.Count != 0 && playerAvatarsAlive.Count != 0)
+            {
+                distance = (enemiesAlive[selectedEnemyAvatar].transform.position - playerAvatarsAlive[selectedEnemyTarget].transform.position).magnitude;
+                powerBar.ChangeSpeed(distance);
+            }
         }
 	}
 
-    public void changeSelectCharacter(string team)
+    public void changeSelectCharacter(string team, GameObject character = null)
     {
         if (team == playerTag)
         {
@@ -182,7 +188,16 @@ public class GameManager : MonoBehaviour
                 StopCoroutine(playerAvatarsAlive[selectedPlayerAvatar].GetComponent<Launcher>().launch());
             }
             playerAvatarsAlive[selectedPlayerAvatar].GetComponent<controlPlayer>().enabled = false;
-            selectedPlayerAvatar = (selectedPlayerAvatar + 1) % playerAvatarsAlive.Count;
+
+            if (character == null)
+            {
+                selectedPlayerAvatar = (selectedPlayerAvatar + 1) % playerAvatarsAlive.Count;
+            }
+            else
+            {
+                selectedPlayerAvatar = playerAvatarsAlive.FindIndex(x => x.gameObject == character);   
+            }
+
             playerAvatarsAlive[selectedPlayerAvatar].GetComponent<controlPlayer>().enabled = true;
             if (teamTurn == playerTag)
             {
@@ -196,7 +211,16 @@ public class GameManager : MonoBehaviour
                 StopCoroutine(enemiesAlive[selectedEnemyAvatar].GetComponent<Launcher>().launch());
             }
             enemiesAlive[selectedEnemyAvatar].GetComponent<IAEnemyScript>().enabled = false;
-            selectedEnemyAvatar = (selectedEnemyAvatar + 1) % enemiesAlive.Count;
+            
+            if (character == null)
+            {
+                selectedEnemyAvatar = (selectedEnemyAvatar + 1) % enemiesAlive.Count;
+            }
+            else
+            {
+                selectedEnemyAvatar = enemiesAlive.FindIndex(x => x.gameObject == character);
+            }
+
             enemiesAlive[selectedEnemyAvatar].GetComponent<IAEnemyScript>().enabled = true;
             if (teamTurn == enemiesTag)
             {

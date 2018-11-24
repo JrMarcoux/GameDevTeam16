@@ -20,18 +20,23 @@ public class IAEnemyScript : MonoBehaviour
     private bool firstDefense = false;
     private bool moveOnce = false;
     private bool moveOnceDef = false;
+    private bool difficultyIsHard;
     private GameObject firstCheckAtt;
     private Vector3 firstCheckPosAtt;
     private GameObject firstCheckDef;
     private Vector3 firstCheckPosDef;
     private Coroutine attack = null;
     private Coroutine defense = null;
+    private int maxDistance;
+    private bool continueScript = false;
 
     void Awake()
     {
         gameManager = GameObject.FindGameObjectWithTag("Game manager");
         graphStruct = gameManager.GetComponent<LevelGenerator>().getGraph();
         graph = graphStruct.NodeSet;
+        difficultyIsHard = System.Convert.ToBoolean(PlayerPrefs.GetInt("difficulty"));
+        maxDistance = PlayerPrefs.GetInt("levelWidth");
     }
 
     void Update()
@@ -56,6 +61,16 @@ public class IAEnemyScript : MonoBehaviour
                     hasShot = false;
                     timer = 0.0f;
 
+                    GameObject bestCharacter = GetCharacter();
+                    if (this.gameObject != bestCharacter)
+                    {
+                        ChgCharacter(bestCharacter);
+                    }
+                    else
+                    {
+                        continueScript = true;
+                    }
+
                     // met le joueur le plus proche comme target
                     firstCheckAtt = GetClosestPlayer();
                     firstCheckPosAtt = ConvertPositionToIndex(firstCheckAtt.transform.position);
@@ -65,10 +80,11 @@ public class IAEnemyScript : MonoBehaviour
                     GetComponent<BoxCollider>().enabled = false;
                     GetComponent<Rigidbody>().useGravity = false;
                 }
-                // démarre le behaviour d'attaque
-                StartCoroutine(AttackBehaviour());
-
-
+                if (continueScript)
+                {
+                    // démarre le behaviour d'attaque
+                    StartCoroutine(AttackBehaviour());
+                }
             }
             else
             {
@@ -82,6 +98,7 @@ public class IAEnemyScript : MonoBehaviour
                     }
                     firstAttack = false;
                     moveOnceDef = false;
+                    continueScript = false;
                     // prend la position du joueur qui peut bouger/tirer
                     firstCheckDef = gameManager.GetComponent<GameManager>().GetSelectedCharacter(gameManager.GetComponent<GameManager>().playerTag);
                     firstCheckPosDef = ConvertPositionToIndex(firstCheckDef.transform.position);
@@ -90,6 +107,28 @@ public class IAEnemyScript : MonoBehaviour
                 StartCoroutine(DefenseBehaviour());
             }
         }
+    }
+
+    private GameObject GetCharacter()
+    {
+        List<GameObject> playersAlive = gameManager.GetComponent<GameManager>().playerAvatarsAlive;
+        List<GameObject> enemiesAlive = gameManager.GetComponent<GameManager>().enemiesAlive;
+        float distance = int.MaxValue;
+        GameObject character = this.gameObject;
+
+        foreach (var player in playersAlive)
+        {
+            foreach (var enemy in enemiesAlive)
+            {
+                if (Mathf.Abs(Vector3.Distance(player.transform.position, enemy.transform.position)) < distance)
+                {
+                    character = enemy;
+                    distance = Mathf.Abs(Vector3.Distance(player.transform.position, enemy.transform.position));
+                }
+            }
+        }
+
+        return character;
     }
 
     private IEnumerator AttackBehaviour()
@@ -146,7 +185,7 @@ public class IAEnemyScript : MonoBehaviour
             hasShot = true;
             GetComponent<BoxCollider>().enabled = true;
             GetComponent<Rigidbody>().useGravity = true;
-            yield return StartCoroutine(Shoot());
+            yield return StartCoroutine(Shoot(firstCheckAtt));
         }
         yield return null;
     }
@@ -254,17 +293,25 @@ public class IAEnemyScript : MonoBehaviour
 
         // recherche le meilleur chemin pour ce rapprocher du joueur
         List<int> bestPath = SearchPath(posIndex, posPlayerIndex);
-        if(bestPath.Count>6)
+
+        if (bestPath.Count > 6)
         {
             bestPath.RemoveRange(bestPath.Count - 6, 6);
         }
-        else if(bestPath.Count > 2)
+        else if (bestPath.Count > 2)
         {
             bestPath.RemoveRange(bestPath.Count - 3, 3);
         }
         else
         {
-            bestPath.RemoveRange(bestPath.Count - 1, 1);
+            try
+            {
+                bestPath.RemoveRange(bestPath.Count - 1, 1);
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log(e);
+            }
         }
 
         // effectue les déplacements case par case
@@ -323,9 +370,46 @@ public class IAEnemyScript : MonoBehaviour
     /// permet d'effectuer une probabilité de tir
     /// </summary>
     /// <returns></returns>
-    private IEnumerator Shoot()
+    private IEnumerator Shoot(GameObject target)
     {
-        bool isBest = Random.Range(1, 3) == 1 ? true : false;
+        bool isBest = false;
+        float distance = 0;
+
+        distance = Mathf.Abs(Vector3.Distance(target.transform.position, transform.position));
+
+        // si la difficulté est à difficile
+        if (difficultyIsHard)
+        {
+            // augmenter la probabilité en fonction de la distance et la cible
+            if (distance >= (0.8 * maxDistance))
+            {
+                isBest = Random.Range(1, 4) == 3 ? true : false;
+            }
+            else if ((0.8 * maxDistance) > distance && distance >= (0.4 * maxDistance))
+            {
+                isBest = Random.Range(1, 3) == 2 ? true : false;
+            }
+            else if (distance < (0.4 * maxDistance))
+            {
+                isBest = Random.Range(1, 2) == 1 ? true : false;
+            }
+        }
+        else
+        {
+            // augmenter la probabilité en fonction de la distance et la cible
+            if (distance >= (0.8 * maxDistance))
+            {
+                isBest = Random.Range(1, 7) == 4 ? true : false;
+            }
+            else if ((0.8 * maxDistance) > distance && distance >= (0.4 * maxDistance))
+            {
+                isBest = Random.Range(1, 6) == 3 ? true : false;
+            }
+            else if (distance < (0.4 * maxDistance))
+            {
+                isBest = Random.Range(1, 5) == 2 ? true : false;
+            }
+        }
         yield return StartCoroutine(WaitShot(isBest));
     }
 
@@ -377,9 +461,9 @@ public class IAEnemyScript : MonoBehaviour
     /// <summary>
     /// pour changer l'IA controlable
     /// </summary>
-    private void ChgCharacter()
+    private void ChgCharacter(GameObject character = null)
     {
-        gameManager.GetComponent<GameManager>().changeSelectCharacter(gameManager.GetComponent<GameManager>().enemiesTag);
+        gameManager.GetComponent<GameManager>().changeSelectCharacter(gameManager.GetComponent<GameManager>().enemiesTag, character);
     }
 
     /// <summary>

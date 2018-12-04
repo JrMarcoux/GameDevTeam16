@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -602,20 +602,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 869333bf644c56041943356aaee9d2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tiles:
-  - {fileID: 1500956264263158, guid: 26334e6e03afae0419094ede5f5a319a, type: 2}
+  tiles:
   - {fileID: 1117198655446886, guid: 2fea0b657ac47f6499cf05336afc4bb3, type: 2}
+  - {fileID: 1500956264263158, guid: 26334e6e03afae0419094ede5f5a319a, type: 2}
   - {fileID: 1029550740900280, guid: de60dd45e9da49843ba30a3305790f28, type: 2}
   - {fileID: 1757877761196698, guid: d11a007e9cc1c314d82f27b588815ea2, type: 2}
-  TileSize: 1
+  tileSize: 1
   WaitTime: 0
-  Wall: {fileID: 1938637704507498, guid: cdcff34fc24cd58428d79c04f0573f76, type: 2}
-  SpawnHeight: 2
-  PlayerAvatars:
+  wall: {fileID: 1938637704507498, guid: cdcff34fc24cd58428d79c04f0573f76, type: 2}
+  spawnHeight: 1.5
+  playerAvatars:
   - {fileID: 1746275052901430, guid: fba399a7689ac8642bee1621a8f8ea3d, type: 2}
-  EnemyAvatars:
+  enemyAvatars:
   - {fileID: 1817590304118368, guid: 624066fb85109df4aa105a6e29d92577, type: 2}
-  DecorObjects:
+  decorObjects:
   - {fileID: 1405603867655460, guid: b96c052c7b979c247b434051a0e3e14a, type: 2}
   - {fileID: 1195173555408488, guid: d380cca31b0ce364ebee6dca37133792, type: 2}
   - {fileID: 1499997797911864, guid: fea56575a3f845746922e2fdac46600d, type: 2}

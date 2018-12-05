@@ -190,6 +190,8 @@
     <Compile Include="Assets\Scripts\keyBindScript.cs" />
     <Compile Include="Assets\Scripts\Launcher.cs" />
     <Compile Include="Assets\Scripts\LevelGenerator.cs" />
+    <Compile Include="Assets\Scripts\magicScript.cs" />
+    <Compile Include="Assets\Scripts\magmaScript.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MapElement.cs" />
     <Compile Include="Assets\Scripts\MapGraph.cs" />
@@ -212,9 +214,11 @@
     <Compile Include="Assets\Scripts\playersLivesScript.cs" />
     <Compile Include="Assets\Scripts\powerBarScript.cs" />
     <Compile Include="Assets\Scripts\RangeAttack.cs" />
+    <Compile Include="Assets\Scripts\rockScript.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\selectedPlayerArrowScript.cs" />
     <Compile Include="Assets\Scripts\targetPlayerArrowScript.cs" />
+    <Compile Include="Assets\Scripts\texturesGenerator.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\Photon\PhotonUnityNetworking\link.xml" />

@@ -21,9 +21,14 @@ public class powerBarScript : MonoBehaviour {
 	void Update () {
         if (powerBarMoving == true)
         {
-            powerBar.fillAmount = Mathf.PingPong(Time.time*speed, 1);
+            powerBar.fillAmount = Hermite(Mathf.PingPong(Time.time*speed, 1));
         }
 	}
+    float Hermite(float t)
+    {
+        return -t * t * t * 2f + t * t * 3f;
+    }
+
     //activer ou désactiver le mouvement si tour commencé ou en attente du prochain
     public void ToggleOn()
     {

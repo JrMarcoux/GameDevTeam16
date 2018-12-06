@@ -196,6 +196,7 @@
     <Compile Include="Assets\Scripts\MapElement.cs" />
     <Compile Include="Assets\Scripts\MapGraph.cs" />
     <Compile Include="Assets\Scripts\menuButtonScript.cs" />
+    <Compile Include="Assets\Scripts\mouseFollower.cs" />
     <Compile Include="Assets\Scripts\OpenScene.cs" />
     <Compile Include="Assets\Scripts\pauseScript.cs" />
     <Compile Include="Assets\Scripts\Photon\EndGameCamera.cs" />

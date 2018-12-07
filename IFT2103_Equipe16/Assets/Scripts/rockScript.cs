@@ -12,10 +12,6 @@ public class rockScript : MonoBehaviour {
         m_renderer = GetComponent<Renderer>();
         m_renderer.material.EnableKeyword("_NORMALMAP");
         texturesGenerator = GameObject.FindGameObjectWithTag("Game manager").GetComponent<texturesGenerator>();
-    }
-
-    void Update()
-    {
         m_renderer.material.SetTexture("_BumpMap", texturesGenerator.textureRock);
     }
 }

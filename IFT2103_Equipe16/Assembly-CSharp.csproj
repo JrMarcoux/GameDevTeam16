@@ -170,6 +170,7 @@
      <Compile Include="Assets\Scripts\cameraScript.cs" />
      <Compile Include="Assets\Scripts\CollisionAABB.cs" />
      <Compile Include="Assets\Scripts\controlPlayer.cs" />
+     <Compile Include="Assets\Scripts\CustomAvatarMenu.cs" />
      <Compile Include="Assets\Scripts\DEPRECATED_Network\BotSpawnerMultiplayer.cs" />
      <Compile Include="Assets\Scripts\DEPRECATED_Network\controlBotMultiplayer.cs" />
      <Compile Include="Assets\Scripts\DEPRECATED_Network\controlPlayerMultiplayer.cs" />

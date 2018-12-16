@@ -264,6 +264,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 95414880934347388}
   bodyPart: {fileID: 95703881582884486}
+  bodyRenderer: {fileID: 212550133301970626}
+  bodyPartRenderer: {fileID: 212769788327562016}
 --- !u!114 &114963313709833746
 MonoBehaviour:
   m_ObjectHideFlags: 1

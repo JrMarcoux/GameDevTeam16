@@ -14,9 +14,11 @@ public class animPlayer : MonoBehaviour {
 	public GameObject[] mouths;
 	private int eyeIndex;
 	private int mouthIndex;
+	public GameObject glasses;
+	public GameObject mustache;
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
 
 		bodyRenderer.color = HexToColor(PlayerPrefs.GetString("PrimaryColor"));
 		bodyPartRenderer.color = HexToColor(PlayerPrefs.GetString("SecondaryColor"));
@@ -24,6 +26,10 @@ public class animPlayer : MonoBehaviour {
 		mouthIndex = PlayerPrefs.GetInt("mouthIndex");
 		eyes[eyeIndex].SetActive(true);
 		mouths[mouthIndex].SetActive(true);
+		if (PlayerPrefs.GetInt("isGlasses") == 1)
+			glasses.SetActive(true);
+		if (PlayerPrefs.GetInt("isMustache") == 1)
+			mustache.SetActive(true);
 	}
 	Color HexToColor(string hex)
 	{
@@ -46,6 +52,8 @@ public class animPlayer : MonoBehaviour {
 				bodyPart.SetBool("isDead", true);
 				eyes[eyeIndex].GetComponent<Animator>().SetBool("isDead",true);
 				mouths[mouthIndex].GetComponent<Animator>().SetBool("isDead", true);
+				mustache.GetComponent<Animator>().SetBool("isDead", true);
+				glasses.GetComponent<Animator>().SetBool("isDead", true);
 
 			}
 

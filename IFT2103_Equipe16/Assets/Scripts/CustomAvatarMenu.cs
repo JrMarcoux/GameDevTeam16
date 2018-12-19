@@ -18,13 +18,20 @@ public class CustomAvatarMenu : MonoBehaviour {
 	public Animator bodyPartAnim;
 	public GameObject[] eyes;
 	public GameObject[] mouths;
+	public GameObject glasses;
+	public GameObject mustache;
 	private int indexMouth;
 	private int indexEye;
+	private int isMustache;
+	private int isGlasses;
 
 	// Use this for initialization
 	void Start () {
 		indexMouth = 0;
 		indexEye = 0;
+		isGlasses = 0;
+		isMustache = 0;
+		
 	}
 
 	public void changeEye()
@@ -38,10 +45,8 @@ public class CustomAvatarMenu : MonoBehaviour {
 		{
 			indexEye = 0;
 		}
-		bodyAnim.Play("body", -1, 0f);
-		bodyPartAnim.Play("bodyPart", -1, 0f);
-		mouths[indexMouth].GetComponent<Animator>().Play("mouth"+(indexMouth+1), -1, 0f);
 		eyes[indexEye].SetActive(true);
+		rewindAnim();
 	}
 	public void changeMouth()
 	{
@@ -54,10 +59,46 @@ public class CustomAvatarMenu : MonoBehaviour {
 		{
 			indexMouth = 0;
 		}
+		mouths[indexMouth].SetActive(true);
+		rewindAnim();
+	}
+	public void toggleGlasses(bool value)
+	{
+		
+		if (value)
+		{
+			isGlasses = 1;
+			glasses.SetActive(true);
+			rewindAnim();
+		}
+		else{
+			isGlasses = 0;
+			glasses.SetActive(false);
+		}
+	}
+	public void toggleMustache(bool value)
+	{
+		
+		if (value)
+		{
+			isMustache = 1;
+			mustache.SetActive(true);
+			rewindAnim();
+		}
+		else
+		{
+			isMustache = 0;
+			mustache.SetActive(false);
+		}
+	}
+	public void rewindAnim()
+	{
 		bodyAnim.Play("body", -1, 0f);
 		bodyPartAnim.Play("bodyPart", -1, 0f);
 		eyes[indexEye].GetComponent<Animator>().Play("eye" + (indexEye + 1), -1, 0f);
-		mouths[indexMouth].SetActive(true);
+		mouths[indexMouth].GetComponent<Animator>().Play("mouth" + (indexMouth + 1), -1, 0f);
+		glasses.GetComponent<Animator>().Play("glasses", -1, 0f);
+		mustache.GetComponent<Animator>().Play("mustache", -1, 0f);
 	}
 
 	public void changePrimaryBlue()
@@ -100,6 +141,8 @@ public class CustomAvatarMenu : MonoBehaviour {
 		PlayerPrefs.SetString("SecondaryColor", ColorToHex(avatarBodyPart.color));
 		PlayerPrefs.SetInt("eyeIndex", indexEye);
 		PlayerPrefs.SetInt("mouthIndex", indexMouth);
+		PlayerPrefs.SetInt("isGlasses",isGlasses);
+		PlayerPrefs.SetInt("isMustache", isMustache);
 
 	}
 

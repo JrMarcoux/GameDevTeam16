@@ -14,12 +14,46 @@ public class CustomAvatarMenu : MonoBehaviour {
 	public Color pink;
 	public Color grey;
 	public Color yellow;
+	public Animator bodyAnim;
+	public Animator bodyPartAnim;
+	public GameObject[] eyes;
+	public GameObject[] mouths;
+	private int indexMouth;
+	private int indexEye;
 
 	// Use this for initialization
 	void Start () {
-		
+		indexMouth = 0;
+		indexEye = 0;
 	}
-	
+
+	public void changeEye()
+	{
+		eyes[indexEye].SetActive(false);
+		if (indexEye < eyes.Length - 1)
+		{
+			indexEye++;
+		}
+		else
+		{
+			indexEye = 0;
+		}
+		eyes[indexEye].SetActive(true);
+	}
+	public void changeMouth()
+	{
+		mouths[indexMouth].SetActive(false);
+		if (indexMouth < mouths.Length - 1)
+		{
+			indexMouth++;
+		}
+		else
+		{
+			indexMouth = 0;
+		}
+		mouths[indexMouth].SetActive(true);
+	}
+
 	public void changePrimaryBlue()
 	{
 		avatarBody.color = blue;

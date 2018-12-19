@@ -10,14 +10,20 @@ public class animPlayer : MonoBehaviour {
 	bool stopCheck = false;
 	public SpriteRenderer bodyRenderer;
 	public SpriteRenderer bodyPartRenderer;
+	public Animator eye1;
+	public Animator eye2;
+	public Animator eye3;
+	public Animator mouth1;
+	public Animator mouth2;
+	public Animator mouth3;
 
 
 
 	// Use this for initialization
 	void Start () {
 
-		//bodyRenderer.color = HexToColor(PlayerPrefs.GetString("PrimaryColor"));
-		//bodyPartRenderer.color = HexToColor(PlayerPrefs.GetString("SecondaryColor"));
+		bodyRenderer.color = HexToColor(PlayerPrefs.GetString("PrimaryColor"));
+		bodyPartRenderer.color = HexToColor(PlayerPrefs.GetString("SecondaryColor"));
 
 
 	}

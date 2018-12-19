@@ -38,6 +38,9 @@ public class CustomAvatarMenu : MonoBehaviour {
 		{
 			indexEye = 0;
 		}
+		bodyAnim.Play("body", -1, 0f);
+		bodyPartAnim.Play("bodyPart", -1, 0f);
+		mouths[indexMouth].GetComponent<Animator>().Play("mouth"+(indexMouth+1), -1, 0f);
 		eyes[indexEye].SetActive(true);
 	}
 	public void changeMouth()
@@ -51,6 +54,9 @@ public class CustomAvatarMenu : MonoBehaviour {
 		{
 			indexMouth = 0;
 		}
+		bodyAnim.Play("body", -1, 0f);
+		bodyPartAnim.Play("bodyPart", -1, 0f);
+		eyes[indexEye].GetComponent<Animator>().Play("eye" + (indexEye + 1), -1, 0f);
 		mouths[indexMouth].SetActive(true);
 	}
 
@@ -92,6 +98,9 @@ public class CustomAvatarMenu : MonoBehaviour {
 	{
 		PlayerPrefs.SetString("PrimaryColor", ColorToHex(avatarBody.color) );
 		PlayerPrefs.SetString("SecondaryColor", ColorToHex(avatarBodyPart.color));
+		PlayerPrefs.SetInt("eyeIndex", indexEye);
+		PlayerPrefs.SetInt("mouthIndex", indexMouth);
+
 	}
 
 	string ColorToHex(Color32 color)

@@ -10,22 +10,20 @@ public class animPlayer : MonoBehaviour {
 	bool stopCheck = false;
 	public SpriteRenderer bodyRenderer;
 	public SpriteRenderer bodyPartRenderer;
-	public Animator eye1;
-	public Animator eye2;
-	public Animator eye3;
-	public Animator mouth1;
-	public Animator mouth2;
-	public Animator mouth3;
-
-
+	public GameObject[] eyes;
+	public GameObject[] mouths;
+	private int eyeIndex;
+	private int mouthIndex;
 
 	// Use this for initialization
 	void Start () {
 
 		bodyRenderer.color = HexToColor(PlayerPrefs.GetString("PrimaryColor"));
 		bodyPartRenderer.color = HexToColor(PlayerPrefs.GetString("SecondaryColor"));
-
-
+		eyeIndex = PlayerPrefs.GetInt("eyeIndex");
+		mouthIndex = PlayerPrefs.GetInt("mouthIndex");
+		eyes[eyeIndex].SetActive(true);
+		mouths[mouthIndex].SetActive(true);
 	}
 	Color HexToColor(string hex)
 	{
@@ -42,9 +40,11 @@ public class animPlayer : MonoBehaviour {
 			isDead = GetComponent<Launcher>().isDead;
 			if (isDead)
 			{
+
 				stopCheck = true;
 				body.SetBool("isDead",true);
 				bodyPart.SetBool("isDead", true);
+				
 			}
 
 		}

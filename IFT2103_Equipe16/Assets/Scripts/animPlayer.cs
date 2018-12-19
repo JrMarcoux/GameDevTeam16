@@ -44,7 +44,9 @@ public class animPlayer : MonoBehaviour {
 				stopCheck = true;
 				body.SetBool("isDead",true);
 				bodyPart.SetBool("isDead", true);
-				
+				eyes[eyeIndex].GetComponent<Animator>().SetBool("isDead",true);
+				mouths[mouthIndex].GetComponent<Animator>().SetBool("isDead", true);
+
 			}
 
 		}

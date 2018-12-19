@@ -16,8 +16,8 @@ public class animPlayer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		bodyRenderer.color = HexToColor(PlayerPrefs.GetString("PrimaryColor"));
-		bodyPartRenderer.color = HexToColor(PlayerPrefs.GetString("SecondaryColor"));
+		//bodyRenderer.color = HexToColor(PlayerPrefs.GetString("PrimaryColor"));
+		//bodyPartRenderer.color = HexToColor(PlayerPrefs.GetString("SecondaryColor"));
 
 
 	}

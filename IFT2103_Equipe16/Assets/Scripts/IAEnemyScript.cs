@@ -446,6 +446,7 @@ public class IAEnemyScript : MonoBehaviour
             float rdm = Random.Range(1, 3);
             yield return new WaitForSeconds(rdm);
         }
+        this.GetComponents<AudioSource>()[0].Play();
         GetComponent<Launcher>().isShooting = true;
     }
 

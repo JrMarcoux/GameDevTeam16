@@ -27,23 +27,41 @@ public class GameManager : MonoBehaviour
     public string teamTurn;
 
     public string playerTag = "Player";
-	public string enemiesTag = "Enemy";
+    public string enemiesTag = "Enemy";
 
 
     private GameObject redSprite;
     private GameObject blueSprite;
     private GameObject victory;
+    private GameObject victory2;
     private GameObject[] particles;
     public float chrono = 4;
-    private bool chronoActive = false;
+    private bool gameEnded = false;
 
     private powerBarScript powerBar;
     private float distance;
 
-    void Start () {
+    private AudioSource[] audio;
+    private GameObject mainCamera;
+    private AudioClip winClip;
+    private AudioClip whipSound;
+    private AudioClip clapSound;
+    private AudioClip finalClip;
+    private bool playWinMusic = false;
+    private bool finalKill = false;
+    private Coroutine playAudio = null;
+
+    void Start()
+    {
 
         players = GameObject.FindGameObjectsWithTag(playerTag);
         enemies = GameObject.FindGameObjectsWithTag(enemiesTag);
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        audio = mainCamera.GetComponents<AudioSource>();
+        winClip = (AudioClip)Resources.Load("Audio/win");
+        finalClip = (AudioClip)Resources.Load("Audio/final");
+        whipSound = (AudioClip)Resources.Load("Audio/whip");
+        clapSound = (AudioClip)Resources.Load("Audio/clap");
 
         enemyLifes = GameObject.FindGameObjectWithTag("enemyLifes");
         playerAvatarLifes = GameObject.FindGameObjectWithTag("playerAvatarLifes");
@@ -80,12 +98,14 @@ public class GameManager : MonoBehaviour
         redSprite = GameObject.Find("powerBarRed");
         blueSprite = GameObject.Find("powerBarBlue");
         victory = GameObject.Find("victoryText");
+        victory2 = GameObject.Find("victoryText2");
 
 
         //commencer la partie
         redSprite.SetActive(false);
         blueSprite.SetActive(true);
         victory.SetActive(false);
+        victory2.SetActive(false);
         teamTurn = playerTag;
         selectedPlayerAvatar = 0;
         selectedEnemyAvatar = 0;
@@ -115,12 +135,23 @@ public class GameManager : MonoBehaviour
             else
             {
                 victory.SetActive(true);
+                victory2.SetActive(true);
+                playWinMusic = true;
+                if (playWinMusic)
+                {
+                    playWinMusic = false;
+                    if (playAudio != null)
+                    {
+                        StopCoroutine(playAudio);
+                    }
+                    playAudio = StartCoroutine(PlayWinMusic());
+                }
                 particles = GameObject.FindGameObjectsWithTag("RedFountain");
                 foreach (GameObject emitter in particles)
                 {
                     emitter.GetComponent<ParticleSystem>().Play();
                 }
-                chronoActive = true;
+                gameEnded = true;
             }
         }
         else if (teamTurn == playerTag)
@@ -138,30 +169,50 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                StopAllCoroutines();
                 victory.SetActive(true);
+                victory2.SetActive(true);
+                playWinMusic = true;
+                if (playWinMusic)
+                {
+                    playWinMusic = false;
+                    if (playAudio != null)
+                    {
+                        StopCoroutine(playAudio);
+                    }
+                    playAudio = StartCoroutine(PlayWinMusic());
+                }
                 particles = GameObject.FindGameObjectsWithTag("BlueFountain");
                 foreach (GameObject emitter in particles)
                 {
                     emitter.GetComponent<ParticleSystem>().Play();
                 }
-                chronoActive = true;
+                gameEnded = true;
             }
+        }
+
+        if (playerAvatarsAlive.Count == 1 && enemiesAlive.Count == 1 && !finalKill)
+        {
+            finalKill = true;
+            if (playAudio != null)
+            {
+                StopCoroutine(playAudio);
+            }
+            playAudio = StartCoroutine(PlayDuelMusic());
         }
     }
 
 
     void Update()
     {
-        if (chronoActive)
+        if (gameEnded)
         {
-            chrono -= Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                SceneManager.LoadScene("Menu");
+            }
         }
-        if (chrono <= 0)
-        {
-            SceneManager.LoadScene("Menu");
-        }
-        if(teamTurn == playerTag)
+
+        if (teamTurn == playerTag)
         {
             if (playerAvatarsAlive.Count != 0 && enemiesAlive.Count != 0)
             {
@@ -169,7 +220,7 @@ public class GameManager : MonoBehaviour
                 powerBar.ChangeSpeed(distance);
             }
         }
-        else if(teamTurn == enemiesTag)
+        else if (teamTurn == enemiesTag)
         {
             if (enemiesAlive.Count != 0 && playerAvatarsAlive.Count != 0)
             {
@@ -177,7 +228,33 @@ public class GameManager : MonoBehaviour
                 powerBar.ChangeSpeed(distance);
             }
         }
-	}
+    }
+
+    private IEnumerator PlayWinMusic()
+    {
+        if (mainCamera.GetComponent<backGroudMusicScript>().play != null)
+            StopCoroutine(mainCamera.GetComponent<backGroudMusicScript>().play);
+        mainCamera.GetComponent<backGroudMusicScript>().enabled = false;
+        audio[0].Stop();
+        audio[2].clip = clapSound;
+        audio[2].Play();
+        yield return new WaitForSeconds(audio[2].clip.length);
+        audio[0].clip = winClip;
+        audio[0].Play();
+    }
+
+    private IEnumerator PlayDuelMusic()
+    {
+        if (mainCamera.GetComponent<backGroudMusicScript>().play != null)
+            StopCoroutine(mainCamera.GetComponent<backGroudMusicScript>().play);
+        mainCamera.GetComponent<backGroudMusicScript>().enabled = false;
+        audio[0].Stop();
+        audio[2].clip = whipSound;
+        audio[2].Play();
+        yield return new WaitForSeconds(audio[2].clip.length);
+        audio[0].clip = finalClip;
+        audio[0].Play();
+    }
 
     public void changeSelectCharacter(string team, GameObject character = null)
     {
@@ -195,7 +272,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                selectedPlayerAvatar = playerAvatarsAlive.FindIndex(x => x.gameObject == character);   
+                selectedPlayerAvatar = playerAvatarsAlive.FindIndex(x => x.gameObject == character);
             }
 
             playerAvatarsAlive[selectedPlayerAvatar].GetComponent<controlPlayer>().enabled = true;
@@ -211,7 +288,7 @@ public class GameManager : MonoBehaviour
                 StopCoroutine(enemiesAlive[selectedEnemyAvatar].GetComponent<Launcher>().launch());
             }
             enemiesAlive[selectedEnemyAvatar].GetComponent<IAEnemyScript>().enabled = false;
-            
+
             if (character == null)
             {
                 selectedEnemyAvatar = (selectedEnemyAvatar + 1) % enemiesAlive.Count;

@@ -37,6 +37,7 @@ public class controlPlayer : MonoBehaviour
         }
         if (Input.GetKeyDown(GetKeyPrefs("Fire")) && gameManager.GetComponent<GameManager>().teamTurn == gameManager.GetComponent<GameManager>().playerTag)
         {
+            this.GetComponents<AudioSource>()[0].Play();
             GetComponent<Launcher>().isShooting = true;
         }
         if (Input.GetKeyDown(GetKeyPrefs("ChgCharacter")))

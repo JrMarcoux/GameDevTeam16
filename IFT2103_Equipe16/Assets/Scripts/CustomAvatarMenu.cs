@@ -14,6 +14,7 @@ public class CustomAvatarMenu : MonoBehaviour {
 	public Color pink;
 	public Color grey;
 	public Color yellow;
+	public Transform transformBody;
 	public Animator bodyAnim;
 	public Animator bodyPartAnim;
 	public GameObject[] eyes;
@@ -24,6 +25,9 @@ public class CustomAvatarMenu : MonoBehaviour {
 	private int indexEye;
 	private int isMustache;
 	private int isGlasses;
+	private Vector3 initialTransform;
+	private float heightValue = 0;
+	private float widthValue = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -31,6 +35,7 @@ public class CustomAvatarMenu : MonoBehaviour {
 		indexEye = 0;
 		isGlasses = 0;
 		isMustache = 0;
+		initialTransform = transformBody.localScale;
 		
 	}
 
@@ -91,6 +96,16 @@ public class CustomAvatarMenu : MonoBehaviour {
 			mustache.SetActive(false);
 		}
 	}
+	public void changeHeigth(float value)
+	{
+		heightValue = value; 
+		transformBody.localScale =  initialTransform + new Vector3(0, value*45, 0); 
+	}
+	public void changeWidth(float value)
+	{
+		widthValue = value;
+		transformBody.localScale = initialTransform + new Vector3(value * 30, 0, 0);
+	}
 	public void rewindAnim()
 	{
 		bodyAnim.Play("body", -1, 0f);
@@ -143,6 +158,8 @@ public class CustomAvatarMenu : MonoBehaviour {
 		PlayerPrefs.SetInt("mouthIndex", indexMouth);
 		PlayerPrefs.SetInt("isGlasses",isGlasses);
 		PlayerPrefs.SetInt("isMustache", isMustache);
+		PlayerPrefs.SetFloat("avatarWidth", widthValue);
+		PlayerPrefs.SetFloat("avatarHeight", heightValue);
 
 	}
 

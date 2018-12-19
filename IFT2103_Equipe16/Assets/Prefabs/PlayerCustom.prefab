@@ -846,6 +846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b66f56d2cdcb474a95cf777f290192e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  avatarTransform: {fileID: 4409661853984056}
   body: {fileID: 95414880934347388}
   bodyPart: {fileID: 95703881582884486}
   bodyRenderer: {fileID: 212550133301970626}

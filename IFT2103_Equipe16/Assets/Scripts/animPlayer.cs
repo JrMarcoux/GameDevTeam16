@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class animPlayer : MonoBehaviour {
 
+	public Transform avatarTransform;
 	public Animator body;
 	public Animator bodyPart;
 	bool isDead = false;
@@ -30,6 +31,7 @@ public class animPlayer : MonoBehaviour {
 			glasses.SetActive(true);
 		if (PlayerPrefs.GetInt("isMustache") == 1)
 			mustache.SetActive(true);
+		avatarTransform.localScale += new Vector3(PlayerPrefs.GetFloat("avatarWidth"), PlayerPrefs.GetFloat("avatarHeight"), 0);
 	}
 	Color HexToColor(string hex)
 	{

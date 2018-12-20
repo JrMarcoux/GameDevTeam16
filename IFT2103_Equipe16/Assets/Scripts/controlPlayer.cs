@@ -50,6 +50,7 @@ public class controlPlayer : MonoBehaviour
         }
         if (Input.GetKeyDown(GetKeyPrefs("Jump")) && Time.time > delayJump)
         {
+            this.GetComponents<AudioSource>()[2].Play();
             GetComponent<Rigidbody>().velocity += jumpSpeed * Vector3.up;
             delayJump = Time.time + 0.8f;
         }

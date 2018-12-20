@@ -5,7 +5,7 @@ using UnityEngine;
 public class backGroudMusicScript : MonoBehaviour
 {
     private AudioClip[] soundClips;
-    private bool playNextMusic;
+    public bool playNextMusic;
     private int musicNumber;
     private AudioSource backGroundMusicSource;
     public Coroutine play = null;
@@ -39,16 +39,17 @@ public class backGroudMusicScript : MonoBehaviour
     private IEnumerator PlayTheNextMusic()
     {
         playNextMusic = false;
-        int randomNbr = Random.Range(0, 2);
-        if (musicNumber == randomNbr) yield return null;
-        else
+        int randomNbr = Random.Range(0, 3);
+        while (musicNumber == randomNbr)
         {
-            musicNumber = randomNbr;
-            Debug.Log("found nbr");
-            backGroundMusicSource.clip = soundClips[musicNumber];
-            backGroundMusicSource.Play();
-            yield return new WaitForSeconds(backGroundMusicSource.clip.length);
-            playNextMusic = true;
+            randomNbr = Random.Range(0, 3);
+            yield return null;
         }
+        musicNumber = randomNbr;
+        backGroundMusicSource.clip = soundClips[musicNumber];
+        backGroundMusicSource.Play();
+        yield return new WaitForSeconds(backGroundMusicSource.clip.length);
+        playNextMusic = true;
+
     }
 }

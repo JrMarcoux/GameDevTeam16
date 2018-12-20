@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CustomAvatarMenu : MonoBehaviour {
 
@@ -28,6 +29,12 @@ public class CustomAvatarMenu : MonoBehaviour {
 	private Vector3 initialTransform;
 	private float heightValue = 0;
 	private float widthValue = 0;
+	public Toggle mustacheBtn;
+	public Toggle glassesBtn;
+	public Slider sliderHeight;
+	public Slider sliderWidth;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -36,7 +43,8 @@ public class CustomAvatarMenu : MonoBehaviour {
 		isGlasses = 0;
 		isMustache = 0;
 		initialTransform = transformBody.localScale;
-		
+	
+
 	}
 
 	public void changeEye()
@@ -114,6 +122,54 @@ public class CustomAvatarMenu : MonoBehaviour {
 		mouths[indexMouth].GetComponent<Animator>().Play("mouth" + (indexMouth + 1), -1, 0f);
 		glasses.GetComponent<Animator>().Play("glasses", -1, 0f);
 		mustache.GetComponent<Animator>().Play("mustache", -1, 0f);
+	}
+	public void presetAvatar1()
+	{
+		changePrimaryBlue();
+		changeSecondaryYellow();
+		eyes[indexEye].SetActive(false);
+		mouths[indexMouth].SetActive(false);
+		indexEye = 1;
+		indexMouth = 0;
+		eyes[indexEye].SetActive(true);
+		mouths[indexMouth].SetActive(true);
+		mustacheBtn.isOn = false;
+		glassesBtn.isOn = false;
+		sliderHeight.value = 0;
+		sliderWidth.value = 0;
+		rewindAnim();
+	}
+	public void presetAvatar2()
+	{
+		changePrimaryOrange();
+		changeSecondaryPink();
+		eyes[indexEye].SetActive(false);
+		mouths[indexMouth].SetActive(false);
+		indexEye = 0;
+		indexMouth = 2;
+		eyes[indexEye].SetActive(true);
+		mouths[indexMouth].SetActive(true);
+		mustacheBtn.isOn = true;
+		glassesBtn.isOn = false;
+		sliderHeight.value = 0;
+		sliderWidth.value = 0;
+		rewindAnim();
+	}
+	public void presetAvatar3()
+	{
+		changePrimaryGray();
+		changeSecondaryGreen();
+		eyes[indexEye].SetActive(false);
+		mouths[indexMouth].SetActive(false);
+		indexEye = 2;
+		indexMouth = 1;
+		eyes[indexEye].SetActive(true);
+		mouths[indexMouth].SetActive(true);
+		mustacheBtn.isOn = false;
+		glassesBtn.isOn = true;
+		sliderHeight.value = 0;
+		sliderWidth.value = 0;
+		rewindAnim();
 	}
 
 	public void changePrimaryBlue()

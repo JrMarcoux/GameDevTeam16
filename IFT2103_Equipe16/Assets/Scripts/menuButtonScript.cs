@@ -20,11 +20,11 @@ public class menuButtonScript : MonoBehaviour
 
     public void playOnEnterSound()
     {
-        camera.GetComponents<AudioSource>()[1].Play();
+        camera.transform.GetChild(0).GetComponents<AudioSource>()[0].Play();
     }
 
     public void playOnClickSound()
     {
-        camera.GetComponents<AudioSource>()[2].Play();
+        camera.transform.GetChild(0).GetComponents<AudioSource>()[1].Play();
     }
 }

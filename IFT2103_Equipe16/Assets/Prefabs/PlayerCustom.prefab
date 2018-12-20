@@ -320,7 +320,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1746275052901430}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.961602, y: -35.28644, z: 11.292909}
+  m_LocalPosition: {x: 16.74767, y: -2.1178322, z: 11.164811}
   m_LocalScale: {x: 1, y: 1, z: 0.2}
   m_Children:
   - {fileID: 4266618963642798}
@@ -942,7 +942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b66f56d2cdcb474a95cf777f290192e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatarTransform: {fileID: 0}
+  avatarTransform: {fileID: 4409661853984056}
   body: {fileID: 95414880934347388}
   bodyPart: {fileID: 95703881582884486}
   bodyRenderer: {fileID: 212550133301970626}
@@ -955,8 +955,8 @@ MonoBehaviour:
   - {fileID: 1994382355999752}
   - {fileID: 1206417206265468}
   - {fileID: 1252090785720806}
-  glasses: {fileID: 0}
-  mustache: {fileID: 0}
+  glasses: {fileID: 1908423049255010}
+  mustache: {fileID: 1887765337673186}
 --- !u!114 &114963313709833746
 MonoBehaviour:
   m_ObjectHideFlags: 1

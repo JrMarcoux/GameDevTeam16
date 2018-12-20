@@ -99,12 +99,12 @@ public class CustomAvatarMenu : MonoBehaviour {
 	public void changeHeigth(float value)
 	{
 		heightValue = value; 
-		transformBody.localScale =  initialTransform + new Vector3(0, value*45, 0); 
+		transformBody.localScale =  initialTransform + new Vector3(widthValue*30, heightValue * 45, 0); 
 	}
 	public void changeWidth(float value)
 	{
 		widthValue = value;
-		transformBody.localScale = initialTransform + new Vector3(value * 30, 0, 0);
+		transformBody.localScale = initialTransform + new Vector3(widthValue * 30, heightValue*45, 0);
 	}
 	public void rewindAnim()
 	{

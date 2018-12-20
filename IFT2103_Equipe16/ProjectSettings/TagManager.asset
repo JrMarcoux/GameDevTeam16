@@ -29,6 +29,7 @@ TagManager:
   - PipePlayer2
   - Decor
   - GameSetup
+  - particleFireBall
   layers:
   - Default
   - TransparentFX

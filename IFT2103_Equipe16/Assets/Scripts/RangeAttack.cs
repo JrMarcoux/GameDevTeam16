@@ -83,7 +83,9 @@ public class RangeAttack : MonoBehaviour {
 	*/
 	void OnCollisionEnter(Collision col)
 	{
-        int deadHash = Animator.StringToHash("Dead");    
+				
+
+				int deadHash = Animator.StringToHash("Dead");    
 
         if (col.gameObject.tag == gameManager.GetComponent<GameManager>().playerTag)
 		{

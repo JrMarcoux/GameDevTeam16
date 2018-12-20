@@ -194,6 +194,9 @@
      <Compile Include="Assets\Scripts\menuButtonScript.cs" />
      <Compile Include="Assets\Scripts\mouseFollower.cs" />
      <Compile Include="Assets\Scripts\OpenScene.cs" />
+     <Compile Include="Assets\Scripts\ParticleFireBall.cs" />
+     <Compile Include="Assets\Scripts\ParticlePooler.cs" />
+     <Compile Include="Assets\Scripts\ParticleSpawner.cs" />
      <Compile Include="Assets\Scripts\pauseScript.cs" />
      <Compile Include="Assets\Scripts\Photon\EndGameCamera.cs" />
      <Compile Include="Assets\Scripts\Photon\GameControllers\AvatarSetup.cs" />

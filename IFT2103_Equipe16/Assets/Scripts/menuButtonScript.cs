@@ -6,11 +6,11 @@ public class menuButtonScript : MonoBehaviour
 {
 
     public GameObject pointer;
-    private GameObject camera;
+    private GameObject mainCamera;
 
     void Awake()
     {
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     public void changePointerPosition()
@@ -20,11 +20,11 @@ public class menuButtonScript : MonoBehaviour
 
     public void playOnEnterSound()
     {
-        camera.transform.GetChild(0).GetComponents<AudioSource>()[0].Play();
+        mainCamera.transform.GetChild(0).GetComponents<AudioSource>()[0].Play();
     }
 
     public void playOnClickSound()
     {
-        camera.transform.GetChild(0).GetComponents<AudioSource>()[1].Play();
+        mainCamera.transform.GetChild(0).GetComponents<AudioSource>()[1].Play();
     }
 }

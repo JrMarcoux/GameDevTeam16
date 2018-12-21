@@ -29,6 +29,8 @@ public class IAEnemyScript : MonoBehaviour
     private Coroutine defense = null;
     private int maxDistance;
     private bool continueScript = false;
+    IEnumerator easyShot = null;
+    
 
     void Awake()
     {
@@ -46,67 +48,91 @@ public class IAEnemyScript : MonoBehaviour
         {
             if (gameManager.GetComponent<GameManager>().teamTurn == gameManager.GetComponent<GameManager>().enemiesTag)
             {
-                if (!firstAttack)
+                if(!hasShot)
                 {
-                    firstAttack = true;
-                    if (attack != null)
-                    {
-                        StopCoroutine(attack);
-                        attack = null;
-                    }
+                    hasShot = true;
+                    Debug.Log("son tour");
                     firstDefense = false;
-                    moveOnce = false;
-                    isMoving = true;
-                    timerDone = false;
-                    hasShot = false;
-                    timer = 0.0f;
-
-                    GameObject bestCharacter = GetCharacter();
-                    if (this.gameObject != bestCharacter)
-                    {
-                        ChgCharacter(bestCharacter);
-                    }
-                    else
-                    {
-                        continueScript = true;
-                    }
-
-                    // met le joueur le plus proche comme target
-                    firstCheckAtt = GetClosestPlayer();
-                    firstCheckPosAtt = ConvertPositionToIndex(firstCheckAtt.transform.position);
-                    ChgTarget(firstCheckAtt);
-
-                    // évite que l'image de la caméra tremble
-                    GetComponent<BoxCollider>().enabled = false;
-                    GetComponent<Rigidbody>().useGravity = false;
+                    easyShot = EasyShot();
+                    StartCoroutine(easyShot);
                 }
-                if (continueScript)
-                {
-                    // démarre le behaviour d'attaque
-                    StartCoroutine(AttackBehaviour());
-                }
+                //if (!firstAttack)
+                //{
+                //    firstAttack = true;
+                //    if (attack != null)
+                //    {
+                //        StopCoroutine(attack);
+                //        attack = null;
+                //    }
+                //    firstDefense = false;
+                //    moveOnce = false;
+                //    isMoving = true;
+                //    timerDone = false;
+                //    hasShot = false;
+                //    timer = 0.0f;
+
+                //    GameObject bestCharacter = GetCharacter();
+                //    if (this.gameObject != bestCharacter)
+                //    {
+                //        ChgCharacter(bestCharacter);
+                //    }
+                //    else
+                //    {
+                //        continueScript = true;
+                //    }
+
+                //    // met le joueur le plus proche comme target
+                //    firstCheckAtt = GetClosestPlayer();
+                //    firstCheckPosAtt = ConvertPositionToIndex(firstCheckAtt.transform.position);
+                //    ChgTarget(firstCheckAtt);
+
+                //    // évite que l'image de la caméra tremble
+                //    GetComponent<BoxCollider>().enabled = false;
+                //    GetComponent<Rigidbody>().useGravity = false;
+                //}
+                //if (continueScript)
+                //{
+                //    // démarre le behaviour d'attaque
+                //    StartCoroutine(AttackBehaviour());
+                //}
             }
             else
             {
-                if (!firstDefense)
+                if(!firstDefense)
                 {
                     firstDefense = true;
-                    if (defense != null)
+                    Debug.Log("pas ton tour");
+                    hasShot = false;
+                    if (easyShot != null)
                     {
-                        StopCoroutine(defense);
-                        defense = null;
+                        StopCoroutine(easyShot);
                     }
-                    firstAttack = false;
-                    moveOnceDef = false;
-                    continueScript = false;
-                    // prend la position du joueur qui peut bouger/tirer
-                    firstCheckDef = gameManager.GetComponent<GameManager>().GetSelectedCharacter(gameManager.GetComponent<GameManager>().playerTag);
-                    firstCheckPosDef = ConvertPositionToIndex(firstCheckDef.transform.position);
                 }
-                // démarre le behaviour de défense
-                StartCoroutine(DefenseBehaviour());
+                
+                //if (!firstDefense)
+                //{
+                //    firstDefense = true;
+                //    if (defense != null)
+                //    {
+                //        StopCoroutine(defense);
+                //        defense = null;
+                //    }
+                //    firstAttack = false;
+                //    moveOnceDef = false;
+                //    continueScript = false;
+                //    // prend la position du joueur qui peut bouger/tirer
+                //    firstCheckDef = gameManager.GetComponent<GameManager>().GetSelectedCharacter(gameManager.GetComponent<GameManager>().playerTag);
+                //    firstCheckPosDef = ConvertPositionToIndex(firstCheckDef.transform.position);
+                //}
+                //// démarre le behaviour de défense
+                //StartCoroutine(DefenseBehaviour());
             }
         }
+    }
+
+    private IEnumerator EasyShot()
+    {
+        yield return StartCoroutine(WaitShot(true));
     }
 
     private GameObject GetCharacter()

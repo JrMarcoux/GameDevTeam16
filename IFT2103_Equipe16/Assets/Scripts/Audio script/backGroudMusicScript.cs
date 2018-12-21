@@ -46,8 +46,7 @@ public class backGroudMusicScript : MonoBehaviour
             yield return null;
         }
         musicNumber = randomNbr;
-        backGroundMusicSource.clip = soundClips[musicNumber];
-        backGroundMusicSource.Play();
+        yield return GetComponent<crossFaderScript>().CrossFade(backGroundMusicSource, backGroundMusicSource, soundClips[musicNumber]);
         yield return new WaitForSeconds(backGroundMusicSource.clip.length);
         playNextMusic = true;
 

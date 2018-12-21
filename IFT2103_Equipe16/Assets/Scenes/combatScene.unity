@@ -1269,6 +1269,7 @@ MonoBehaviour:
   playerTag: Player
   enemiesTag: Enemy
   chrono: 4
+  finalKill: 0
 --- !u!114 &250202435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2689,6 +2690,7 @@ GameObject:
   - component: {fileID: 575221484}
   - component: {fileID: 575221489}
   - component: {fileID: 575221492}
+  - component: {fileID: 575221494}
   - component: {fileID: 575221491}
   - component: {fileID: 575221490}
   - component: {fileID: 575221493}
@@ -3082,6 +3084,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &575221494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 575221483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba8b053832e484447aaaf859b37b6dd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 575221483}
 --- !u!1001 &588131515
 Prefab:
   m_ObjectHideFlags: 0
@@ -6296,6 +6310,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 1632458942}
   volumeMenu: {fileID: 588849192}
   mainCamera: {fileID: 575221483}
+  gameManager: {fileID: 250202433}
 --- !u!1 &1889225722
 GameObject:
   m_ObjectHideFlags: 0

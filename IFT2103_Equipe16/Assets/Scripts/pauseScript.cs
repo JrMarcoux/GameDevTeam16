@@ -10,20 +10,24 @@ public class pauseScript : MonoBehaviour {
     public GameObject pauseMenu;
     public GameObject volumeMenu;
     public GameObject mainCamera;
+    public GameObject gameManager;
 
     private AudioClip menuClip;
+    private AudioClip finalClip;
     AudioSource backGroudSource;
 
     void Awake()
     {
         menuClip = (AudioClip)Resources.Load("Audio/menuBG");
+        finalClip = (AudioClip)Resources.Load("Audio/final");
+
         backGroudSource = mainCamera.GetComponents<AudioSource>()[0];
     }
 
     void Update () {
 
         //pause ou résumer
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameManager.GetComponent<GameManager>().playWinMusic)
         {
             mainCamera.transform.GetChild(0).GetComponents<AudioSource>()[1].Play();
             if (isGamePause)
@@ -43,10 +47,17 @@ public class pauseScript : MonoBehaviour {
         volumeMenu.SetActive(false);
         Time.timeScale = 1f;
         isGamePause = false;
-
-        backGroudSource.Stop();
-        mainCamera.GetComponent<backGroudMusicScript>().enabled = true;
-        mainCamera.GetComponent<backGroudMusicScript>().playNextMusic = true;
+        Cursor.visible = false;
+        
+        if(!gameManager.GetComponent<GameManager>().finalKill)
+        {
+            mainCamera.GetComponent<backGroudMusicScript>().enabled = true;
+            mainCamera.GetComponent<backGroudMusicScript>().playNextMusic = true;
+        }
+        else
+        {
+            mainCamera.GetComponent<crossFaderScript>().CrossFade(backGroudSource, backGroudSource, finalClip);
+        }
     }
 
     public void Pause()
@@ -54,13 +65,15 @@ public class pauseScript : MonoBehaviour {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isGamePause = true;
+        Cursor.visible = true;
 
-        if (mainCamera.GetComponent<backGroudMusicScript>().play != null)
-            StopCoroutine(mainCamera.GetComponent<backGroudMusicScript>().play);
-        mainCamera.GetComponent<backGroudMusicScript>().enabled = false;
-        backGroudSource.Stop();
-        backGroudSource.clip = menuClip;
-        backGroudSource.Play();
+        if(!gameManager.GetComponent<GameManager>().finalKill)
+        {
+            if (mainCamera.GetComponent<backGroudMusicScript>().play != null)
+                StopCoroutine(mainCamera.GetComponent<backGroudMusicScript>().play);
+            mainCamera.GetComponent<backGroudMusicScript>().enabled = false;
+        }
+        mainCamera.GetComponent<crossFaderScript>().CrossFade(backGroudSource, backGroudSource, menuClip);
     }
 
     public void LoadMainMenu()

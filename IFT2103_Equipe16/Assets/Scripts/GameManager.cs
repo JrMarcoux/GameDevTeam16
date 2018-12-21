@@ -41,15 +41,16 @@ public class GameManager : MonoBehaviour
     private powerBarScript powerBar;
     private float distance;
 
-    private AudioSource[] audio;
+    private AudioSource[] audioSources;
     private GameObject mainCamera;
     private AudioClip winClip;
     private AudioClip whipSound;
     private AudioClip clapSound;
     private AudioClip finalClip;
-    private bool playWinMusic = false;
-    private bool finalKill = false;
-    private Coroutine playAudio = null;
+    private AudioClip deathPlayerSound;
+    public bool playWinMusic = false;
+    public bool finalKill = false;
+    private IEnumerator playAudio = null;
 
     void Start()
     {
@@ -57,11 +58,12 @@ public class GameManager : MonoBehaviour
         players = GameObject.FindGameObjectsWithTag(playerTag);
         enemies = GameObject.FindGameObjectsWithTag(enemiesTag);
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        audio = mainCamera.GetComponents<AudioSource>();
+        audioSources = mainCamera.GetComponents<AudioSource>();
         winClip = (AudioClip)Resources.Load("Audio/win");
         finalClip = (AudioClip)Resources.Load("Audio/final");
         whipSound = (AudioClip)Resources.Load("Audio/whip");
         clapSound = (AudioClip)Resources.Load("Audio/clap");
+        deathPlayerSound = (AudioClip)Resources.Load("Audio/Shotgun_Blast-Jim_Rogers-1914772763");
 
         enemyLifes = GameObject.FindGameObjectWithTag("enemyLifes");
         playerAvatarLifes = GameObject.FindGameObjectWithTag("playerAvatarLifes");
@@ -136,15 +138,15 @@ public class GameManager : MonoBehaviour
             {
                 victory.SetActive(true);
                 victory2.SetActive(true);
-                playWinMusic = true;
-                if (playWinMusic)
+                if (!playWinMusic)
                 {
-                    playWinMusic = false;
+                    playWinMusic = true;
                     if (playAudio != null)
                     {
                         StopCoroutine(playAudio);
                     }
-                    playAudio = StartCoroutine(PlayWinMusic());
+                    playAudio = PlayWinMusic();
+                    StartCoroutine(playAudio);
                 }
                 particles = GameObject.FindGameObjectsWithTag("RedFountain");
                 foreach (GameObject emitter in particles)
@@ -171,15 +173,15 @@ public class GameManager : MonoBehaviour
             {
                 victory.SetActive(true);
                 victory2.SetActive(true);
-                playWinMusic = true;
-                if (playWinMusic)
+                if (!playWinMusic)
                 {
-                    playWinMusic = false;
+                    playWinMusic = true;
                     if (playAudio != null)
                     {
                         StopCoroutine(playAudio);
                     }
-                    playAudio = StartCoroutine(PlayWinMusic());
+                    playAudio = PlayWinMusic();
+                    StartCoroutine(playAudio);
                 }
                 particles = GameObject.FindGameObjectsWithTag("BlueFountain");
                 foreach (GameObject emitter in particles)
@@ -197,7 +199,8 @@ public class GameManager : MonoBehaviour
             {
                 StopCoroutine(playAudio);
             }
-            playAudio = StartCoroutine(PlayDuelMusic());
+            playAudio = PlayDuelMusic();
+            StartCoroutine(playAudio);
         }
     }
 
@@ -235,25 +238,25 @@ public class GameManager : MonoBehaviour
         if (mainCamera.GetComponent<backGroudMusicScript>().play != null)
             StopCoroutine(mainCamera.GetComponent<backGroudMusicScript>().play);
         mainCamera.GetComponent<backGroudMusicScript>().enabled = false;
-        audio[0].Stop();
-        audio[2].clip = clapSound;
-        audio[2].Play();
-        yield return new WaitForSeconds(audio[2].clip.length);
-        audio[0].clip = winClip;
-        audio[0].Play();
+        audioSources[0].Stop();
+        audioSources[2].clip = clapSound;
+        audioSources[2].Play();
+        yield return new WaitForSeconds(audioSources[2].clip.length-1);
+        mainCamera.GetComponent<crossFaderScript>().CrossFade(audioSources[0], audioSources[0], winClip);
     }
 
     private IEnumerator PlayDuelMusic()
     {
+        audioSources[0].Stop();
+        yield return new WaitForSeconds(deathPlayerSound.length-1);
         if (mainCamera.GetComponent<backGroudMusicScript>().play != null)
             StopCoroutine(mainCamera.GetComponent<backGroudMusicScript>().play);
         mainCamera.GetComponent<backGroudMusicScript>().enabled = false;
-        audio[0].Stop();
-        audio[2].clip = whipSound;
-        audio[2].Play();
-        yield return new WaitForSeconds(audio[2].clip.length);
-        audio[0].clip = finalClip;
-        audio[0].Play();
+        
+        audioSources[2].clip = whipSound;
+        audioSources[2].Play();
+        yield return new WaitForSeconds(audioSources[2].clip.length);
+        mainCamera.GetComponent<crossFaderScript>().CrossFade(audioSources[0], audioSources[0], finalClip);
     }
 
     public void changeSelectCharacter(string team, GameObject character = null)
